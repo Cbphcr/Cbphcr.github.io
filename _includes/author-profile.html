@@ -105,6 +105,9 @@
       {% endif %}
       {% if author.googlescholar %}
         <li><a href="{{ author.googlescholar }}"><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+        {% if site.google_scholar_id %}
+          <li><i class="fas fa-fw fa-quote-left"></i> Citations: <span id="total_cit">loading...</span></li>
+        {% endif %}
       {% endif %}
       {% if author.pubmed %}
         <li><a href="{{ author.pubmed }}"><i class="ai ai-pubmed-square ai-fw"></i> PubMed</a></li>

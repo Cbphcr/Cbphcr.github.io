@@ -3,56 +3,57 @@ permalink: /
 title: ""
 excerpt: ""
 author_profile: true
-redirect_from: 
+redirect_from:
   - /about/
   - /about.html
 ---
 
-{% if site.google_scholar_stats_use_cdn %}
-{% assign gsDataBaseUrl = "https://cdn.jsdelivr.net/gh/" | append: site.repository | append: "@" %}
-{% else %}
-{% assign gsDataBaseUrl = "https://raw.githubusercontent.com/" | append: site.repository | append: "/" %}
-{% endif %}
-{% assign url = gsDataBaseUrl | append: "google-scholar-stats/gs_data_shieldsio.json" %}
-
 <span class='anchor' id='about-me'></span>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. Suspendisse condimentum, libero vel tempus mattis, risus risus vulputate libero, elementum fermentum mi neque vel nisl. Maecenas facilisis maximus dignissim. Curabitur mattis vulputate dui, tincidunt varius libero luctus eu. Mauris mauris nulla, scelerisque eget massa id, tincidunt congue felis. Sed convallis tempor ipsum rhoncus viverra. Pellentesque nulla orci, accumsan volutpat fringilla vitae, maximus sit amet tortor. Aliquam ultricies odio ut volutpat scelerisque. Donec nisl nisl, porttitor vitae pharetra quis, fringilla sed mi. Fusce pretium dolor ut aliquam consequat. Cras volutpat, tellus accumsan mattis molestie, nisl lacus tempus massa, nec malesuada tortor leo vel quam. Aliquam vel ex consectetur, vehicula leo nec, efficitur eros. Donec convallis non urna quis feugiat.
+I am **Bo-Wen Zhang** (张博闻), an undergraduate student at the School of Intelligence Science and Technology, Nanjing University. My research interests include **Neuro-Symbolic AI**, **LLM Agents**, and **LLM RL**.
 
-My research interest includes neural machine translation and computer vision. I have published more than 100 papers at the top international AI conferences with total <a href='https://scholar.google.com/citations?user=DhtAFkwAAAAJ'>google scholar citations <strong><span id='total_cit'>260000+</span></strong></a> (You can also use google scholar badge <a href='https://scholar.google.com/citations?user=DhtAFkwAAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>).
+I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a member of the LAMDA Group led by Prof. [Zhi-Hua Zhou](https://cs.nju.edu.cn/zhouzh/). I will continue as a Ph.D. student in the same school under the supervision of Prof. Guo starting in September 2026.
 
+<span class='anchor' id='publications'></span>
 
-# 🔥 News
-- *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+# Publications
 
-# 📝 Publications 
+- [**ChinaTravel: An Open-Ended Travel Planning Benchmark with Compositional Constraint Validation for Language Agents**](https://openreview.net/forum?id=0YRVlxY9BH)  
+  Jie-Jing Shao\*, **Bo-Wen Zhang**\*, Xiao-Wen Yang\*, Bai-Zhi Chen, Si-Yu Han, Jing-Hao Pang, Wen-Da Wei, Guohao Cai, Zhenhua Dong, Lan-Zhe Guo, Yu-Feng Li.  
+  *International Conference on Learning Representations (ICLR), 2026. Poster.*  
+  [Paper](https://openreview.net/forum?id=0YRVlxY9BH) / [Project](https://www.lamda.nju.edu.cn/shaojj/chinatravel/) / [GitHub](https://github.com/LAMDASZ-ML/ChinaTravel)  
+  *Equal contribution.
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
+- [**Mind the Gap to Trustworthy LLM Agents: A Systematic Evaluation on Constraint Satisfaction for Real-World Travel Planning**](https://openreview.net/forum?id=SXKIaWTe4N)  
+  **Bo-Wen Zhang**\*, Jin Ye\*, Jie-Jing Shao\*, Yu-Feng Li, Lan-Zhe Guo.  
+  *AAAI 2026 Trustworthy Agentic AI Workshop. Oral. Best Student Paper Award.*  
+  [Paper](https://openreview.net/forum?id=SXKIaWTe4N)  
+  *Equal contribution.
 
-[Deep Residual Learning for Image Recognition](https://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf)
+- [**Neuro-Symbolic Artificial Intelligence: Towards Improving the Reasoning Abilities of Large Language Models**](https://www.ijcai.org/proceedings/2025/1195)  
+  Xiao-Wen Yang\*, Jie-Jing Shao\*, Lan-Zhe Guo\*, **Bo-Wen Zhang**, Zhi Zhou, Lin-Han Jia, Wang-Zhou Dai, Yu-Feng Li.  
+  *International Joint Conference on Artificial Intelligence (IJCAI), 2025. Survey Track.*  
+  [Paper](https://www.ijcai.org/proceedings/2025/1195) / [GitHub](https://github.com/LAMDASZ-ML/Awesome-LLM-Reasoning-with-NeSy)  
+  *Equal contribution.
 
-**Kaiming He**, Xiangyu Zhang, Shaoqing Ren, Jian Sun
+<span class='anchor' id='projects'></span>
 
-[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-</div>
-</div>
+# Projects
 
-- [Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet](https://github.com), A, B, C, **CVPR 2020**
+- [**ChinaTravel**](https://www.lamda.nju.edu.cn/shaojj/chinatravel/): An open-ended benchmark and sandbox for realistic multi-day, multi-POI travel planning with compositional constraint validation.
 
-# 🎖 Honors and Awards
-- *2021.10* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.09* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+- [**LibFewShot**](https://github.com/rl-vig/libfewshot): An open-source library for few-shot learning research and reproducible benchmarking.
 
-# 📖 Educations
-- *2019.06 - 2022.04 (now)*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2015.09 - 2019.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+<span class='anchor' id='experience'></span>
 
-# 💬 Invited Talks
-- *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/)
+# Experience
 
-# 💻 Internships
-- *2019.05 - 2020.02*, [Lorem](https://github.com/), China.
+- *2026.04 - Present*, Intern, ByteDance.
+
+<span class='anchor' id='education'></span>
+
+# Education
+
+- *2026.09 - 2031.06*, Ph.D. student (pre-admitted), School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/).
+
+- *2022.09 - 2026.06*, B.S. student, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/).
