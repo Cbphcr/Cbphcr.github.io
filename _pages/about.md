@@ -19,22 +19,24 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
 # Publications
 
 - [**ChinaTravel: An Open-Ended Travel Planning Benchmark with Compositional Constraint Validation for Language Agents**](https://openreview.net/forum?id=0YRVlxY9BH)  
-  Jie-Jing Shao\*, **Bo-Wen Zhang**\*, Xiao-Wen Yang\*, Bai-Zhi Chen, Si-Yu Han, Jing-Hao Pang, Wen-Da Wei, Guohao Cai, Zhenhua Dong, Lan-Zhe Guo, Yu-Feng Li.  
+  Jie-Jing Shao, **Bo-Wen Zhang**, Xiao-Wen Yang, Bai-Zhi Chen, Si-Yu Han, Jing-Hao Pang, Wen-Da Wei, Guohao Cai, Zhenhua Dong, Lan-Zhe Guo, Yu-Feng Li.  
   *International Conference on Learning Representations (ICLR), 2026. Poster.*  
   [Paper](https://openreview.net/forum?id=0YRVlxY9BH) / [Project](https://www.lamda.nju.edu.cn/shaojj/chinatravel/) / [GitHub](https://github.com/LAMDASZ-ML/ChinaTravel)  
-  *Equal contribution.
+
+- [**Revisiting the Travel Planning Capabilities of Large Language Models**](https://arxiv.org/abs/2605.03308)  
+  **Bo-Wen Zhang**, Jin Ye, Peng-Yu Hua, Jia-Wei Cao, Jie-Jing Shao, Yu-Feng Li, Lan-Zhe Guo.  
+  *arXiv, 2026.*  
+  [Paper](https://arxiv.org/abs/2605.03308)
 
 - [**Mind the Gap to Trustworthy LLM Agents: A Systematic Evaluation on Constraint Satisfaction for Real-World Travel Planning**](https://openreview.net/forum?id=SXKIaWTe4N)  
-  **Bo-Wen Zhang**\*, Jin Ye\*, Jie-Jing Shao\*, Yu-Feng Li, Lan-Zhe Guo.  
+  **Bo-Wen Zhang**, Jin Ye, Jie-Jing Shao, Yu-Feng Li, Lan-Zhe Guo.  
   *AAAI 2026 Trustworthy Agentic AI Workshop. Oral. Best Student Paper Award.*  
   [Paper](https://openreview.net/forum?id=SXKIaWTe4N)  
-  *Equal contribution.
 
 - [**Neuro-Symbolic Artificial Intelligence: Towards Improving the Reasoning Abilities of Large Language Models**](https://www.ijcai.org/proceedings/2025/1195)  
-  Xiao-Wen Yang\*, Jie-Jing Shao\*, Lan-Zhe Guo\*, **Bo-Wen Zhang**, Zhi Zhou, Lin-Han Jia, Wang-Zhou Dai, Yu-Feng Li.  
+  Xiao-Wen Yang, Jie-Jing Shao, Lan-Zhe Guo, **Bo-Wen Zhang**, Zhi Zhou, Lin-Han Jia, Wang-Zhou Dai, Yu-Feng Li.  
   *International Joint Conference on Artificial Intelligence (IJCAI), 2025. Survey Track.*  
   [Paper](https://www.ijcai.org/proceedings/2025/1195) / [GitHub](https://github.com/LAMDASZ-ML/Awesome-LLM-Reasoning-with-NeSy)  
-  *Equal contribution.
 
 <span class='anchor' id='projects'></span>
 
