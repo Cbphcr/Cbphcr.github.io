@@ -23,6 +23,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 author:
   name             : "Bo-Wen Zhang"
   avatar           : "images/usagi.jpeg"
+  real_avatar      : "images/profile-photo.jpg"
   bio              : "Undergraduate student, Nanjing University"
   location         : "Suzhou, China"
   employer         :
@@ -54,6 +55,8 @@ author:
   twitter          : 
   vine             :
   weibo            :
+  xiaohongshu      :
+  xiaohongshu_url  : "https://www.xiaohongshu.com/user/profile/62ce460c000000000e00ead7"
   xing             :
   youtube          :
   wikipedia        :

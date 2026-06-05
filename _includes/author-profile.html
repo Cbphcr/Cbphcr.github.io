@@ -4,8 +4,11 @@
 
 <div itemscope itemtype="http://schema.org/Person" class="profile_box">
 
-  <div class="author__avatar">
-    <img src="{{ author.avatar }}" class="author__avatar" alt="{{ author.name }}">
+  <div class="author__avatar avatar-switch" role="button" tabindex="0" aria-label="Toggle profile photo">
+    <img src="{{ author.avatar }}" class="avatar-image avatar-image--primary" alt="{{ author.name }}">
+    {% if author.real_avatar %}
+      <img src="{{ author.real_avatar }}" class="avatar-image avatar-image--real" alt="{{ author.name }} profile photo">
+    {% endif %}
   </div>
 
   <div class="author__content">
@@ -93,6 +96,11 @@
       {% endif %}
       {% if author.weibo %}
         <li><a href="https://www.weibo.com/{{ author.weibo }}"><i class="fab fa-fw fa-weibo" aria-hidden="true"></i> Weibo</a></li>
+      {% endif %}
+      {% if author.xiaohongshu_url %}
+        <li><a href="{{ author.xiaohongshu_url }}"><i class="fas fa-fw fa-book-open" aria-hidden="true"></i> 小红书</a></li>
+      {% elsif author.xiaohongshu %}
+        <li><i class="fas fa-fw fa-book-open" aria-hidden="true"></i> 小红书：{{ author.xiaohongshu }}</li>
       {% endif %}
       {% if author.flickr %}
         <li><a href="https://www.flickr.com/{{ author.flickr }}"><i class="fab fa-fw fa-flickr" aria-hidden="true"></i> Flickr</a></li>
@@ -188,6 +196,9 @@
       {% endif %}
       {% if author.weibo %}
         <a href="https://www.weibo.com/{{ author.weibo }}"><i class="fab fa-fw fa-weibo" aria-hidden="true"></i></a>
+      {% endif %}
+      {% if author.xiaohongshu_url %}
+        <a href="{{ author.xiaohongshu_url }}"><i class="fas fa-fw fa-book-open" aria-hidden="true"></i></a>
       {% endif %}
       {% if author.flickr %}
         <a href="https://www.flickr.com/{{ author.flickr }}"><i class="fab fa-fw fa-flickr" aria-hidden="true"></i></a>
