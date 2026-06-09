@@ -4,7 +4,7 @@
 
 <div itemscope itemtype="http://schema.org/Person" class="profile_box">
 
-  <div class="author__avatar avatar-switch" role="button" tabindex="0" aria-label="Toggle profile photo">
+  <div class="author__avatar avatar-switch">
     <img src="{{ author.avatar }}" class="avatar-image avatar-image--primary" alt="{{ author.name }}">
     {% if author.real_avatar %}
       <img src="{{ author.real_avatar }}" class="avatar-image avatar-image--real" alt="{{ author.name }} profile photo">
@@ -113,6 +113,9 @@
       {% endif %}
       {% if author.googlescholar %}
         <li><a href="{{ author.googlescholar }}"><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+        {% if site.google_scholar_id %}
+          <li><i class="fas fa-fw fa-quote-left" aria-hidden="true"></i> Citations: <span id="total_cit">loading...</span></li>
+        {% endif %}
       {% endif %}
       {% if author.pubmed %}
         <li><a href="{{ author.pubmed }}"><i class="ai ai-pubmed-square ai-fw"></i> PubMed</a></li>

@@ -9,7 +9,8 @@
 title                    : "Bo-Wen Zhang"
 description              : "Neuro-Symbolic AI · LLM Agents · LLM RL"
 repository               : "Cbphcr/Cbphcr.github.io"
-google_scholar_stats_use_cdn : true
+google_scholar_stats_use_cdn : false
+google_scholar_id       : "_NHh89YAAAAJ"
 
 # google analytics
 google_analytics_id      :  # get google_analytics_id from https://analytics.google.com/analytics/

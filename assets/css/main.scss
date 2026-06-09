@@ -114,7 +114,6 @@ h1:before, .anchor:before {
 
 .avatar-switch {
     position: relative;
-    cursor: pointer;
     line-height: 0;
 
     .avatar-image {
@@ -131,23 +130,18 @@ h1:before, .anchor:before {
         opacity: 0;
     }
 
-    &:hover .avatar-image,
-    &.is-real .avatar-image {
+    &:hover .avatar-image {
         transform: translateY(-2px) scale(1.02);
         box-shadow: 0 8px 18px rgba(44, 62, 80, .16);
     }
 
-    &:hover .avatar-image--real,
-    &.is-real .avatar-image--real {
+    &:hover .avatar-image--real {
         opacity: 1;
     }
 }
 
 .research-interests {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: .5rem .6rem;
+    display: block;
     margin: .35rem 0 1rem;
 }
 
@@ -155,7 +149,7 @@ h1:before, .anchor:before {
     color: #6b7683;
     font-size: .76em;
     font-weight: 700;
-    letter-spacing: .02em;
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 
@@ -163,18 +157,60 @@ h1:before, .anchor:before {
     display: flex;
     flex-wrap: wrap;
     gap: .45rem;
+    margin-top: .35rem;
 
     span {
         display: inline-flex;
         align-items: center;
         min-height: 1.65rem;
         padding: .16rem .58rem;
-        border: 1px solid #d9e4f2;
         border-radius: 6px;
-        background: #f7fbff;
-        color: #24466f;
         font-size: .78em;
         font-weight: 600;
+        line-height: 1.2;
+    }
+}
+
+.interest-tag--nesy {
+    border: 1px solid #cfe5dc;
+    background: #f4fbf7;
+    color: #236449;
+}
+
+.interest-tag--agents {
+    border: 1px solid #d5e2f5;
+    background: #f6f9ff;
+    color: #294f86;
+}
+
+.interest-tag--rl {
+    border: 1px solid #ead9f1;
+    background: #fbf7fd;
+    color: #6a3d7a;
+}
+
+.paper-interests {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .35rem;
+    margin: .45rem 0 .35rem;
+
+    .paper-interest-label {
+        color: #768392;
+        font-size: .68em;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    span:not(.paper-interest-label) {
+        display: inline-flex;
+        align-items: center;
+        min-height: 1.35rem;
+        padding: .08rem .42rem;
+        border-radius: 5px;
+        font-size: .68em;
+        font-weight: 700;
         line-height: 1.2;
     }
 }
