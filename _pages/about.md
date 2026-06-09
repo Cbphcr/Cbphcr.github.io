@@ -37,7 +37,7 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
     </div>
     <h3><a href="https://openreview.net/forum?id=0YRVlxY9BH">ChinaTravel: An Open-Ended Travel Planning Benchmark with Compositional Constraint Validation for Language Agents</a></h3>
     <p class="authors">Jie-Jing Shao*, <strong>Bo-Wen Zhang</strong>*, Xiao-Wen Yang*, Bai-Zhi Chen, Si-Yu Han, Jing-Hao Pang, Wen-Da Wei, Guohao Cai, Zhenhua Dong, Lan-Zhe Guo, Yu-Feng Li.</p>
-    <div class="paper-interests"><span class="paper-interest-label">Research Interest</span><span class="interest-tag--agents">LLM Agents</span></div>
+    <div class="paper-interests"><span class="interest-tag--nesy">Neuro-Symbolic AI</span><span class="interest-tag--agents">LLM Agents</span></div>
     <p class="pub-links"><a href="https://openreview.net/forum?id=0YRVlxY9BH">Paper</a> / <a href="https://www.lamda.nju.edu.cn/shaojj/chinatravel/">Project</a> / <a href="https://github.com/LAMDASZ-ML/ChinaTravel">GitHub</a></p>
   </article>
 
@@ -47,7 +47,7 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
     </div>
     <h3><a href="https://arxiv.org/abs/2605.03308">Revisiting the Travel Planning Capabilities of Large Language Models</a></h3>
     <p class="authors"><strong>Bo-Wen Zhang</strong>, Jin Ye, Peng-Yu Hua, Jia-Wei Cao, Jie-Jing Shao, Yu-Feng Li, Lan-Zhe Guo.</p>
-    <div class="paper-interests"><span class="paper-interest-label">Research Interest</span><span class="interest-tag--agents">LLM Agents</span><span class="interest-tag--rl">LLM RL</span></div>
+    <div class="paper-interests"><span class="interest-tag--agents">LLM Agents</span></div>
     <p class="pub-links"><a href="https://arxiv.org/abs/2605.03308">Paper</a></p>
   </article>
 
@@ -58,7 +58,7 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
     </div>
     <h3><a href="https://openreview.net/forum?id=SXKIaWTe4N">Mind the Gap to Trustworthy LLM Agents: A Systematic Evaluation on Constraint Satisfaction for Real-World Travel Planning</a></h3>
     <p class="authors"><strong>Bo-Wen Zhang</strong>*, Jin Ye*, Jie-Jing Shao*, Yu-Feng Li, Lan-Zhe Guo.</p>
-    <div class="paper-interests"><span class="paper-interest-label">Research Interest</span><span class="interest-tag--agents">LLM Agents</span></div>
+    <div class="paper-interests"><span class="interest-tag--agents">LLM Agents</span></div>
     <p class="pub-links"><a href="https://openreview.net/forum?id=SXKIaWTe4N">Paper</a></p>
   </article>
 
@@ -69,7 +69,7 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
     </div>
     <h3><a href="https://www.ijcai.org/proceedings/2025/1195">Neuro-Symbolic Artificial Intelligence: Towards Improving the Reasoning Abilities of Large Language Models</a></h3>
     <p class="authors">Xiao-Wen Yang*, Jie-Jing Shao*, Lan-Zhe Guo*, <strong>Bo-Wen Zhang</strong>, Zhi Zhou, Lin-Han Jia, Wang-Zhou Dai, Yu-Feng Li.</p>
-    <div class="paper-interests"><span class="paper-interest-label">Research Interest</span><span class="interest-tag--nesy">Neuro-Symbolic AI</span><span class="interest-tag--agents">LLM Agents</span></div>
+    <div class="paper-interests"><span class="interest-tag--nesy">Neuro-Symbolic AI</span><span class="interest-tag--agents">LLM Agents</span></div>
     <p class="pub-links"><a href="https://www.ijcai.org/proceedings/2025/1195">Paper</a> / <a href="https://github.com/LAMDASZ-ML/Awesome-LLM-Reasoning-with-NeSy">GitHub</a></p>
   </article>
 </div>

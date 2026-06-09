@@ -192,18 +192,10 @@ h1:before, .anchor:before {
 .paper-interests {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     gap: .35rem;
     margin: .45rem 0 .35rem;
 
-    .paper-interest-label {
-        color: #768392;
-        font-size: .68em;
-        font-weight: 700;
-        line-height: 1.2;
-    }
-
-    span:not(.paper-interest-label) {
+    span {
         display: inline-flex;
         align-items: center;
         min-height: 1.35rem;
