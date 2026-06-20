@@ -46,8 +46,8 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
       <span class="venue-badge">arXiv 2026</span>
     </div>
     <h3><a href="https://arxiv.org/abs/2605.03308">Revisiting the Travel Planning Capabilities of Large Language Models</a></h3>
-    <p class="authors"><strong>Bo-Wen Zhang</strong>, Jin Ye, Peng-Yu Hua, Jia-Wei Cao, Jie-Jing Shao, Yu-Feng Li, Lan-Zhe Guo.</p>
-    <div class="paper-interests"><span class="interest-tag--agents">LLM Agents</span></div>
+    <p class="authors"><strong>Bo-Wen Zhang</strong>*, Jin Ye*, Peng-Yu Hua*, Jia-Wei Cao*, Jie-Jing Shao, Yu-Feng Li, Lan-Zhe Guo.</p>
+    <div class="paper-interests"><span class="interest-tag--nesy">Neuro-Symbolic AI</span><span class="interest-tag--agents">LLM Agents</span></div>
     <p class="pub-links"><a href="https://arxiv.org/abs/2605.03308">Paper</a></p>
   </article>
 
@@ -58,7 +58,7 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
     </div>
     <h3><a href="https://openreview.net/forum?id=SXKIaWTe4N">Mind the Gap to Trustworthy LLM Agents: A Systematic Evaluation on Constraint Satisfaction for Real-World Travel Planning</a></h3>
     <p class="authors"><strong>Bo-Wen Zhang</strong>*, Jin Ye*, Jie-Jing Shao*, Yu-Feng Li, Lan-Zhe Guo.</p>
-    <div class="paper-interests"><span class="interest-tag--agents">LLM Agents</span></div>
+    <div class="paper-interests"><span class="interest-tag--nesy">Neuro-Symbolic AI</span><span class="interest-tag--agents">LLM Agents</span></div>
     <p class="pub-links"><a href="https://openreview.net/forum?id=SXKIaWTe4N">Paper</a></p>
   </article>
 
