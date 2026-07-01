@@ -1,8 +1,9 @@
 import json
 import os
-import signal
+import queue
 import sys
 from datetime import datetime
+from multiprocessing import Process, Queue
 from pathlib import Path
 
 from scholarly import scholarly
@@ -17,10 +18,6 @@ TIMEOUT_SECONDS = int(os.environ.get("GOOGLE_SCHOLAR_TIMEOUT_SECONDS", "120"))
 
 class ScholarFetchTimeout(Exception):
     pass
-
-
-def _handle_timeout(signum, frame):
-    raise ScholarFetchTimeout(f"Google Scholar fetch timed out after {TIMEOUT_SECONDS} seconds")
 
 
 def load_previous_data(scholar_id):
@@ -42,18 +39,41 @@ def load_previous_data(scholar_id):
 
 def fetch_author_data(scholar_id):
     print(f"Fetching Google Scholar stats for {scholar_id}", flush=True)
-    signal.signal(signal.SIGALRM, _handle_timeout)
-    signal.alarm(TIMEOUT_SECONDS)
-    try:
-        author = scholarly.search_author_id(scholar_id)
-        scholarly.fill(author, sections=["basics", "indices", "counts"])
-    finally:
-        signal.alarm(0)
-
+    author = scholarly.search_author_id(scholar_id)
+    scholarly.fill(author, sections=["basics", "indices", "counts"])
     author["updated"] = str(datetime.now())
     author["fetch_status"] = "success"
     author.pop("fetch_error", None)
     return author
+
+
+def fetch_author_worker(output_queue, scholar_id):
+    try:
+        output_queue.put(("success", fetch_author_data(scholar_id)))
+    except Exception as error:
+        output_queue.put(("error", repr(error)))
+
+
+def fetch_author_data_with_timeout(scholar_id):
+    output_queue = Queue()
+    process = Process(target=fetch_author_worker, args=(output_queue, scholar_id))
+    process.start()
+    process.join(TIMEOUT_SECONDS)
+
+    if process.is_alive():
+        process.terminate()
+        process.join()
+        raise ScholarFetchTimeout(f"Google Scholar fetch timed out after {TIMEOUT_SECONDS} seconds")
+
+    try:
+        status, payload = output_queue.get_nowait()
+    except queue.Empty as error:
+        raise RuntimeError(f"Google Scholar fetch exited with code {process.exitcode}") from error
+
+    if status == "error":
+        raise RuntimeError(payload)
+
+    return payload
 
 
 def fallback_author_data(scholar_id, error):
@@ -96,7 +116,7 @@ def write_outputs(author):
 def main():
     scholar_id = os.environ["GOOGLE_SCHOLAR_ID"]
     try:
-        author = fetch_author_data(scholar_id)
+        author = fetch_author_data_with_timeout(scholar_id)
     except Exception as error:
         author = fallback_author_data(scholar_id, error)
 
