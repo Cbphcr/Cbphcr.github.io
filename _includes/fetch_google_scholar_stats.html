@@ -20,6 +20,10 @@
         setCitationStatus('unavailable');
         return;
       }
+      if (typeof data['citedby'] !== 'number') {
+        setCitationStatus('unavailable');
+        return;
+      }
       setCitationStatus(data['citedby']);
     }).fail(function () {
       setCitationStatus('unavailable');
