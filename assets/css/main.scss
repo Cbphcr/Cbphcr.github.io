@@ -220,9 +220,9 @@ h1:before, .anchor:before {
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 2.35rem;
+    min-height: 3rem;
     overflow: hidden;
-    padding: .42rem .65rem .38rem;
+    padding: .52rem .72rem .48rem 3rem;
     border: 1px solid #e6edf4;
     border-radius: 8px;
     background: #fff;
@@ -247,16 +247,66 @@ h1:before, .anchor:before {
     }
 }
 
-.profile-ribbon__item--soft:before {
-    background: linear-gradient(90deg, #f2c8d7, #f9e7b0);
+.profile-ribbon__item:after {
+    content: "";
+    position: absolute;
+    left: .72rem;
+    top: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+    transform: translateY(-50%);
 }
 
-.profile-ribbon__item--systems:before {
-    background: linear-gradient(90deg, #80b7a2, #6c9bb8);
+.profile-ribbon__item--chiikawa {
+    background: linear-gradient(180deg, #fff, #fff8fb);
+
+    &:before {
+        background: linear-gradient(90deg, #f2c8d7, #f9e7b0);
+    }
+
+    &:after {
+        border: 2px solid #f0bfce;
+        border-radius: 50%;
+        background:
+            radial-gradient(circle at 35% 42%, #3f4750 0 .11rem, transparent .12rem),
+            radial-gradient(circle at 65% 42%, #3f4750 0 .11rem, transparent .12rem),
+            radial-gradient(ellipse at 35% 64%, rgba(235, 126, 151, .45) 0 .18rem, transparent .19rem),
+            radial-gradient(ellipse at 65% 64%, rgba(235, 126, 151, .45) 0 .18rem, transparent .19rem),
+            linear-gradient(#fff6dd, #fff2cf);
+        box-shadow: -.34rem -.54rem 0 -.2rem #fff2cf, .34rem -.54rem 0 -.2rem #fff2cf;
+    }
 }
 
-.profile-ribbon__item--matchday:before {
-    background: linear-gradient(90deg, #202124 0 33%, #c41230 33% 66%, #ffcc33 66% 100%);
+.profile-ribbon__item--oxygen {
+    background: linear-gradient(180deg, #fff, #f6fbfb);
+
+    &:before {
+        background: linear-gradient(90deg, #72c4d6, #f1b84a, #d75745);
+    }
+
+    &:after {
+        border: 1px solid #9fd8df;
+        border-radius: 6px;
+        background:
+            radial-gradient(circle at 78% 25%, rgba(114, 196, 214, .85) 0 .16rem, transparent .17rem),
+            radial-gradient(circle at 20% 75%, rgba(114, 196, 214, .58) 0 .12rem, transparent .13rem),
+            linear-gradient(90deg, #72c4d6 0 58%, #f1b84a 58% 78%, #d75745 78% 100%);
+        box-shadow: inset 0 0 0 3px #fff, 0 4px 10px rgba(44, 62, 80, .08);
+    }
+}
+
+.profile-ribbon__item--matchday {
+    background: linear-gradient(180deg, #fff, #fff8f8);
+
+    &:before {
+        background: linear-gradient(90deg, #c41230, #1d5a99);
+    }
+
+    &:after {
+        border-radius: 50%;
+        background: #fff url("/images/fc-bayern-logo.png") center / cover no-repeat;
+        box-shadow: 0 0 0 1px #dce6f0;
+    }
 }
 
 .paper-interests {
