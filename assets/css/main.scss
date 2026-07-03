@@ -123,7 +123,7 @@ h1:before, .anchor:before {
             width: 6.2rem;
             height: 3px;
             border-radius: 99px;
-            background: linear-gradient(90deg, #202124 0 33%, #c41230 33% 66%, #ffcc33 66% 100%);
+            background: linear-gradient(90deg, #5fb8c6, #f1b84a 58%, #d75745);
         }
     }
 }
@@ -212,7 +212,7 @@ h1:before, .anchor:before {
     margin: 1rem 0 1.25rem;
 
     @include breakpoint($medium) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -257,26 +257,6 @@ h1:before, .anchor:before {
     transform: translateY(-50%);
 }
 
-.profile-ribbon__item--chiikawa {
-    background: linear-gradient(180deg, #fff, #fff8fb);
-
-    &:before {
-        background: linear-gradient(90deg, #f2c8d7, #f9e7b0);
-    }
-
-    &:after {
-        border: 2px solid #f0bfce;
-        border-radius: 50%;
-        background:
-            radial-gradient(circle at 35% 42%, #3f4750 0 .11rem, transparent .12rem),
-            radial-gradient(circle at 65% 42%, #3f4750 0 .11rem, transparent .12rem),
-            radial-gradient(ellipse at 35% 64%, rgba(235, 126, 151, .45) 0 .18rem, transparent .19rem),
-            radial-gradient(ellipse at 65% 64%, rgba(235, 126, 151, .45) 0 .18rem, transparent .19rem),
-            linear-gradient(#fff6dd, #fff2cf);
-        box-shadow: -.34rem -.54rem 0 -.2rem #fff2cf, .34rem -.54rem 0 -.2rem #fff2cf;
-    }
-}
-
 .profile-ribbon__item--oxygen {
     background: linear-gradient(180deg, #fff, #f6fbfb);
 
@@ -295,7 +275,7 @@ h1:before, .anchor:before {
     }
 }
 
-.profile-ribbon__item--matchday {
+.profile-ribbon__item--bayern {
     background: linear-gradient(180deg, #fff, #fff8f8);
 
     &:before {
@@ -346,7 +326,7 @@ h1:before, .anchor:before {
         position: absolute;
         inset: 0 auto 0 0;
         width: 4px;
-        background: linear-gradient(180deg, #202124 0 33%, #c41230 33% 66%, #ffcc33 66% 100%);
+        background: linear-gradient(180deg, #5fb8c6, #f1b84a 58%, #d75745);
         opacity: .52;
         transform: scaleY(.32);
         transform-origin: top;
@@ -447,7 +427,7 @@ h1:before, .anchor:before {
         position: absolute;
         inset: 0 0 auto 0;
         height: 3px;
-        background: linear-gradient(90deg, #80b7a2, #294f86, #c41230);
+        background: linear-gradient(90deg, #5fb8c6, #80b7a2, #f1b84a);
     }
 
     &:hover {
@@ -477,16 +457,20 @@ h1:before, .anchor:before {
     padding: .12rem 0 .85rem 1rem;
 
     &:before {
-        content: "";
+        content: "🌍";
         position: absolute;
-        top: .12rem;
-        left: -.58rem;
-        width: .98rem;
-        height: .98rem;
+        top: .08rem;
+        left: -.65rem;
+        display: grid;
+        place-items: center;
+        width: 1.1rem;
+        height: 1.1rem;
         border: 0;
         border-radius: 50%;
-        background: #fff url("/images/fc-bayern-logo.png") center / cover no-repeat;
-        box-shadow: 0 0 0 2px #e5edf5;
+        background: #f6fbfb;
+        box-shadow: 0 0 0 2px #d9eef1;
+        font-size: .82rem;
+        line-height: 1;
     }
 
     &:last-child {

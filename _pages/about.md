@@ -23,12 +23,6 @@ I am **Bo-Wen Zhang** (张博闻), a B.S. graduate from the School of Intelligen
 
 I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a member of the LAMDA Group led by Prof. [Zhi-Hua Zhou](https://cs.nju.edu.cn/zhouzh/). I will begin my Ph.D. study in the same school under the supervision of Prof. Guo starting in September 2026.
 
-<div class="profile-ribbon" aria-label="Profile notes">
-  <span class="profile-ribbon__item profile-ribbon__item--chiikawa">Chiikawa-coded softness</span>
-  <span class="profile-ribbon__item profile-ribbon__item--oxygen">Oxygen Not Included loops</span>
-  <span class="profile-ribbon__item profile-ribbon__item--matchday">Bayern matchday</span>
-</div>
-
 <span class='anchor' id='publications'></span>
 
 # Publications
@@ -117,4 +111,13 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
     <div class="timeline-date">2022.09 - 2026.06</div>
     <div class="timeline-body">Bachelor of Science, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</div>
   </div>
+</div>
+
+<span class='anchor' id='personal'></span>
+
+# Personal
+
+<div class="profile-ribbon" aria-label="Personal interests">
+  <span class="profile-ribbon__item profile-ribbon__item--oxygen">Oxygen Not Included loops</span>
+  <span class="profile-ribbon__item profile-ribbon__item--bayern">Bayern München</span>
 </div>
