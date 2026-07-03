@@ -10,7 +10,7 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-I am **Bo-Wen Zhang** (张博闻), an undergraduate student at the School of Intelligence Science and Technology, Nanjing University.
+I am **Bo-Wen Zhang** (张博闻), a B.S. graduate from the School of Intelligence Science and Technology, Nanjing University.
 
 <div class="research-interests" aria-label="Research interests">
   <div class="interest-label">Research Interests</div>
@@ -21,7 +21,13 @@ I am **Bo-Wen Zhang** (张博闻), an undergraduate student at the School of Int
   </div>
 </div>
 
-I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a member of the LAMDA Group led by Prof. [Zhi-Hua Zhou](https://cs.nju.edu.cn/zhouzh/). I will continue as a Ph.D. student in the same school under the supervision of Prof. Guo starting in September 2026.
+I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a member of the LAMDA Group led by Prof. [Zhi-Hua Zhou](https://cs.nju.edu.cn/zhouzh/). I will begin my Ph.D. study in the same school under the supervision of Prof. Guo starting in September 2026.
+
+<div class="profile-ribbon" aria-label="Profile notes">
+  <span class="profile-ribbon__item profile-ribbon__item--soft">Tiny joy</span>
+  <span class="profile-ribbon__item profile-ribbon__item--systems">Colony-style systems</span>
+  <span class="profile-ribbon__item profile-ribbon__item--matchday">Matchday black · red · gold</span>
+</div>
 
 <span class='anchor' id='publications'></span>
 
@@ -84,24 +90,31 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
     <p>An open-ended benchmark and sandbox for realistic multi-day, multi-POI travel planning with compositional constraint validation.</p>
     <p class="project-links"><a href="https://www.lamda.nju.edu.cn/shaojj/chinatravel/">Project</a> / <a href="https://github.com/LAMDASZ-ML/ChinaTravel">GitHub</a></p>
   </article>
-
-  <article class="project-card">
-    <h3><a href="https://github.com/rl-vig/libfewshot">LibFewShot</a></h3>
-    <p>An open-source library for few-shot learning research and reproducible benchmarking.</p>
-    <p class="project-links"><a href="https://github.com/rl-vig/libfewshot">GitHub</a></p>
-  </article>
 </div>
 
 <span class='anchor' id='experience'></span>
 
 # Experience
 
-- *2026.04 - Present*, Intern, ByteDance.
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-date">2026.04 - Present</div>
+    <div class="timeline-body">Intern, ByteDance.</div>
+  </div>
+</div>
 
 <span class='anchor' id='education'></span>
 
 # Education
 
-- *2026.09 - 2031.06*, Ph.D. student (pre-admitted), School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/).
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-date">2026.09 - 2031.06</div>
+    <div class="timeline-body">Ph.D. student, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</div>
+  </div>
 
-- *2022.09 - 2026.06*, B.S. student, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/).
+  <div class="timeline-item">
+    <div class="timeline-date">2022.09 - 2026.06</div>
+    <div class="timeline-body">Bachelor of Science, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</div>
+  </div>
+</div>
