@@ -123,7 +123,7 @@ h1:before, .anchor:before {
             width: 6.2rem;
             height: 3px;
             border-radius: 99px;
-            background: linear-gradient(90deg, #5fb8c6, #f1b84a 58%, #d75745);
+            background: linear-gradient(90deg, #5f8fb8, #b9cbe0);
         }
     }
 }
@@ -257,29 +257,30 @@ h1:before, .anchor:before {
     transform: translateY(-50%);
 }
 
-.profile-ribbon__item--oxygen {
-    background: linear-gradient(180deg, #fff, #f6fbfb);
-
-    &:before {
-        background: linear-gradient(90deg, #72c4d6, #f1b84a, #d75745);
-    }
-
-    &:after {
-        border: 1px solid #9fd8df;
-        border-radius: 6px;
-        background:
-            radial-gradient(circle at 78% 25%, rgba(114, 196, 214, .85) 0 .16rem, transparent .17rem),
-            radial-gradient(circle at 20% 75%, rgba(114, 196, 214, .58) 0 .12rem, transparent .13rem),
-            linear-gradient(90deg, #72c4d6 0 58%, #f1b84a 58% 78%, #d75745 78% 100%);
-        box-shadow: inset 0 0 0 3px #fff, 0 4px 10px rgba(44, 62, 80, .08);
-    }
-}
-
-.profile-ribbon__item--bayern {
+.profile-ribbon__item--germany {
     background: linear-gradient(180deg, #fffdf8, #fff8f2);
 
     &:before {
         background: linear-gradient(90deg, #202124 0 33%, #c41230 33% 66%, #ffcc33 66% 100%);
+    }
+}
+
+.profile-ribbon__item--germany {
+    &:after {
+        top: 49%;
+        width: 1.72rem;
+        height: 2.05rem;
+        border-radius: 6px;
+        background: #fff url("/images/dfb-eagle.svg") center / contain no-repeat;
+        box-shadow: 0 0 0 1px #dce6f0;
+    }
+}
+
+.profile-ribbon__item--bayern {
+    background: linear-gradient(180deg, #fff, #fff8f8);
+
+    &:before {
+        background: linear-gradient(90deg, #dc052d 0 50%, #0066b3 50% 100%);
     }
 
     &:after {
@@ -326,7 +327,7 @@ h1:before, .anchor:before {
         position: absolute;
         inset: 0 auto 0 0;
         width: 4px;
-        background: linear-gradient(180deg, #5fb8c6, #f1b84a 58%, #d75745);
+        background: linear-gradient(180deg, #5f8fb8, #b9cbe0);
         opacity: .52;
         transform: scaleY(.32);
         transform-origin: top;
@@ -427,7 +428,7 @@ h1:before, .anchor:before {
         position: absolute;
         inset: 0 0 auto 0;
         height: 3px;
-        background: linear-gradient(90deg, #5fb8c6, #80b7a2, #f1b84a);
+        background: linear-gradient(90deg, #5f8fb8, #b9cbe0);
     }
 
     &:hover {
