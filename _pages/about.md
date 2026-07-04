@@ -119,5 +119,5 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
 
 <div class="profile-ribbon" aria-label="Personal interests">
   <span class="profile-ribbon__item profile-ribbon__item--oxygen">Oxygen Not Included loops</span>
-  <span class="profile-ribbon__item profile-ribbon__item--bayern">Bayern München</span>
+  <span class="profile-ribbon__item profile-ribbon__item--bayern">Deutschland football & Bayern München</span>
 </div>

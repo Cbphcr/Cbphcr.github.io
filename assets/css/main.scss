@@ -276,10 +276,10 @@ h1:before, .anchor:before {
 }
 
 .profile-ribbon__item--bayern {
-    background: linear-gradient(180deg, #fff, #fff8f8);
+    background: linear-gradient(180deg, #fffdf8, #fff8f2);
 
     &:before {
-        background: linear-gradient(90deg, #c41230, #1d5a99);
+        background: linear-gradient(90deg, #202124 0 33%, #c41230 33% 66%, #ffcc33 66% 100%);
     }
 
     &:after {
