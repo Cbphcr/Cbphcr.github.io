@@ -5,9 +5,9 @@
 <div itemscope itemtype="http://schema.org/Person" class="profile_box">
 
   <div class="author__avatar avatar-switch">
-    <img src="{{ author.avatar }}" class="avatar-image avatar-image--primary" alt="{{ author.name }}">
+    <img src="{{ author.avatar | relative_url }}" class="avatar-image avatar-image--primary" alt="{{ author.name }}">
     {% if author.real_avatar %}
-      <img src="{{ author.real_avatar }}" class="avatar-image avatar-image--real" alt="{{ author.name }} profile photo">
+      <img src="{{ author.real_avatar | relative_url }}" class="avatar-image avatar-image--real" alt="{{ author.name }} profile photo">
     {% endif %}
   </div>
 

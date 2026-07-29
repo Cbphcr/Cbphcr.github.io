@@ -312,6 +312,18 @@ h1:before, .anchor:before {
     margin-top: .8rem;
 }
 
+.publication-section {
+    margin-top: 1.6rem;
+
+    h2 {
+        margin: 0;
+        padding-bottom: .35rem;
+        border-bottom: 1px solid #e5ebf1;
+        color: #34495e;
+        font-size: 1.05em;
+    }
+}
+
 .publication-item {
     position: relative;
     overflow: hidden;
