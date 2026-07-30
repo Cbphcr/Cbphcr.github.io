@@ -10,7 +10,7 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-I am **Bo-Wen Zhang** (张博闻), a B.S. graduate from the School of Intelligence Science and Technology, Nanjing University.
+I am **Bo-Wen Zhang** (张博闻), an incoming Ph.D. student at the School of Intelligence Science and Technology, Nanjing University.
 
 <div class="research-interests" aria-label="Research interests">
   <div class="interest-label">Research Interests</div>
@@ -21,7 +21,7 @@ I am **Bo-Wen Zhang** (张博闻), a B.S. graduate from the School of Intelligen
   </div>
 </div>
 
-I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a member of the LAMDA Group led by Prof. [Zhi-Hua Zhou](https://cs.nju.edu.cn/zhouzh/). I will begin my Ph.D. study in the same school under the supervision of Prof. Guo starting in September 2026.
+I will begin my Ph.D. study in September 2026 under the supervision of Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a member of the LAMDA Group led by Prof. [Zhi-Hua Zhou](https://cs.nju.edu.cn/zhouzh/).
 
 <span class='anchor' id='publications'></span>
 
@@ -59,7 +59,7 @@ I am advised by Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a memb
 <div class="timeline">
   <div class="timeline-item">
     <div class="timeline-date">2026.09 - 2031.06</div>
-    <div class="timeline-body">Ph.D. student, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</div>
+    <div class="timeline-body">Incoming Ph.D. student, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</div>
   </div>
 
   <div class="timeline-item">
