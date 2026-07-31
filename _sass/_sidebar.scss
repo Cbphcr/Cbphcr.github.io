@@ -15,6 +15,8 @@
 
   @include breakpoint($large) {
     @include span(2 of 12);
+    position: sticky;
+    top: 88px;
     opacity: 1;
     -webkit-transition: opacity 0.2s ease-in-out;
             transition: opacity 0.2s ease-in-out;
@@ -46,6 +48,11 @@
 
   img {
     width: 100%;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
   }
 }
 
@@ -97,8 +104,11 @@
     border-radius: 50%;
 
     @include breakpoint($large) {
-      padding: 5px;
-      border: 1px solid $border-color;
+      padding: 6px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 168, 0.07), 0 14px 30px -14px rgba(15, 23, 42, 0.32);
     }
   }
 }
@@ -121,10 +131,12 @@
 
 .author__name {
   margin: 0;
+  color: #0f172a;
 
   @include breakpoint($large) {
     margin-top: 10px;
     margin-bottom: 10px;
+    font-size: 1.35em;
   }
 }
 
@@ -138,6 +150,7 @@
 
 .author__bio {
   margin: 0;
+  color: #475569;
 
   @include breakpoint($large) {
     margin-top: 10px;
@@ -235,20 +248,29 @@
 
   li {
     white-space: nowrap;
+    margin-bottom: .38rem;
+
+    i {
+      color: $info-color;
+    }
   }
 
   a {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0;
     padding-right: 5px;
     padding-top: 2px;
     padding-bottom: 2px;
     color: inherit;
     font-size: $type-size-5;
     text-decoration: none;
+    -webkit-transition: color 0.18s ease-in-out, -webkit-transform 0.18s ease-in-out;
+            transition: color 0.18s ease-in-out, transform 0.18s ease-in-out;
 
     &:hover {
-      text-decoration: underline;
+      color: $link-color;
+      -webkit-transform: translateX(2px);
+              transform: translateX(2px);
     }
   }
 }

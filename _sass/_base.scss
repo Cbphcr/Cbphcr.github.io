@@ -14,6 +14,14 @@ body {
   color: $text-color;
   font-family: $global-font-family;
   line-height: 1.5;
+  background-color: $background-color;
+  background-image:
+    radial-gradient(1100px 460px at 16% -10%, rgba(37, 99, 168, 0.06), transparent 62%),
+    radial-gradient(900px 420px at 90% -14%, rgba(20, 130, 150, 0.05), transparent 60%);
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 
   &.overflow--hidden {
     /* when primary navigation is visible, the content in the background won't scroll */
@@ -26,6 +34,8 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   font-family: $header-font-family;
   font-weight: bold;
+  color: #1e293b;
+  letter-spacing: -0.015em;
 }
 
 h1 {
