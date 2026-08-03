@@ -241,13 +241,13 @@ h3[id] {
     gap: .45rem;
     margin-top: .4rem;
 
-    span {
+    > span {
         display: inline-flex;
         align-items: center;
-        min-height: 1.65rem;
-        padding: .16rem .62rem;
+        min-height: 1.85rem;
+        padding: .2rem .7rem;
         border-radius: 8px;
-        font-size: .78em;
+        font-size: .92em;
         font-weight: 600;
         line-height: 1.2;
         transition: transform .18s ease, box-shadow .18s ease;
