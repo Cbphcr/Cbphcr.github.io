@@ -23,6 +23,21 @@ I am **Bo-Wen Zhang** (张博闻), an incoming Ph.D. student at the School of In
 
 I will begin my Ph.D. study in September 2026 under the supervision of Prof. [Lan-Zhe Guo](https://www.lamda.nju.edu.cn/guolz/), a member of the LAMDA Group led by Prof. [Zhi-Hua Zhou](https://cs.nju.edu.cn/zhouzh/).
 
+<span class='anchor' id='news'></span>
+
+# News
+
+<ul class="news-list">
+  <li class="news-item">
+    <span class="news-date">2026.01</span>
+    <span class="news-body">Our paper <em>ChinaTravel</em> was accepted to <strong>ICLR 2026</strong>.</span>
+  </li>
+  <li class="news-item">
+    <span class="news-date">2025.12</span>
+    <span class="news-body"><em>Mind the Gap to Trustworthy LLM Agents</em> received the <strong>Best Student Paper Award</strong> at the AAAI 2026 TrustAgent Workshop.</span>
+  </li>
+</ul>
+
 <span class='anchor' id='publications'></span>
 
 # Publications
@@ -33,13 +48,7 @@ I will begin my Ph.D. study in September 2026 under the supervision of Prof. [La
 
 # Projects
 
-<div class="project-grid">
-  <article class="project-card">
-    <h3><a href="https://www.lamda.nju.edu.cn/shaojj/chinatravel/">ChinaTravel</a></h3>
-    <p>An open-ended benchmark and sandbox for realistic multi-day, multi-POI travel planning with compositional constraint validation.</p>
-    <p class="project-links"><a href="https://www.lamda.nju.edu.cn/shaojj/chinatravel/">Project</a> / <a href="https://github.com/LAMDASZ-ML/ChinaTravel">GitHub</a></p>
-  </article>
-</div>
+{% include projects.html %}
 
 <span class='anchor' id='experience'></span>
 
@@ -48,7 +57,7 @@ I will begin my Ph.D. study in September 2026 under the supervision of Prof. [La
 <div class="timeline">
   <div class="timeline-item">
     <div class="timeline-date">2026.04 - Present</div>
-    <div class="timeline-body">Intern, ByteDance.</div>
+    <div class="timeline-body">LLM Algorithm Intern, Douyin E-commerce (抖音电商大模型算法), ByteDance.</div>
   </div>
 </div>
 

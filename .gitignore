@@ -3,5 +3,6 @@ push.sh
 .DS_Store
 .gem/
 .uv-cache/
+.venv/
 .sass-cache/
 vendor/

@@ -105,10 +105,10 @@
 
     @include breakpoint($large) {
       padding: 6px;
-      border: 1px solid rgba(226, 232, 240, 0.95);
+      border: 1px solid rgba(236, 231, 224, 0.95);
       border-radius: 50%;
       background: #fff;
-      box-shadow: 0 0 0 4px rgba(37, 99, 168, 0.07), 0 14px 30px -14px rgba(15, 23, 42, 0.32);
+      box-shadow: 0 0 0 4px rgba(120, 112, 190, 0.08), 0 14px 30px -14px rgba(60, 50, 70, 0.28);
     }
   }
 }
@@ -131,12 +131,12 @@
 
 .author__name {
   margin: 0;
-  color: #0f172a;
+  color: #38343f;
 
   @include breakpoint($large) {
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 1.35em;
+    font-size: 1.4em;
   }
 }
 
@@ -144,13 +144,15 @@
   @include breakpoint($medium) {
     font-size: $type-size-3;
   }
-  font-family: $sans-serif;
+  font-family: $serif;
+  font-weight: 600;
+  letter-spacing: 0;
   font-size: $type-size-4;
 }
 
 .author__bio {
   margin: 0;
-  color: #475569;
+  color: #6c6876;
 
   @include breakpoint($large) {
     margin-top: 10px;

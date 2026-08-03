@@ -6,11 +6,11 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(255, 255, 255, 0.82);
-  -webkit-backdrop-filter: saturate(1.5) blur(14px);
-          backdrop-filter: saturate(1.5) blur(14px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.88);
-  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02), 0 10px 26px -20px rgba(15, 23, 42, 0.25);
+  background: rgba(250, 249, 247, 0.82);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+          backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid rgba(236, 231, 224, 0.9);
+  box-shadow: 0 1px 0 rgba(60, 50, 70, 0.02), 0 10px 26px -20px rgba(60, 50, 70, 0.22);
   -webkit-animation: intro 0.3s both;
           animation: intro 0.3s both;
   -webkit-animation-delay: 0.15s;
@@ -63,9 +63,11 @@
     font-weight: 800;
 
     a {
-      color: #0f172a;
-      font-size: 1.08em;
-      letter-spacing: -0.01em;
+      color: #38343f;
+      font-family: $serif;
+      font-size: 1.12em;
+      font-weight: 600;
+      letter-spacing: 0;
     }
   }
 }

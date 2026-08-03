@@ -13,8 +13,8 @@ $paragraph-indent           : false; // true, false (default)
 $indent-var                 : 0.5em;
 
 /* system typefaces */
-$serif                      : Georgia, "Times New Roman", Times, serif;
-$sans-serif                 : -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+$serif                      : "Lora", Georgia, "Times New Roman", Times, serif;
+$sans-serif                 : "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
 $monospace                  : ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
 /* sans serif typefaces */
@@ -47,24 +47,24 @@ $type-size-8                : 0.625em;  // ~10px
    Colors
    ========================================================================== */
 
-$gray                       : #64748b;
+$gray                       : #78747f;
 $dark-gray                  : mix(#000, $gray, 40%);
 $darker-gray                : mix(#000, $gray, 60%);
 $light-gray                 : mix(#fff, $gray, 50%);
 $lighter-gray               : mix(#fff, $gray, 90%);
 
 $body-color                 : #ffffff;
-$background-color           : #fbfcfe;
-$code-background-color      : #fafafa;
+$background-color           : #faf9f7;
+$code-background-color      : #f6f4f0;
 $code-background-color-dark : $light-gray;
-$text-color                 : #334155;
-$border-color               : #e2e8f0;
+$text-color                 : #45424f;
+$border-color               : #ece7e0;
 
-$primary-color              : #2563a8;
+$primary-color              : #6a66ac;
 $success-color              : #62c462;
 $warning-color              : #f89406;
 $danger-color               : #ee5f5b;
-$info-color                 : #1d5e9c;
+$info-color                 : #6f6bb0;
 
 /* brands */
 $behance-color              : #1769FF;
@@ -93,7 +93,7 @@ $xing-color                 : #006567;
 $link-color                 : $info-color;
 $link-color-hover           : mix(#000, $link-color, 25%);
 $link-color-visited         : mix(#fff, $link-color, 25%);
-$masthead-link-color        : #475569;
+$masthead-link-color        : #6c6876;
 $masthead-link-color-hover  : $info-color;
 
 
@@ -146,8 +146,8 @@ $susy: (
    Other
    ========================================================================== */
 
-$border-radius              : 10px;
-$box-shadow                 : 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 32px rgba(15, 23, 42, 0.06);
+$border-radius              : 12px;
+$box-shadow                 : 0 1px 2px rgba(60, 50, 70, 0.04), 0 12px 32px rgba(60, 50, 70, 0.05);
 $navicon-width              : 28px;
 $navicon-height             : 4px;
 $global-transition          : all 0.2s ease-in-out;
