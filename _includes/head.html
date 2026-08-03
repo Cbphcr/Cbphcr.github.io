@@ -12,6 +12,13 @@
 
 <script>
   document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  (function () {
+    var lang = 'en';
+    try { lang = localStorage.getItem('site-lang') || 'en'; } catch (e) {}
+    if (lang !== 'zh') { lang = 'en'; }
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+  })();
 </script>
 
 <!-- For all browsers -->

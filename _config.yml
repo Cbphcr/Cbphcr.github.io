@@ -8,6 +8,7 @@
 # Site Settings
 title                    : "Bo-Wen Zhang"
 description              : "Neuro-Symbolic AI · LLM Agents · LLM RL"
+description_zh           : "神经符号 AI · 大模型智能体 · 大模型强化学习"
 repository               : "Cbphcr/Cbphcr.github.io"
 google_scholar_stats_use_cdn : false
 google_scholar_id       : "_NHh89YAAAAJ"
@@ -23,10 +24,13 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 # Site Author
 author:
   name             : "Bo-Wen Zhang"
+  name_zh          : "张博闻"
   avatar           : "images/usagi.jpeg"
   real_avatar      : "images/profile-photo.jpg"
   bio              : "Incoming Ph.D. student, Nanjing University"
+  bio_zh           : "南京大学准博士生"
   location         : "Suzhou, China"
+  location_zh      : "中国·苏州"
   employer         :
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=_NHh89YAAAAJ&hl=en"

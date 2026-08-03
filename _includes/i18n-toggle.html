@@ -1,0 +1,18 @@
+<script>
+  (function () {
+    function currentLang() {
+      return document.documentElement.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+    }
+    function setLang(lang) {
+      document.documentElement.setAttribute('data-lang', lang);
+      document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+      try { localStorage.setItem('site-lang', lang); } catch (e) {}
+    }
+    document.addEventListener('click', function (evt) {
+      var toggle = evt.target.closest('.lang-toggle');
+      if (!toggle) { return; }
+      evt.preventDefault();
+      setLang(currentLang() === 'zh' ? 'en' : 'zh');
+    });
+  })();
+</script>
