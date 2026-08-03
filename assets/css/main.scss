@@ -367,13 +367,13 @@ h3[id] {
     gap: .35rem;
     margin: .45rem 0 .35rem;
 
-    span {
+    > span {
         display: inline-flex;
         align-items: center;
-        min-height: 1.35rem;
-        padding: .08rem .46rem;
+        min-height: 1.55rem;
+        padding: .12rem .55rem;
         border-radius: 6px;
-        font-size: .68em;
+        font-size: .82em;
         font-weight: 700;
         line-height: 1.2;
     }
