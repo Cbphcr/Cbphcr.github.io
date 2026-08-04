@@ -412,6 +412,7 @@ h3[id] {
     z-index: 0;
     margin-top: .8rem;
     padding-top: 2.7rem;
+    padding-right: 46px;
 }
 
 .publication-section {
@@ -445,7 +446,6 @@ h3[id] {
 .publication-item {
     position: relative;
     z-index: 1;
-    overflow: hidden;
     margin-bottom: .75rem;
     padding: 1.1rem 1.2rem 1rem;
     border: 1px solid var(--border);
@@ -461,21 +461,23 @@ h3[id] {
         position: absolute;
         inset: 0 auto 0 0;
         width: 3px;
+        border-radius: 14px 0 0 14px;
         background: var(--grad-v);
         opacity: 0;
         transition: opacity .18s ease, transform .18s ease;
     }
 
-    /* ONI ceiling lamp mounted at the top edge */
+    /* ONI ceiling lamp, hung in the right gutter over the power bus */
     &:after {
         content: "";
         position: absolute;
+        z-index: 3;
         top: 0;
-        right: 1.1rem;
+        right: -46px;
         width: 46px;
         height: 25px;
         background: url("/images/oni/ceiling-lamp.svg") top center / contain no-repeat;
-        opacity: .8;
+        opacity: .85;
         transition: opacity .18s ease, filter .18s ease;
         pointer-events: none;
     }
@@ -589,19 +591,20 @@ h3[id] {
     gap: .85rem;
     margin-top: .8rem;
     padding-top: 2.7rem;
+    padding-right: 46px;
 }
 
 /* ONI power bus: battery at the top wired down through every lamp */
 .publication-list,
 .project-grid {
-    /* vertical wire, aligned to the lamp centre (lamp: right 1.1rem, width 46px) */
+    /* vertical wire running down the reserved right gutter (centre at 23px) */
     &:before {
         content: "";
         position: absolute;
-        z-index: 0;
+        z-index: 3;
         top: 2.3rem;
         bottom: .3rem;
-        right: calc(1.1rem + 21px);
+        right: 21.5px;
         width: 3px;
         border-radius: 99px;
         background:
@@ -612,13 +615,13 @@ h3[id] {
         pointer-events: none;
     }
 
-    /* battery source seated on top of the wire */
+    /* battery source seated on top of the wire, centred in the gutter */
     &:after {
         content: "";
         position: absolute;
-        z-index: 2;
+        z-index: 4;
         top: -.15rem;
-        right: calc(1.1rem + 4px);
+        right: 6px;
         width: 34px;
         height: 34px;
         background: url("/images/oni/battery.svg") center / contain no-repeat;
@@ -642,7 +645,6 @@ h3[id] {
 .project-card {
     position: relative;
     z-index: 1;
-    overflow: hidden;
     padding: 1.15rem 1.25rem;
     border: 1px solid var(--border);
     border-radius: 14px;
@@ -656,19 +658,21 @@ h3[id] {
         position: absolute;
         inset: 0 0 auto 0;
         height: 4px;
+        border-radius: 14px 14px 0 0;
         background: var(--grad);
     }
 
-    /* ONI ceiling lamp */
+    /* ONI ceiling lamp, hung in the right gutter over the power bus */
     &:after {
         content: "";
         position: absolute;
+        z-index: 3;
         top: 4px;
-        right: 1.1rem;
+        right: -46px;
         width: 46px;
         height: 25px;
         background: url("/images/oni/ceiling-lamp.svg") top center / contain no-repeat;
-        opacity: .8;
+        opacity: .85;
         transition: opacity .18s ease, filter .18s ease;
         pointer-events: none;
     }
