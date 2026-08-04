@@ -28,6 +28,11 @@ layout: compress
     </div>
 
     <footer class="site-footer">
+      <div class="oni-powergrid" aria-hidden="true">
+        <img class="oni-powergrid__machine" src="{{ '/images/oni/generator.svg' | relative_url }}" alt="">
+        <span class="oni-powergrid__wire"></span>
+        <img class="oni-powergrid__machine" src="{{ '/images/oni/battery.svg' | relative_url }}" alt="">
+      </div>
       <p>© {{ site.time | date: "%Y" }} {{ site.author.name }} · Built with <a href="https://jekyllrb.com" rel="noopener" target="_blank">Jekyll</a> &amp; <a href="https://github.com/RayeRen/acad-homepage.github.io" rel="noopener" target="_blank">AcadHomepage</a></p>
     </footer>
 

@@ -13,12 +13,18 @@ body {
   padding-bottom: 0em;
   color: $text-color;
   font-family: $global-font-family;
-  line-height: 1.65;
+  line-height: 1.7;
   background-color: $background-color;
   background-image:
-    radial-gradient(1100px 460px at 16% -10%, rgba(120, 112, 190, 0.07), transparent 62%),
-    radial-gradient(900px 420px at 90% -14%, rgba(196, 138, 168, 0.06), transparent 60%);
-  background-repeat: no-repeat;
+    radial-gradient(1200px 520px at 12% -12%, rgba(56, 208, 196, 0.10), transparent 60%),
+    radial-gradient(1000px 460px at 92% -8%, rgba(240, 180, 41, 0.07), transparent 58%),
+    radial-gradient(900px 700px at 50% 120%, rgba(90, 120, 200, 0.08), transparent 62%),
+    linear-gradient(rgba(120, 140, 180, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 140, 180, 0.035) 1px, transparent 1px);
+  background-size: auto, auto, auto, 34px 34px, 34px 34px;
+  background-position: 0 0, 0 0, 0 0, -1px -1px, -1px -1px;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -31,11 +37,11 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   margin: 1em 0 0.5em;
-  line-height: 1.25;
+  line-height: 1.22;
   font-family: $header-font-family;
   font-weight: 700;
-  color: #38343f;
-  letter-spacing: -0.01em;
+  color: #eef3fb;
+  letter-spacing: 0.005em;
 }
 
 h1 {

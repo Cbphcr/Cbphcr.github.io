@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" fill="none">
+  <!-- base -->
+  <rect x="6" y="54" width="60" height="12" rx="3" fill="#3c4759"/>
+  <!-- battery casing -->
+  <rect x="12" y="14" width="48" height="42" rx="5" fill="#4a5568"/>
+  <rect x="12" y="14" width="48" height="42" rx="5" fill="none" stroke="#5f6b80" stroke-width="1.5"/>
+  <!-- terminals on top -->
+  <rect x="20" y="8" width="10" height="8" rx="2" fill="#586377"/>
+  <rect x="42" y="8" width="10" height="8" rx="2" fill="#586377"/>
+  <!-- charge window -->
+  <rect x="20" y="22" width="32" height="26" rx="3" fill="#1b222e"/>
+  <!-- charge bars -->
+  <rect x="24" y="40" width="24" height="5" rx="1.5" fill="#6fe3a6"/>
+  <rect x="24" y="33" width="24" height="5" rx="1.5" fill="#5fe0d4"/>
+  <rect x="24" y="26" width="24" height="5" rx="1.5" fill="#38d0c4"/>
+  <!-- lightning bolt -->
+  <path d="M39 24 L31 36 L36 36 L33 46 L43 33 L38 33 Z" fill="#f0b429"/>
+</svg>

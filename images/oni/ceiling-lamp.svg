@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 52" fill="none">
+  <!-- mount bracket -->
+  <rect x="42" y="0" width="12" height="7" rx="1.5" fill="#3c4759"/>
+  <rect x="44" y="0" width="8" height="4" rx="1" fill="#586377"/>
+  <!-- housing -->
+  <rect x="14" y="6" width="68" height="20" rx="6" fill="#404b5e"/>
+  <rect x="14" y="6" width="68" height="20" rx="6" fill="none" stroke="#586377" stroke-width="1.5"/>
+  <!-- rivets -->
+  <circle cx="22" cy="16" r="2" fill="#2b3444"/>
+  <circle cx="74" cy="16" r="2" fill="#2b3444"/>
+  <!-- glowing lens -->
+  <rect x="24" y="18" width="48" height="12" rx="4" fill="#f0b429"/>
+  <rect x="24" y="18" width="48" height="12" rx="4" fill="url(#lens)"/>
+  <rect x="28" y="20" width="40" height="3" rx="1.5" fill="#fff5d6" opacity="0.7"/>
+  <defs>
+    <linearGradient id="lens" x1="24" y1="18" x2="24" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe08a"/>
+      <stop offset="1" stop-color="#f0a11e"/>
+    </linearGradient>
+  </defs>
+</svg>
