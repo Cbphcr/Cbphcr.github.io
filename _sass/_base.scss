@@ -16,11 +16,11 @@ body {
   line-height: 1.7;
   background-color: $background-color;
   background-image:
-    radial-gradient(1200px 520px at 12% -12%, rgba(56, 208, 196, 0.10), transparent 60%),
-    radial-gradient(1000px 460px at 92% -8%, rgba(240, 180, 41, 0.07), transparent 58%),
-    radial-gradient(900px 700px at 50% 120%, rgba(90, 120, 200, 0.08), transparent 62%),
-    linear-gradient(rgba(120, 140, 180, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(120, 140, 180, 0.035) 1px, transparent 1px);
+    radial-gradient(1200px 520px at 12% -12%, rgba(20, 180, 165, 0.12), transparent 60%),
+    radial-gradient(1000px 460px at 92% -8%, rgba(240, 180, 41, 0.10), transparent 58%),
+    radial-gradient(900px 700px at 50% 120%, rgba(90, 120, 200, 0.09), transparent 62%),
+    linear-gradient(rgba(70, 100, 150, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 100, 150, 0.05) 1px, transparent 1px);
   background-size: auto, auto, auto, 34px 34px, 34px 34px;
   background-position: 0 0, 0 0, 0 0, -1px -1px, -1px -1px;
   background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.22;
   font-family: $header-font-family;
   font-weight: 700;
-  color: #eef3fb;
+  color: #141b2c;
   letter-spacing: 0.005em;
 }
 

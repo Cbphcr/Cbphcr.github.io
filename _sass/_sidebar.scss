@@ -105,10 +105,10 @@
 
     @include breakpoint($large) {
       padding: 6px;
-      border: 1px solid rgba(56, 208, 196, 0.35);
+      border: 1px solid rgba(20, 180, 165, 0.35);
       border-radius: 50%;
-      background: #12161f;
-      box-shadow: 0 0 0 4px rgba(56, 208, 196, 0.12), 0 0 28px -4px rgba(56, 208, 196, 0.35), 0 14px 34px -14px rgba(0, 0, 0, 0.7);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(20, 180, 165, 0.12), 0 0 26px -6px rgba(20, 180, 165, 0.3), 0 14px 34px -16px rgba(30, 50, 90, 0.35);
     }
   }
 }
@@ -131,7 +131,7 @@
 
 .author__name {
   margin: 0;
-  color: #eef3fb;
+  color: #141b2c;
 
   @include breakpoint($large) {
     margin-top: 10px;
@@ -152,7 +152,7 @@
 
 .author__bio {
   margin: 0;
-  color: #9aa6bd;
+  color: #566178;
 
   @include breakpoint($large) {
     margin-top: 10px;
@@ -199,9 +199,9 @@
   list-style-type: none;
   border: 1px solid $border-color;
   border-radius: $border-radius;
-  background: #161c28;
+  background: #ffffff;
   z-index: -1;
-  box-shadow: 0 0 10px rgba(#000, 0.5);
+  box-shadow: 0 0 10px rgba(30, 50, 90, 0.18);
   cursor: default;
 
   @include breakpoint($large) {
@@ -240,7 +240,7 @@
     width: 0;
     border-style: solid;
     border-width: 0 10px 10px;
-    border-color: #161c28 transparent;
+    border-color: #ffffff transparent;
     z-index: 1;
 
     @include breakpoint($large) {

@@ -45,46 +45,46 @@
    ========================================================================== */
 
 :root {
-    /* deep-space panels */
-    --surface        : #161c28;
-    --surface-2      : #1b2230;
-    --surface-3      : #10151e;
-    --bg             : #0e1219;
-    --text           : #c3cad8;
-    --text-strong    : #eef3fb;
-    --text-muted     : #9aa6bd;
-    --text-soft      : #74809a;
-    --border         : #263041;
-    --border-2       : #324056;
+    /* bright blueprint panels */
+    --surface        : #ffffff;
+    --surface-2      : #f3f7fb;
+    --surface-3      : #e9eff6;
+    --bg             : #eef3f8;
+    --text           : #3a4761;
+    --text-strong    : #141b2c;
+    --text-muted     : #566178;
+    --text-soft      : #828fa6;
+    --border         : #d9e1ec;
+    --border-2       : #c1ccdd;
 
-    /* signature ONI teal + amber */
-    --accent         : #38d0c4;
-    --accent-strong  : #5fe0d4;
-    --accent-soft    : #2a9a92;
-    --accent-tint    : rgba(56, 208, 196, 0.12);
-    --accent-tint-2  : rgba(56, 208, 196, 0.20);
-    --accent-border  : rgba(56, 208, 196, 0.32);
-    --amber          : #f0b429;
-    --amber-soft     : #b98518;
+    /* signature ONI teal + amber, tuned for contrast on light */
+    --accent         : #0f9d91;
+    --accent-strong  : #0b7d73;
+    --accent-soft    : #5fd6cb;
+    --accent-tint    : rgba(20, 180, 165, 0.12);
+    --accent-tint-2  : rgba(20, 180, 165, 0.20);
+    --accent-border  : rgba(20, 180, 165, 0.38);
+    --amber          : #e0940f;
+    --amber-soft     : #b57610;
 
-    --grad           : linear-gradient(90deg, #38d0c4, #6fe3a6);
-    --grad-v         : linear-gradient(180deg, #38d0c4, #6fe3a6);
+    --grad           : linear-gradient(90deg, #22c1b3, #57d99a);
+    --grad-v         : linear-gradient(180deg, #22c1b3, #57d99a);
     --grad-amber     : linear-gradient(90deg, #f0b429, #f5844b);
 
-    --shadow-hover   : 0 18px 40px -20px rgba(0, 0, 0, 0.75), 0 0 22px -10px rgba(56, 208, 196, 0.35);
-    --shadow-soft    : 0 14px 30px -16px rgba(0, 0, 0, 0.7);
-    --glow           : 0 0 24px -6px rgba(56, 208, 196, 0.5);
+    --shadow-hover   : 0 18px 40px -22px rgba(30, 50, 90, 0.30), 0 0 22px -12px rgba(20, 180, 165, 0.32);
+    --shadow-soft    : 0 12px 28px -18px rgba(30, 50, 90, 0.24);
+    --glow           : 0 0 20px -6px rgba(20, 180, 165, 0.45);
 
     /* research-interest tag families — element colour coding */
-    --nesy-bg        : rgba(111, 227, 166, 0.12);
-    --nesy-border    : rgba(111, 227, 166, 0.34);
-    --nesy-text      : #7fe6ad;
-    --agents-bg      : rgba(56, 208, 196, 0.12);
-    --agents-border  : rgba(56, 208, 196, 0.34);
-    --agents-text    : #58ddd0;
-    --rl-bg          : rgba(240, 180, 41, 0.13);
-    --rl-border      : rgba(240, 180, 41, 0.34);
-    --rl-text        : #f0c257;
+    --nesy-bg        : rgba(46, 170, 110, 0.13);
+    --nesy-border    : rgba(46, 170, 110, 0.40);
+    --nesy-text      : #1f8a5c;
+    --agents-bg      : rgba(20, 180, 165, 0.13);
+    --agents-border  : rgba(20, 180, 165, 0.40);
+    --agents-text    : #0d857b;
+    --rl-bg          : rgba(224, 148, 15, 0.15);
+    --rl-border      : rgba(224, 148, 15, 0.42);
+    --rl-text        : #a86a08;
 }
 
 html {
@@ -230,7 +230,7 @@ h3[id] {
 
     &:hover .avatar-image {
         transform: translateY(-2px) scale(1.02);
-        box-shadow: 0 0 0 4px rgba(56, 208, 196, .18), 0 0 28px -4px rgba(56, 208, 196, .5), 0 16px 32px -12px rgba(0, 0, 0, .6);
+        box-shadow: 0 0 0 4px rgba(20, 180, 165, .16), 0 0 26px -6px rgba(20, 180, 165, .4), 0 16px 32px -14px rgba(30, 50, 90, .35);
     }
 
     &:hover .avatar-image--real {
@@ -270,7 +270,7 @@ h3[id] {
 
         &:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .6);
+            box-shadow: 0 6px 16px -8px rgba(30, 50, 90, .35);
         }
     }
 }
@@ -632,7 +632,7 @@ h3[id] {
         width: 34px;
         height: 34px;
         background: url("/images/oni/battery.svg") center / contain no-repeat;
-        filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .55));
+        filter: drop-shadow(0 3px 8px rgba(30, 50, 90, .28));
         pointer-events: none;
     }
 }
@@ -889,7 +889,7 @@ h3[id] {
 .oni-powergrid__machine {
     width: 42px;
     height: 42px;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .5));
+    filter: drop-shadow(0 4px 10px rgba(30, 50, 90, .22));
 }
 
 .oni-powergrid__wire {
