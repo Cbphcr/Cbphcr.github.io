@@ -10,8 +10,8 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-<p class="page-intro lang-en">I am <strong>Bo-Wen Zhang</strong> (张博闻), an incoming Ph.D. student at the School of Intelligence Science and Technology, Nanjing University.</p>
-<p class="page-intro lang-zh">我是<strong>张博闻</strong>，南京大学智能科学与技术学院准博士生。</p>
+<p class="page-intro lang-en">I am <strong>Bo-Wen Zhang</strong> (张博闻), a Ph.D. student at the School of Intelligence Science and Technology, Nanjing University.</p>
+<p class="page-intro lang-zh">我是<strong>张博闻</strong>，南京大学智能科学与技术学院博士生。</p>
 
 <div class="research-interests" aria-label="Research interests">
   <div class="interest-label"><span class="lang-en">Research Interests</span><span class="lang-zh">研究方向</span></div>
@@ -70,7 +70,7 @@ redirect_from:
 <div class="timeline">
   <div class="timeline-item">
     <div class="timeline-date">2026.09 - 2031.06</div>
-    <div class="timeline-body"><span class="lang-en">Incoming Ph.D. student, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</span><span class="lang-zh">准博士生，南京大学智能科学与技术学院。导师：<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授。</span></div>
+    <div class="timeline-body"><span class="lang-en">Ph.D. student, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</span><span class="lang-zh">博士生，南京大学智能科学与技术学院。导师：<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授。</span></div>
   </div>
 
   <div class="timeline-item">

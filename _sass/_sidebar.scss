@@ -105,10 +105,10 @@
 
     @include breakpoint($large) {
       padding: 6px;
-      border: 1px solid rgba(20, 180, 165, 0.35);
+      border: 1px solid rgba(20, 165, 200, 0.35);
       border-radius: 50%;
       background: #ffffff;
-      box-shadow: 0 0 0 4px rgba(20, 180, 165, 0.12), 0 0 26px -6px rgba(20, 180, 165, 0.3), 0 14px 34px -16px rgba(30, 50, 90, 0.35);
+      box-shadow: 0 0 0 4px rgba(20, 165, 200, 0.12), 0 0 26px -6px rgba(20, 165, 200, 0.3), 0 14px 34px -16px rgba(30, 50, 90, 0.35);
     }
   }
 }
