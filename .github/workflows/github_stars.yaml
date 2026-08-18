@@ -1,0 +1,54 @@
+name: Get GitHub Star Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 8 * * *'
+
+concurrency:
+  group: github-star-stats
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch Star Counts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # repositories whose star counts are shown on the site
+          repos=(
+            "LAMDASZ-ML/ChinaTravel"
+            "LAMDASZ-ML/Awesome-LLM-Reasoning-with-NeSy"
+          )
+          mkdir -p _data
+          tmp="$(mktemp)"
+          echo "{" > "$tmp"
+          first=1
+          for repo in "${repos[@]}"; do
+            stars="$(gh api "repos/${repo}" --jq '.stargazers_count')"
+            if [ "$first" -eq 0 ]; then echo "," >> "$tmp"; fi
+            printf '  "%s": %s' "$repo" "$stars" >> "$tmp"
+            first=0
+          done
+          printf '\n}\n' >> "$tmp"
+          mv "$tmp" _data/github_stars.json
+          cat _data/github_stars.json
+      - name: Commit Star Data
+        run: |
+          git config --local user.name "${GITHUB_ACTOR}"
+          git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          if git diff --quiet -- _data/github_stars.json; then
+            echo "No star changes to commit."
+            exit 0
+          fi
+          git add _data/github_stars.json
+          git commit -m "Update GitHub star data"
+          git push

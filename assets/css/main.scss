@@ -632,6 +632,34 @@ h3[id] {
             opacity: .72;
         }
     }
+
+    a.repo-stars {
+        display: inline-flex;
+        align-items: center;
+        gap: .22em;
+        margin-left: .1rem;
+        padding: .04rem .42rem;
+        border-radius: 999px;
+        background: var(--accent-tint);
+        border: 1px solid var(--accent-border);
+        color: var(--accent-strong);
+        font-size: .82em;
+        font-weight: 700;
+        line-height: 1.35;
+        vertical-align: baseline;
+        transition: background .18s ease, border-color .18s ease, opacity .18s ease;
+
+        i {
+            font-size: .9em;
+            color: var(--amber);
+        }
+
+        &:hover {
+            opacity: 1;
+            background: var(--accent-tint-2);
+            border-color: var(--accent-soft);
+        }
+    }
 }
 
 .project-grid {
