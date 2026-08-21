@@ -4,12 +4,16 @@
 
 <div itemscope itemtype="http://schema.org/Person" class="profile_box">
 
-  <div class="author__avatar avatar-switch">
+  <button class="author__avatar avatar-switch" type="button" data-avatar-easter aria-label="Profile photo. Triple-click for a surprise.">
     <img src="{{ author.avatar | relative_url }}" class="avatar-image avatar-image--primary" alt="{{ author.name }}">
     {% if author.real_avatar %}
       <img src="{{ author.real_avatar | relative_url }}" class="avatar-image avatar-image--real" alt="{{ author.name }} profile photo">
     {% endif %}
-  </div>
+    <img src="{{ '/images/bayern-scarf-v2.png' | relative_url }}" class="avatar-scarf" alt="" aria-hidden="true">
+    <img src="{{ '/images/bayern-scarf-v2.png' | relative_url }}" class="avatar-scarf" alt="" aria-hidden="true">
+    <img src="{{ '/images/bayern-scarf-v2.png' | relative_url }}" class="avatar-scarf" alt="" aria-hidden="true">
+    <img src="{{ '/images/fc-bayern-logo.png' | relative_url }}" class="avatar-scarf-crest" alt="" aria-hidden="true">
+  </button>
 
   <div class="author__content">
     <h3 class="author__name">{% if author.name_zh %}<span class="lang-en">{{ author.name }}</span><span class="lang-zh">{{ author.name_zh }}</span>{% else %}{{ author.name }}{% endif %}</h3>

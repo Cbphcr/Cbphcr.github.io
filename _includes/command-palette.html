@@ -1,0 +1,21 @@
+<div class="command-palette" id="site-search" data-command-palette hidden>
+  <div class="command-palette__backdrop" data-command-close></div>
+  <section class="command-palette__dialog" role="dialog" aria-modal="true" aria-labelledby="command-palette-title">
+    <h2 class="visually-hidden" id="command-palette-title"><span class="lang-en">Search this site</span><span class="lang-zh">搜索本站</span></h2>
+    <div class="command-palette__input-wrap">
+      <i class="fas fa-search" aria-hidden="true"></i>
+      <input class="command-palette__input" type="search" autocomplete="off" spellcheck="false" aria-controls="command-results" aria-autocomplete="list" placeholder="Search papers, projects, and sections..." data-placeholder-en="Search papers, projects, and sections..." data-placeholder-zh="搜索论文、项目和页面章节……">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="command-palette__results" id="command-results" role="listbox" aria-live="polite"></div>
+    <div class="command-palette__footer" aria-hidden="true">
+      <span><kbd>↑</kbd><kbd>↓</kbd> <span class="lang-en">navigate</span><span class="lang-zh">选择</span></span>
+      <span><kbd>↵</kbd> <span class="lang-en">open</span><span class="lang-zh">打开</span></span>
+    </div>
+  </section>
+</div>
+
+<div class="achievement-toast" role="status" aria-live="polite" data-achievement-toast hidden>
+  <span class="achievement-toast__crest"><img src="{{ '/images/fc-bayern-logo.png' | relative_url }}" alt=""></span>
+  <span><strong>Achievement unlocked</strong><small>Mia san mia!</small></span>
+</div>

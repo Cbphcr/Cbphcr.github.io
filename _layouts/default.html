@@ -27,6 +27,8 @@ layout: compress
       </article>
     </div>
 
+    {% include command-palette.html %}
+
     <footer class="site-footer">
       <div class="oni-powergrid" aria-hidden="true">
         <img class="oni-powergrid__machine" src="{{ '/images/oni/generator.svg' | relative_url }}" alt="">
@@ -34,6 +36,7 @@ layout: compress
         <img class="oni-powergrid__machine" src="{{ '/images/oni/battery.svg' | relative_url }}" alt="">
       </div>
       <p>© {{ site.time | date: "%Y" }} {{ site.author.name }} · Built with <a href="https://jekyllrb.com" rel="noopener" target="_blank">Jekyll</a> &amp; <a href="https://github.com/RayeRen/acad-homepage.github.io" rel="noopener" target="_blank">AcadHomepage</a></p>
+      <a class="footer-detour" href="{{ '/404.html' | relative_url }}"><i class="fas fa-route" aria-hidden="true"></i><span class="lang-en">Take a detour</span><span class="lang-zh">绕个路</span></a>
     </footer>
 
     {% include scripts.html %}

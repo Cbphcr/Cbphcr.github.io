@@ -9,6 +9,7 @@
             <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}">{% if link.title_zh %}<span class="lang-en">{{ link.title }}</span><span class="lang-zh">{{ link.title_zh }}</span>{% else %}{{ link.title }}{% endif %}</a></li>
           {% endfor %}
           <li class="masthead__menu-item"><a class="lang-toggle" href="#" role="button" aria-label="Switch language"><i class="fas fa-globe" aria-hidden="true"></i><span class="lang-en">中文</span><span class="lang-zh">English</span></a></li>
+          <li class="masthead__menu-item masthead__menu-search"><a class="command-toggle" href="#site-search" role="button" aria-label="Search this site" title="Search (/)"><i class="fas fa-search" aria-hidden="true"></i><span class="command-toggle__label lang-en">Search</span><span class="command-toggle__label lang-zh">搜索</span><kbd>/</kbd></a></li>
         </ul>
         <ul class="hidden-links hidden"></ul>
       </nav>

@@ -16,9 +16,9 @@ redirect_from:
 <div class="research-interests" aria-label="Research interests">
   <div class="interest-label"><span class="lang-en">Research Interests</span><span class="lang-zh">研究方向</span></div>
   <div class="interest-list">
-    <span class="interest-tag interest-tag--nesy"><span class="lang-en">Neuro-Symbolic AI</span><span class="lang-zh">神经符号 AI</span></span>
-    <span class="interest-tag interest-tag--agents"><span class="lang-en">LLM Agents</span><span class="lang-zh">大模型智能体</span></span>
-    <span class="interest-tag interest-tag--rl"><span class="lang-en">LLM RL</span><span class="lang-zh">大模型强化学习</span></span>
+    <button class="interest-tag interest-tag--nesy" type="button" data-interest-filter="nesy" aria-pressed="false" aria-label="Filter by Neuro-Symbolic AI"><span class="lang-en">Neuro-Symbolic AI</span><span class="lang-zh">神经符号 AI</span></button>
+    <button class="interest-tag interest-tag--agents" type="button" data-interest-filter="agents" aria-pressed="false" aria-label="Filter by LLM Agents"><span class="lang-en">LLM Agents</span><span class="lang-zh">大模型智能体</span></button>
+    <button class="interest-tag interest-tag--rl" type="button" data-interest-filter="rl" aria-pressed="false" aria-label="Filter by LLM RL"><span class="lang-en">LLM RL</span><span class="lang-zh">大模型强化学习</span></button>
   </div>
 </div>
 
