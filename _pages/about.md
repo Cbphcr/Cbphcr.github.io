@@ -56,27 +56,67 @@ redirect_from:
 
 # <span class="lang-en">Experience</span><span class="lang-zh">经历</span>
 
-<div class="timeline">
-  <div class="timeline-item">
-    <div class="timeline-date">2026.04 - Present</div>
-    <div class="timeline-body"><span class="lang-en">LLM Algorithm Intern, Douyin E-commerce, ByteDance.</span><span class="lang-zh">大模型算法实习生，抖音电商，字节跳动。</span></div>
-  </div>
+<div class="experience-list">
+  <article class="experience-card">
+    <a class="experience-logo" href="https://www.bytedance.com/" aria-label="ByteDance">
+      <img src="/images/bytedance-logo.png" alt="ByteDance logo">
+    </a>
+    <div class="experience-content">
+      <div class="experience-card__header">
+        <h3><a href="https://www.bytedance.com/">ByteDance</a></h3>
+        <span class="experience-date"><span class="lang-en">2026.04 - Present</span><span class="lang-zh">2026.04 - 至今</span></span>
+      </div>
+      <p class="experience-role"><span class="lang-en">LLM Algorithm Intern</span><span class="lang-zh">大模型算法实习生</span></p>
+      <p class="experience-team"><span class="lang-en">Douyin E-commerce</span><span class="lang-zh">抖音电商</span></p>
+    </div>
+  </article>
 </div>
 
 <span class='anchor' id='education'></span>
 
 # <span class="lang-en">Education</span><span class="lang-zh">教育</span>
 
-<div class="timeline">
-  <div class="timeline-item">
-    <div class="timeline-date">2026.09 - 2031.06</div>
-    <div class="timeline-body"><span class="lang-en">Ph.D. student, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</span><span class="lang-zh">博士生，南京大学智能科学与技术学院。导师：<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授。</span></div>
-  </div>
+<div class="education-list">
+  <article class="education-card education-card--engineering">
+    <div class="education-logos">
+      <a href="https://www.nju.edu.cn/" aria-label="Nanjing University">
+        <img class="education-logo--nju" src="/images/nju-logo.png" alt="Nanjing University logo">
+      </a>
+      <a href="https://www.lamda.nju.edu.cn/CH.MainPage.ashx" aria-label="LAMDA">
+        <img class="education-logo--lamda" src="/images/lamda-logo.png" alt="LAMDA logo">
+      </a>
+    </div>
+    <div class="education-content">
+      <div class="education-card__header">
+        <div>
+          <span class="education-degree education-degree--engineering"><span class="lang-en">Engineering</span><span class="lang-zh">工学</span></span>
+          <h3><span class="lang-en">Ph.D. Student</span><span class="lang-zh">博士生</span></h3>
+        </div>
+        <span class="education-date">2026.09 - 2031.06</span>
+      </div>
+      <p class="education-school"><span class="lang-en">School of Intelligence Science and Technology, Nanjing University</span><span class="lang-zh">南京大学智能科学与技术学院</span></p>
+      <p class="education-advisor"><span class="lang-en">Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a></span><span class="lang-zh">导师：<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授</span></p>
+    </div>
+  </article>
 
-  <div class="timeline-item">
-    <div class="timeline-date">2022.09 - 2026.06</div>
-    <div class="timeline-body"><span class="lang-en">Bachelor of Science, School of Intelligence Science and Technology, Nanjing University. Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>.</span><span class="lang-zh">理学学士，南京大学智能科学与技术学院。导师：<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授。</span></div>
-  </div>
+  <article class="education-card education-card--science">
+    <div class="education-logos">
+      <a href="https://www.nju.edu.cn/" aria-label="Nanjing University">
+        <img class="education-logo--nju" src="/images/nju-logo.png" alt="Nanjing University logo">
+      </a>
+    </div>
+    <div class="education-content">
+      <div class="education-card__header">
+        <div>
+          <span class="education-degree education-degree--science"><span class="lang-en">Science</span><span class="lang-zh">理学</span></span>
+          <h3><span class="lang-en">Bachelor of Science</span><span class="lang-zh">理学学士</span></h3>
+        </div>
+        <span class="education-date">2022.09 - 2026.06</span>
+      </div>
+      <p class="education-school"><span class="lang-en">School of Intelligence Science and Technology, Nanjing University</span><span class="lang-zh">南京大学智能科学与技术学院</span></p>
+      <p class="education-advisor"><span class="lang-en">Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a></span><span class="lang-zh">导师：<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授</span></p>
+    </div>
+  </article>
 </div>
 
 <span class='anchor' id='personal'></span>
