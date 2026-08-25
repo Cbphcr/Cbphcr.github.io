@@ -1,0 +1,70 @@
+<div class="workflow-lab" data-workflow-lab hidden>
+  <div class="workflow-lab__backdrop" data-workflow-close></div>
+  <section class="workflow-lab__dialog" role="dialog" aria-modal="true" aria-labelledby="workflow-lab-title">
+    <header class="workflow-lab__header">
+      <div>
+        <span class="workflow-lab__kicker"><i class="fas fa-project-diagram" aria-hidden="true"></i><span class="lang-en">Concept Demo</span><span class="lang-zh">概念演示</span></span>
+        <h2 id="workflow-lab-title">Workflow Lab</h2>
+      </div>
+      <button class="workflow-lab__close" type="button" data-workflow-close aria-label="Close Workflow Lab" title="Close">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+    </header>
+
+    <div class="workflow-lab__body">
+      <section class="workflow-lab__task-picker" aria-labelledby="workflow-task-label">
+        <div class="workflow-lab__section-head">
+          <span id="workflow-task-label"><span class="lang-en">Incoming task</span><span class="lang-zh">收到任务</span></span>
+          <strong data-workflow-task-prompt></strong>
+        </div>
+        <div class="workflow-lab__task-options" role="group" aria-label="Workflow task">
+          <button type="button" data-workflow-task="constraints" aria-pressed="true"><i class="fas fa-check-double" aria-hidden="true"></i><span class="lang-en">Constraints</span><span class="lang-zh">约束论文</span></button>
+          <button type="button" data-workflow-task="award" aria-pressed="false"><i class="fas fa-award" aria-hidden="true"></i><span class="lang-en">Award</span><span class="lang-zh">获奖论文</span></button>
+          <button type="button" data-workflow-task="rl" aria-pressed="false"><i class="fas fa-sync-alt" aria-hidden="true"></i><span class="lang-en">Latest RL</span><span class="lang-zh">最新 RL</span></button>
+        </div>
+        <div class="workflow-lab__strategy">
+          <span class="workflow-lab__strategy-icon"><i class="fas fa-code-branch" data-workflow-strategy-icon aria-hidden="true"></i></span>
+          <span class="workflow-lab__strategy-copy">
+            <small><span class="lang-en">Execution mode</span><span class="lang-zh">执行模式</span></small>
+            <strong data-workflow-strategy-title></strong>
+          </span>
+          <span class="workflow-lab__strategy-path" data-workflow-strategy-path></span>
+        </div>
+      </section>
+
+      <section class="workflow-lab__process" aria-labelledby="workflow-process-label">
+        <div class="workflow-lab__section-head">
+          <span id="workflow-process-label"><span class="lang-en">Task stream</span><span class="lang-zh">任务流</span></span>
+          <span class="workflow-lab__status" data-workflow-status><span class="lang-en">Ready</span><span class="lang-zh">就绪</span></span>
+        </div>
+        <div class="workflow-lab__rounds" data-workflow-rounds aria-live="polite"></div>
+      </section>
+
+      <div class="workflow-lab__metrics" aria-live="polite">
+        <div><strong data-workflow-automated>0</strong><span class="lang-en">automated steps</span><span class="lang-zh">自动化步骤</span></div>
+        <div><strong data-workflow-model>5</strong><span class="lang-en">model interventions</span><span class="lang-zh">模型介入</span></div>
+        <div><strong data-workflow-saving>0%</strong><span class="lang-en">estimated saving</span><span class="lang-zh">预计节省</span></div>
+      </div>
+
+      <div class="workflow-lab__result" data-workflow-result hidden>
+        <i class="fas fa-check-circle" aria-hidden="true"></i>
+        <div>
+          <small><span class="lang-en">Result verified</span><span class="lang-zh">结果已验证</span></small>
+          <strong data-workflow-result-title></strong>
+        </div>
+        <button type="button" data-workflow-open-result aria-label="Open matching paper" title="Open matching paper">
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <footer class="workflow-lab__actions">
+      <button class="workflow-lab__exception" type="button" data-workflow-exception disabled>
+        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i><span class="lang-en">Inject exception</span><span class="lang-zh">注入异常</span>
+      </button>
+      <button class="workflow-lab__run" type="button" data-workflow-run>
+        <i class="fas fa-play" aria-hidden="true"></i><span class="lang-en">Compile workflow</span><span class="lang-zh">编译工作流</span>
+      </button>
+    </footer>
+  </section>
+</div>

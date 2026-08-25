@@ -128,6 +128,13 @@
           href: "/404.html",
           type: "command",
           keywords: "travel constraint chinatravel trip 行程 约束"
+        },
+        {
+          title: currentLanguage() === "zh" ? "打开工作流实验室" : "Open Workflow Lab",
+          href: "#",
+          type: "command",
+          action: "workflow",
+          keywords: "/automate automate workflow lab self-automating harness 自动化 工作流 实验室"
         }
       ].forEach(function (item) {
         if (!seen[item.href]) { items.push(item); }
@@ -251,6 +258,13 @@
         }
         return;
       }
+      if (item.action === "workflow") {
+        closePalette();
+        window.setTimeout(function () {
+          document.dispatchEvent(new CustomEvent("workflow:open"));
+        }, 190);
+        return;
+      }
       closePalette();
       window.location.href = item.href;
     }
@@ -297,6 +311,540 @@
         activateItem(visibleItems[activeIndex]);
       }
     });
+  }
+
+  function setupWorkflowLab() {
+    var lab = document.querySelector("[data-workflow-lab]");
+    if (!lab) { return; }
+
+    var dialog = lab.querySelector(".workflow-lab__dialog");
+    var openButtons = document.querySelectorAll("[data-workflow-open]");
+    var taskButtons = Array.prototype.slice.call(lab.querySelectorAll("[data-workflow-task]"));
+    var taskPrompt = lab.querySelector("[data-workflow-task-prompt]");
+    var strategyIcon = lab.querySelector("[data-workflow-strategy-icon]");
+    var strategyTitle = lab.querySelector("[data-workflow-strategy-title]");
+    var strategyPath = lab.querySelector("[data-workflow-strategy-path]");
+    var rounds = lab.querySelector("[data-workflow-rounds]");
+    var status = lab.querySelector("[data-workflow-status]");
+    var runButton = lab.querySelector("[data-workflow-run]");
+    var exceptionButton = lab.querySelector("[data-workflow-exception]");
+    var result = lab.querySelector("[data-workflow-result]");
+    var resultTitle = lab.querySelector("[data-workflow-result-title]");
+    var automatedMetric = lab.querySelector("[data-workflow-automated]");
+    var modelMetric = lab.querySelector("[data-workflow-model]");
+    var savingMetric = lab.querySelector("[data-workflow-saving]");
+    var selectedTask = "constraints";
+    var previousFocus = null;
+    var timers = [];
+    var completed = false;
+    var exceptionInjected = false;
+
+    var tasks = {
+      constraints: {
+        theme: "constraints",
+        prompt: { en: "Find work on constraint verification", zh: "查找与约束验证相关的工作" },
+        strategy: {
+          icon: "fa-check-double",
+          title: { en: "Constraint compiler", zh: "约束编译器" },
+          path: { en: "Language → rules → plan → repair loop", zh: "语言 → 规则 → 规划 → 修复环" }
+        },
+        result: "ChinaTravel: An Open-Ended Travel Planning Benchmark with Compositional Constraint Validation for Language Agents",
+        target: "ChinaTravel:",
+        interest: "nesy",
+        metrics: { automated: "8", model: "4", saving: "66%" },
+        rounds: [
+          {
+            number: "01",
+            title: { en: "Formalize", zh: "形式化" },
+            note: { en: "Language to checks", zh: "自然语言转检查器" },
+            steps: [
+              { en: "Interpret request", zh: "理解请求", kind: "model" },
+              { en: "Extract constraints", zh: "抽取约束", kind: "model" },
+              { en: "Normalize slots", zh: "规范化槽位", kind: "auto" },
+              { en: "Build verifier", zh: "构建验证器", kind: "auto" }
+            ]
+          },
+          {
+            number: "02",
+            title: { en: "Plan", zh: "规划" },
+            note: { en: "Candidate generation", zh: "生成候选方案" },
+            steps: [
+              { en: "Retrieve options", zh: "检索候选", kind: "source" },
+              { en: "Compose plan", zh: "组合方案", kind: "model" },
+              { en: "Simulate route", zh: "模拟行程", kind: "auto" },
+              { en: "Score constraints", zh: "约束打分", kind: "verify" }
+            ]
+          },
+          {
+            number: "03",
+            title: { en: "Repair loop", zh: "修复循环" },
+            note: { en: "Validation-guided", zh: "验证反馈驱动" },
+            steps: [
+              { en: "Inspect violations", zh: "检查冲突", kind: "decision" },
+              { en: "Repair plan", zh: "修复方案", kind: "model" },
+              { en: "Re-check", zh: "重新验证", kind: "verify" },
+              { en: "Present", zh: "返回结果", kind: "auto" }
+            ]
+          }
+        ],
+        exception: {
+          title: { en: "Runtime repair", zh: "运行时修复" },
+          note: { en: "Hidden preference", zh: "发现隐含偏好" },
+          status: { en: "Validator patched", zh: "验证器已更新" },
+          metrics: { automated: "10", model: "5", saving: "52%" },
+          steps: [
+            { en: "Implicit preference", zh: "隐含偏好", kind: "error" },
+            { en: "Ask one question", zh: "追问一次", kind: "model" },
+            { en: "Add rule", zh: "添加规则", kind: "auto" },
+            { en: "Re-run", zh: "重新运行", kind: "verify" }
+          ]
+        }
+      },
+      award: {
+        theme: "award",
+        prompt: { en: "Find the award-winning paper", zh: "找到获得最佳学生论文奖的工作" },
+        strategy: {
+          icon: "fa-award",
+          title: { en: "Evidence triangulation", zh: "多源证据三角验证" },
+          path: { en: "Claim → sources → provenance gate", zh: "声明 → 多个来源 → 来源门控" }
+        },
+        result: "Mind the Gap to Trustworthy LLM Agents: A Systematic Evaluation on Constraint Satisfaction for Real-World Travel Planning",
+        target: "Mind the Gap to Trustworthy",
+        interest: "agents",
+        metrics: { automated: "9", model: "2", saving: "78%" },
+        rounds: [
+          {
+            number: "01",
+            title: { en: "Scout", zh: "初步检索" },
+            note: { en: "Ground the claim", zh: "定位获奖声明" },
+            steps: [
+              { en: "Parse award claim", zh: "解析获奖声明", kind: "model" },
+              { en: "Search sources", zh: "检索来源", kind: "source" },
+              { en: "Lock paper ID", zh: "锁定论文标识", kind: "verify" }
+            ]
+          },
+          {
+            number: "02",
+            title: { en: "Triangulate", zh: "交叉验证" },
+            note: { en: "Independent evidence", zh: "独立证据源" },
+            steps: [
+              { en: "OpenReview", zh: "OpenReview", kind: "source" },
+              { en: "Workshop program", zh: "研讨会议程", kind: "source" },
+              { en: "Award notice", zh: "获奖公告", kind: "source" },
+              { en: "Compare metadata", zh: "比对元数据", kind: "auto" }
+            ]
+          },
+          {
+            number: "03",
+            title: { en: "Verdict", zh: "形成结论" },
+            note: { en: "Provenance first", zh: "来源优先" },
+            steps: [
+              { en: "Resolve wording", zh: "核定奖项表述", kind: "model" },
+              { en: "Two-source gate", zh: "双来源门控", kind: "decision" },
+              { en: "Build citation", zh: "生成引用", kind: "verify" },
+              { en: "Present", zh: "返回结果", kind: "auto" }
+            ]
+          }
+        ],
+        exception: {
+          title: { en: "Archive fallback", zh: "存档回退" },
+          note: { en: "Source moved", zh: "证据来源已迁移" },
+          status: { en: "Evidence path restored", zh: "证据链已恢复" },
+          metrics: { automated: "11", model: "3", saving: "61%" },
+          steps: [
+            { en: "Notice moved", zh: "公告已迁移", kind: "error" },
+            { en: "Fetch archive", zh: "读取网页存档", kind: "source" },
+            { en: "Compare snapshot", zh: "比对历史快照", kind: "auto" },
+            { en: "Confirm wording", zh: "确认奖项表述", kind: "model" }
+          ]
+        }
+      },
+      rl: {
+        theme: "rl",
+        prompt: { en: "Find the latest LLM RL work", zh: "查找最新的大模型强化学习工作" },
+        strategy: {
+          icon: "fa-sync-alt",
+          title: { en: "Method & recency audit", zh: "方法与时效审计" },
+          path: { en: "Retrieval → objective audit → version rank", zh: "检索 → 目标函数审计 → 版本排序" }
+        },
+        result: "CoRT: Counterfactual Replay for Token-Level Rubric-Guided Policy Optimization",
+        target: "CoRT:",
+        interest: "rl",
+        metrics: { automated: "10", model: "3", saving: "74%" },
+        rounds: [
+          {
+            number: "01",
+            title: { en: "Recency pass", zh: "时效检索" },
+            note: { en: "Define latest", zh: "定义“最新”" },
+            steps: [
+              { en: "Parse intent", zh: "解析意图", kind: "model" },
+              { en: "Query indexes", zh: "查询论文索引", kind: "source" },
+              { en: "Sort dates", zh: "按日期排序", kind: "auto" },
+              { en: "Deduplicate", zh: "版本去重", kind: "auto" }
+            ]
+          },
+          {
+            number: "02",
+            title: { en: "Method audit", zh: "方法审计" },
+            note: { en: "RL, not prompting", zh: "区分 RL 与提示工程" },
+            steps: [
+              { en: "Read objective", zh: "读取目标函数", kind: "model" },
+              { en: "Find policy update", zh: "确认策略更新", kind: "verify" },
+              { en: "Locate rewards", zh: "定位奖励信号", kind: "auto" },
+              { en: "Trace replay", zh: "追踪回放机制", kind: "auto" }
+            ]
+          },
+          {
+            number: "03",
+            title: { en: "Rank & report", zh: "排序与汇报" },
+            note: { en: "Method plus version", zh: "方法与版本并重" },
+            steps: [
+              { en: "Reject non-RL", zh: "排除非 RL 工作", kind: "decision" },
+              { en: "Compare versions", zh: "比较版本", kind: "verify" },
+              { en: "Summarize method", zh: "总结方法", kind: "model" },
+              { en: "Cite source", zh: "引用来源", kind: "source" },
+              { en: "Present", zh: "返回结果", kind: "auto" }
+            ]
+          }
+        ],
+        exception: {
+          title: { en: "Version repair", zh: "版本修复" },
+          note: { en: "Preprint chronology", zh: "预印本时间顺序" },
+          status: { en: "Version order repaired", zh: "版本顺序已修正" },
+          metrics: { automated: "12", model: "4", saving: "58%" },
+          steps: [
+            { en: "Version drift", zh: "版本时间漂移", kind: "error" },
+            { en: "Refresh metadata", zh: "刷新元数据", kind: "source" },
+            { en: "Diff revisions", zh: "比较修订记录", kind: "auto" },
+            { en: "Resolve chronology", zh: "判断版本先后", kind: "model" }
+          ]
+        }
+      }
+    };
+
+    function setLocalizedText(node, en, zh) {
+      node.innerHTML = "";
+      var enNode = document.createElement("span");
+      var zhNode = document.createElement("span");
+      enNode.className = "lang-en";
+      zhNode.className = "lang-zh";
+      enNode.textContent = en;
+      zhNode.textContent = zh;
+      node.appendChild(enNode);
+      node.appendChild(zhNode);
+    }
+
+    function clearTimers() {
+      timers.forEach(function (timer) { window.clearTimeout(timer); });
+      timers = [];
+    }
+
+    function schedule(callback, delay) {
+      var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var timer = window.setTimeout(callback, reduced ? 0 : delay);
+      timers.push(timer);
+    }
+
+    function createNode(step, roundIndex) {
+      var node = document.createElement("span");
+      node.className = "workflow-node workflow-node--" + step.kind + " is-pending";
+      node.dataset.workflowNode = "";
+      node.dataset.workflowRound = String(roundIndex);
+
+      var icon = document.createElement("i");
+      var icons = {
+        model: "fa-brain",
+        auto: "fa-cog",
+        source: "fa-database",
+        verify: "fa-check-circle",
+        decision: "fa-code-branch",
+        error: "fa-exclamation-triangle"
+      };
+      icon.className = "fas " + icons[step.kind];
+      icon.setAttribute("aria-hidden", "true");
+      node.appendChild(icon);
+
+      var label = document.createElement("span");
+      setLocalizedText(label, step.en, step.zh);
+      node.appendChild(label);
+      return node;
+    }
+
+    function createRoundRow(definition, roundIndex, isException) {
+      var row = document.createElement("div");
+      row.className = "workflow-round" + (isException ? " workflow-round--exception" : "");
+      row.dataset.workflowRoundRow = String(roundIndex);
+
+      var label = document.createElement("div");
+      label.className = "workflow-round__label";
+      var number = document.createElement("span");
+      number.textContent = definition.number;
+      var copy = document.createElement("div");
+      var title = document.createElement("strong");
+      var note = document.createElement("small");
+      setLocalizedText(title, definition.title.en, definition.title.zh);
+      setLocalizedText(note, definition.note.en, definition.note.zh);
+      copy.appendChild(title);
+      copy.appendChild(note);
+      label.appendChild(number);
+      label.appendChild(copy);
+
+      var nodes = document.createElement("div");
+      nodes.className = "workflow-round__nodes";
+      definition.steps.forEach(function (step, index) {
+        if (index > 0) {
+          var arrow = document.createElement("i");
+          arrow.className = "fas fa-long-arrow-alt-right workflow-round__arrow" + (isException ? " workflow-exception-node" : "");
+          arrow.setAttribute("aria-hidden", "true");
+          nodes.appendChild(arrow);
+        }
+        var node = createNode(step, roundIndex);
+        if (isException) { node.classList.add("workflow-exception-node"); }
+        nodes.appendChild(node);
+      });
+
+      row.appendChild(label);
+      row.appendChild(nodes);
+      return row;
+    }
+
+    function renderRounds() {
+      var task = tasks[selectedTask];
+      rounds.innerHTML = "";
+      task.rounds.forEach(function (definition, roundIndex) {
+        rounds.appendChild(createRoundRow(definition, roundIndex, false));
+      });
+    }
+
+    function resetDemo() {
+      var task = tasks[selectedTask];
+      clearTimers();
+      completed = false;
+      exceptionInjected = false;
+      runButton.disabled = false;
+      exceptionButton.disabled = true;
+      result.hidden = true;
+      automatedMetric.textContent = "--";
+      modelMetric.textContent = "--";
+      savingMetric.textContent = "--";
+      setLocalizedText(status, "Ready", "就绪");
+      setLocalizedText(taskPrompt, task.prompt.en, task.prompt.zh);
+      setLocalizedText(strategyTitle, task.strategy.title.en, task.strategy.title.zh);
+      setLocalizedText(strategyPath, task.strategy.path.en, task.strategy.path.zh);
+      strategyIcon.className = "fas " + task.strategy.icon;
+      lab.dataset.workflowTheme = task.theme;
+      renderRounds();
+    }
+
+    function activateRound(roundIndex) {
+      var task = tasks[selectedTask];
+      rounds.querySelectorAll("[data-workflow-round-row]").forEach(function (row, index) {
+        row.classList.toggle("is-current", index === roundIndex);
+        row.classList.toggle("is-complete", index < roundIndex);
+      });
+      var phase = task.rounds[roundIndex].title;
+      setLocalizedText(status, "Running: " + phase.en, "运行中：" + phase.zh);
+    }
+
+    function runDemo() {
+      var task = tasks[selectedTask];
+      resetDemo();
+      runButton.disabled = true;
+      setLocalizedText(status, "Compiling", "编译中");
+      var nodes = Array.prototype.slice.call(rounds.querySelectorAll("[data-workflow-node]"));
+      var activeRound = -1;
+
+      nodes.forEach(function (node, index) {
+        schedule(function () {
+          var previous = rounds.querySelector(".workflow-node.is-active");
+          if (previous) {
+            previous.classList.remove("is-active");
+            previous.classList.add("is-complete");
+          }
+          var roundIndex = Number(node.dataset.workflowRound);
+          if (roundIndex !== activeRound) {
+            activeRound = roundIndex;
+            activateRound(roundIndex);
+          }
+          node.classList.remove("is-pending");
+          node.classList.add("is-active");
+        }, 140 + index * 135);
+      });
+
+      schedule(function () {
+        var active = rounds.querySelector(".workflow-node.is-active");
+        if (active) {
+          active.classList.remove("is-active");
+          active.classList.add("is-complete");
+        }
+        completed = true;
+        runButton.disabled = false;
+        exceptionButton.disabled = false;
+        rounds.querySelectorAll("[data-workflow-round-row]").forEach(function (row) {
+          row.classList.remove("is-current");
+          row.classList.add("is-complete");
+        });
+        automatedMetric.textContent = task.metrics.automated;
+        modelMetric.textContent = task.metrics.model;
+        savingMetric.textContent = task.metrics.saving;
+        setLocalizedText(status, "Workflow ready", "工作流就绪");
+        resultTitle.textContent = task.result;
+        result.hidden = false;
+      }, 250 + nodes.length * 135);
+    }
+
+    function injectException() {
+      if (!completed || exceptionInjected) { return; }
+      var task = tasks[selectedTask];
+      exceptionInjected = true;
+      exceptionButton.disabled = true;
+      setLocalizedText(status, "Exception detected", "检测到异常");
+
+      var exceptionSteps = task.exception.steps;
+      var lastRoundIndex = task.rounds.length - 1;
+      rounds.querySelectorAll("[data-workflow-round-row]").forEach(function (row) {
+        row.classList.remove("is-current");
+        row.classList.add("is-complete");
+      });
+      var recovery = {
+        number: "EX",
+        title: task.exception.title,
+        note: task.exception.note,
+        steps: exceptionSteps
+      };
+      var lastRow = createRoundRow(recovery, lastRoundIndex, true);
+      var lastRound = lastRow.querySelector(".workflow-round__nodes");
+      lastRow.classList.add("is-current");
+      rounds.appendChild(lastRow);
+
+      schedule(function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        lastRound.scrollTo({ left: lastRound.scrollWidth, behavior: reduced ? "auto" : "smooth" });
+      }, 40);
+
+      var nodes = Array.prototype.slice.call(lastRound.querySelectorAll(".workflow-exception-node[data-workflow-node]"));
+      nodes.forEach(function (node, index) {
+        schedule(function () {
+          var previous = lastRound.querySelector(".workflow-node.is-active");
+          if (previous) {
+            previous.classList.remove("is-active");
+            previous.classList.add("is-complete");
+          }
+          node.classList.remove("is-pending");
+          node.classList.add("is-active");
+        }, 120 + index * 360);
+      });
+
+      schedule(function () {
+        var active = lastRound.querySelector(".workflow-node.is-active");
+        if (active) {
+          active.classList.remove("is-active");
+          active.classList.add("is-complete");
+        }
+        lastRow.classList.remove("is-current");
+        lastRow.classList.add("is-complete");
+        automatedMetric.textContent = task.exception.metrics.automated;
+        modelMetric.textContent = task.exception.metrics.model;
+        savingMetric.textContent = task.exception.metrics.saving;
+        setLocalizedText(status, task.exception.status.en, task.exception.status.zh);
+      }, 220 + nodes.length * 320);
+    }
+
+    function openLab() {
+      previousFocus = document.activeElement;
+      lab.hidden = false;
+      document.body.classList.add("workflow-lab-open");
+      resetDemo();
+      window.requestAnimationFrame(function () {
+        lab.classList.add("is-open");
+        runButton.focus();
+      });
+    }
+
+    function closeLab() {
+      clearTimers();
+      lab.classList.remove("is-open");
+      document.body.classList.remove("workflow-lab-open");
+      window.setTimeout(function () {
+        lab.hidden = true;
+        if (previousFocus && previousFocus.focus) { previousFocus.focus(); }
+      }, 190);
+    }
+
+    function openResult() {
+      var task = tasks[selectedTask];
+      var targetLink = Array.prototype.slice.call(document.querySelectorAll(".publication-item h3 a")).find(function (link) {
+        return link.textContent.indexOf(task.target) !== -1;
+      });
+      if (!targetLink) { return; }
+
+      var filter = document.querySelector('[data-interest-filter="' + task.interest + '"]');
+      if (filter && filter.getAttribute("aria-pressed") !== "true") { filter.click(); }
+      var card = targetLink.closest(".publication-item");
+      closeLab();
+      window.setTimeout(function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        card.classList.add("is-workflow-match");
+        card.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+        targetLink.focus({ preventScroll: true });
+        window.setTimeout(function () { card.classList.remove("is-workflow-match"); }, reduced ? 800 : 3200);
+      }, 220);
+    }
+
+    taskButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        selectedTask = button.dataset.workflowTask;
+        taskButtons.forEach(function (item) {
+          var selected = item === button;
+          item.classList.toggle("is-active", selected);
+          item.setAttribute("aria-pressed", selected ? "true" : "false");
+        });
+        resetDemo();
+      });
+    });
+
+    openButtons.forEach(function (button) { button.addEventListener("click", openLab); });
+    document.addEventListener("workflow:open", openLab);
+    runButton.addEventListener("click", runDemo);
+    exceptionButton.addEventListener("click", injectException);
+    lab.querySelector("[data-workflow-open-result]").addEventListener("click", openResult);
+
+    lab.addEventListener("click", function (event) {
+      if (event.target.closest("[data-workflow-close]")) { closeLab(); }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (lab.hidden) { return; }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeLab();
+        return;
+      }
+      if (event.key === "Tab") {
+        var focusable = Array.prototype.slice.call(dialog.querySelectorAll("button:not([disabled])"));
+        if (!focusable.length) { return; }
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    document.addEventListener("click", function (event) {
+      if (event.target.closest(".lang-toggle") && !lab.hidden) {
+        window.setTimeout(function () {
+          setLocalizedText(taskPrompt, tasks[selectedTask].prompt.en, tasks[selectedTask].prompt.zh);
+        }, 0);
+      }
+    });
+
+    taskButtons[0].classList.add("is-active");
+    resetDemo();
   }
 
   function setupTravelGame() {
@@ -436,5 +984,6 @@
   setupAvatarEasterEgg();
   setupInterestFilters();
   setupCommandPalette();
+  setupWorkflowLab();
   setupTravelGame();
 }());
