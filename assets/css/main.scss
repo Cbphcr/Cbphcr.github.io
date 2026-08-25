@@ -330,6 +330,30 @@ h3[id] {
     }
 }
 
+.research-outlook {
+    margin: 1rem 0 1.15rem;
+    padding: .8rem 1rem .85rem;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    background: linear-gradient(90deg, var(--accent-tint), rgba(20, 165, 200, .025) 72%);
+
+    .interest-label {
+        margin-bottom: .25rem;
+    }
+
+    p {
+        margin: .2rem 0 0;
+        color: var(--text-muted);
+        font-size: .95em;
+        line-height: 1.65;
+    }
+
+    strong {
+        color: var(--text-strong);
+        font-weight: 800;
+    }
+}
+
 .publication-item,
 .project-card {
     &.is-interest-muted {

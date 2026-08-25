@@ -22,6 +22,12 @@ redirect_from:
   </div>
 </div>
 
+<div class="research-outlook">
+  <div class="interest-label"><span class="lang-en">Long-term Interest</span><span class="lang-zh">长期研究兴趣</span></div>
+  <p class="lang-en">My work so far has explored realistic agent tasks, constraint verification, and learning from fine-grained feedback. In the long term, I am interested in <strong>self-automating agents</strong> that can build, verify, and continuously improve their own workflows with minimal task-specific human scaffolding.</p>
+  <p class="lang-zh">我过去的工作关注面向真实场景的智能体任务、约束验证与细粒度反馈学习。长期来看，我希望研究能够自主构建、验证并持续改进自身工作流的智能体，尽量减少针对具体任务的人工脚手架。</p>
+</div>
+
 <p class="lang-en">I will begin my Ph.D. study in September 2026 under the supervision of Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>, a member of the LAMDA Group led by Prof. <a href="https://cs.nju.edu.cn/zhouzh/">Zhi-Hua Zhou</a>.</p>
 <p class="lang-zh">我将于 2026 年 9 月在<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授的指导下开始博士学习；郭老师是<a href="https://cs.nju.edu.cn/zhouzh/">周志华</a>教授领导的 LAMDA 团队成员。</p>
 
