@@ -130,7 +130,7 @@
           keywords: "travel constraint chinatravel trip 行程 约束"
         },
         {
-          title: currentLanguage() === "zh" ? "打开工作流实验室" : "Open Workflow Lab",
+          title: currentLanguage() === "zh" ? "打开 Agent Harness Lab" : "Open Agent Harness Lab",
           href: "#",
           type: "command",
           action: "workflow",
@@ -320,6 +320,8 @@
     var dialog = lab.querySelector(".workflow-lab__dialog");
     var openButtons = document.querySelectorAll("[data-workflow-open]");
     var taskButtons = Array.prototype.slice.call(lab.querySelectorAll("[data-workflow-task]"));
+    var taskGroup = lab.querySelector(".workflow-lab__task-options");
+    var closeButton = lab.querySelector(".workflow-lab__close");
     var taskPrompt = lab.querySelector("[data-workflow-task-prompt]");
     var strategyIcon = lab.querySelector("[data-workflow-strategy-icon]");
     var strategyTitle = lab.querySelector("[data-workflow-strategy-title]");
@@ -330,193 +332,237 @@
     var exceptionButton = lab.querySelector("[data-workflow-exception]");
     var result = lab.querySelector("[data-workflow-result]");
     var resultTitle = lab.querySelector("[data-workflow-result-title]");
-    var automatedMetric = lab.querySelector("[data-workflow-automated]");
-    var modelMetric = lab.querySelector("[data-workflow-model]");
-    var savingMetric = lab.querySelector("[data-workflow-saving]");
-    var selectedTask = "constraints";
+    var resultIcon = lab.querySelector("[data-workflow-result-icon]");
+    var harnessStatus = lab.querySelector("[data-workflow-harness]");
+    var verifierStatus = lab.querySelector("[data-workflow-verifier]");
+    var recoveryStatus = lab.querySelector("[data-workflow-recovery]");
+    var resultLabel = lab.querySelector("[data-workflow-result-label]");
+    var resultButton = lab.querySelector("[data-workflow-open-result]");
+    var selectedTask = "planning";
     var previousFocus = null;
     var timers = [];
     var completed = false;
     var exceptionInjected = false;
 
     var tasks = {
-      constraints: {
-        theme: "constraints",
-        prompt: { en: "Find work on constraint verification", zh: "查找与约束验证相关的工作" },
+      planning: {
+        theme: "planning",
+        prompt: { en: "Plan a multi-day trip under open-ended constraints", zh: "在开放式约束下规划多日行程" },
         strategy: {
-          icon: "fa-check-double",
-          title: { en: "Constraint compiler", zh: "约束编译器" },
-          path: { en: "Language → rules → plan → repair loop", zh: "语言 → 规则 → 规划 → 修复环" }
+          icon: "fa-map-marked-alt",
+          title: { en: "Build a verifiable planner", zh: "构建可验证的规划器" },
+          path: { en: "task → harness → plan → verify → repair", zh: "任务 → harness → 规划 → 验证 → 修复" }
         },
-        result: "ChinaTravel: An Open-Ended Travel Planning Benchmark with Compositional Constraint Validation for Language Agents",
+        resultLabel: { en: "Related work", zh: "相关工作" },
+        resultKind: "work",
+        resultIcon: "fa-check-circle",
+        result: {
+          en: "ChinaTravel: An Open-Ended Travel Planning Benchmark with Compositional Constraint Validation for Language Agents",
+          zh: "ChinaTravel：面向语言智能体的开放式旅行规划基准"
+        },
         target: "ChinaTravel:",
         interest: "nesy",
-        metrics: { automated: "8", model: "4", saving: "66%" },
+        signals: {
+          harness: { en: "Built", zh: "已构建" },
+          verifier: { en: "Attached", zh: "已接入" },
+          recovery: { en: "Standby", zh: "待命" }
+        },
         rounds: [
           {
             number: "01",
-            title: { en: "Formalize", zh: "形式化" },
-            note: { en: "Language to checks", zh: "自然语言转检查器" },
+            title: { en: "Understand", zh: "理解任务" },
+            note: { en: "Turn language into checks", zh: "将自然语言转为检查项" },
             steps: [
-              { en: "Interpret request", zh: "理解请求", kind: "model" },
+              { en: "Inspect resources", zh: "检查可用资源", kind: "source" },
               { en: "Extract constraints", zh: "抽取约束", kind: "model" },
-              { en: "Normalize slots", zh: "规范化槽位", kind: "auto" },
-              { en: "Build verifier", zh: "构建验证器", kind: "auto" }
+              { en: "Formalize checks", zh: "形式化检查项", kind: "auto" },
+              { en: "Choose tools", zh: "选择工具", kind: "decision" }
             ]
           },
           {
             number: "02",
-            title: { en: "Plan", zh: "规划" },
-            note: { en: "Candidate generation", zh: "生成候选方案" },
+            title: { en: "Execute", zh: "执行规划" },
+            note: { en: "Use the constructed harness", zh: "运行已构建的 harness" },
             steps: [
-              { en: "Retrieve options", zh: "检索候选", kind: "source" },
-              { en: "Compose plan", zh: "组合方案", kind: "model" },
-              { en: "Simulate route", zh: "模拟行程", kind: "auto" },
-              { en: "Score constraints", zh: "约束打分", kind: "verify" }
+              { en: "Retrieve POIs", zh: "检索地点", kind: "source" },
+              { en: "Compose itinerary", zh: "生成行程", kind: "model" },
+              { en: "Simulate route", zh: "模拟路线", kind: "auto" },
+              { en: "Verify constraints", zh: "验证约束", kind: "verify" }
             ]
           },
           {
             number: "03",
-            title: { en: "Repair loop", zh: "修复循环" },
-            note: { en: "Validation-guided", zh: "验证反馈驱动" },
+            title: { en: "Control", zh: "控制流程" },
+            note: { en: "Inspect only when needed", zh: "仅在必要时介入" },
             steps: [
-              { en: "Inspect violations", zh: "检查冲突", kind: "decision" },
+              { en: "Inspect failures", zh: "检查失败项", kind: "decision" },
               { en: "Repair plan", zh: "修复方案", kind: "model" },
-              { en: "Re-check", zh: "重新验证", kind: "verify" },
-              { en: "Present", zh: "返回结果", kind: "auto" }
+              { en: "Re-run tools", zh: "重运行工具", kind: "auto" },
+              { en: "Final gate", zh: "最终门控", kind: "verify" }
             ]
           }
         ],
         exception: {
           title: { en: "Runtime repair", zh: "运行时修复" },
-          note: { en: "Hidden preference", zh: "发现隐含偏好" },
-          status: { en: "Validator patched", zh: "验证器已更新" },
-          metrics: { automated: "10", model: "5", saving: "52%" },
+          note: { en: "A hidden preference appears", zh: "发现隐含偏好" },
+          status: { en: "Harness repaired", zh: "Harness 已修复" },
+          signals: {
+            harness: { en: "Patched", zh: "已更新" },
+            verifier: { en: "Re-checked", zh: "已复核" },
+            recovery: { en: "Triggered", zh: "已触发" }
+          },
           steps: [
-            { en: "Implicit preference", zh: "隐含偏好", kind: "error" },
+            { en: "Hidden preference", zh: "隐含偏好", kind: "error" },
             { en: "Ask one question", zh: "追问一次", kind: "model" },
-            { en: "Add rule", zh: "添加规则", kind: "auto" },
-            { en: "Re-run", zh: "重新运行", kind: "verify" }
+            { en: "Patch verifier", zh: "更新验证器", kind: "auto" },
+            { en: "Replay affected stage", zh: "重放受影响阶段", kind: "verify" }
           ]
         }
       },
-      award: {
-        theme: "award",
-        prompt: { en: "Find the award-winning paper", zh: "找到获得最佳学生论文奖的工作" },
+      credit: {
+        theme: "credit",
+        prompt: { en: "Learn which tokens deserve credit from one scalar reward", zh: "从单一标量奖励中学习 token 级信用" },
         strategy: {
-          icon: "fa-award",
-          title: { en: "Evidence triangulation", zh: "多源证据三角验证" },
-          path: { en: "Claim → sources → provenance gate", zh: "声明 → 多个来源 → 来源门控" }
+          icon: "fa-coins",
+          title: { en: "Counterfactual credit harness", zh: "反事实信用分配 harness" },
+          path: { en: "rubric → replay → contrast → token credit", zh: "rubric → 回放 → 对比 → token 信用" }
         },
-        result: "Mind the Gap to Trustworthy LLM Agents: A Systematic Evaluation on Constraint Satisfaction for Real-World Travel Planning",
-        target: "Mind the Gap to Trustworthy",
-        interest: "agents",
-        metrics: { automated: "9", model: "2", saving: "78%" },
-        rounds: [
-          {
-            number: "01",
-            title: { en: "Scout", zh: "初步检索" },
-            note: { en: "Ground the claim", zh: "定位获奖声明" },
-            steps: [
-              { en: "Parse award claim", zh: "解析获奖声明", kind: "model" },
-              { en: "Search sources", zh: "检索来源", kind: "source" },
-              { en: "Lock paper ID", zh: "锁定论文标识", kind: "verify" }
-            ]
-          },
-          {
-            number: "02",
-            title: { en: "Triangulate", zh: "交叉验证" },
-            note: { en: "Independent evidence", zh: "独立证据源" },
-            steps: [
-              { en: "OpenReview", zh: "OpenReview", kind: "source" },
-              { en: "Workshop program", zh: "研讨会议程", kind: "source" },
-              { en: "Award notice", zh: "获奖公告", kind: "source" },
-              { en: "Compare metadata", zh: "比对元数据", kind: "auto" }
-            ]
-          },
-          {
-            number: "03",
-            title: { en: "Verdict", zh: "形成结论" },
-            note: { en: "Provenance first", zh: "来源优先" },
-            steps: [
-              { en: "Resolve wording", zh: "核定奖项表述", kind: "model" },
-              { en: "Two-source gate", zh: "双来源门控", kind: "decision" },
-              { en: "Build citation", zh: "生成引用", kind: "verify" },
-              { en: "Present", zh: "返回结果", kind: "auto" }
-            ]
-          }
-        ],
-        exception: {
-          title: { en: "Archive fallback", zh: "存档回退" },
-          note: { en: "Source moved", zh: "证据来源已迁移" },
-          status: { en: "Evidence path restored", zh: "证据链已恢复" },
-          metrics: { automated: "11", model: "3", saving: "61%" },
-          steps: [
-            { en: "Notice moved", zh: "公告已迁移", kind: "error" },
-            { en: "Fetch archive", zh: "读取网页存档", kind: "source" },
-            { en: "Compare snapshot", zh: "比对历史快照", kind: "auto" },
-            { en: "Confirm wording", zh: "确认奖项表述", kind: "model" }
-          ]
-        }
-      },
-      rl: {
-        theme: "rl",
-        prompt: { en: "Find the latest LLM RL work", zh: "查找最新的大模型强化学习工作" },
-        strategy: {
-          icon: "fa-sync-alt",
-          title: { en: "Method & recency audit", zh: "方法与时效审计" },
-          path: { en: "Retrieval → objective audit → version rank", zh: "检索 → 目标函数审计 → 版本排序" }
+        resultLabel: { en: "Related work", zh: "相关工作" },
+        resultKind: "work",
+        resultIcon: "fa-check-circle",
+        result: {
+          en: "CoRT: Counterfactual Replay for Token-Level Rubric-Guided Policy Optimization",
+          zh: "CoRT：面向 token 级 Rubric 引导策略优化的反事实回放"
         },
-        result: "CoRT: Counterfactual Replay for Token-Level Rubric-Guided Policy Optimization",
         target: "CoRT:",
         interest: "rl",
-        metrics: { automated: "10", model: "3", saving: "74%" },
+        signals: {
+          harness: { en: "Replay built", zh: "回放已构建" },
+          verifier: { en: "Rubric checked", zh: "Rubric 已检查" },
+          recovery: { en: "Standby", zh: "待命" }
+        },
         rounds: [
           {
             number: "01",
-            title: { en: "Recency pass", zh: "时效检索" },
-            note: { en: "Define latest", zh: "定义“最新”" },
+            title: { en: "Define feedback", zh: "定义反馈" },
+            note: { en: "Make sparse reward inspectable", zh: "让稀疏奖励可检查" },
             steps: [
-              { en: "Parse intent", zh: "解析意图", kind: "model" },
-              { en: "Query indexes", zh: "查询论文索引", kind: "source" },
-              { en: "Sort dates", zh: "按日期排序", kind: "auto" },
-              { en: "Deduplicate", zh: "版本去重", kind: "auto" }
+              { en: "Read rubric", zh: "读取 Rubric", kind: "model" },
+              { en: "Compile criteria", zh: "编译评价标准", kind: "auto" },
+              { en: "Check response", zh: "检查回答", kind: "verify" }
             ]
           },
           {
             number: "02",
-            title: { en: "Method audit", zh: "方法审计" },
-            note: { en: "RL, not prompting", zh: "区分 RL 与提示工程" },
+            title: { en: "Replay", zh: "反事实回放" },
+            note: { en: "Hold the response fixed", zh: "固定同一回答" },
             steps: [
-              { en: "Read objective", zh: "读取目标函数", kind: "model" },
-              { en: "Find policy update", zh: "确认策略更新", kind: "verify" },
-              { en: "Locate rewards", zh: "定位奖励信号", kind: "auto" },
-              { en: "Trace replay", zh: "追踪回放机制", kind: "auto" }
+              { en: "Remove one criterion", zh: "移除一个标准", kind: "decision" },
+              { en: "Replay response", zh: "回放同一回答", kind: "auto" },
+              { en: "Compare log-probs", zh: "比较对数概率", kind: "verify" },
+              { en: "Map contrast", zh: "映射差异", kind: "auto" }
             ]
           },
           {
             number: "03",
-            title: { en: "Rank & report", zh: "排序与汇报" },
-            note: { en: "Method plus version", zh: "方法与版本并重" },
+            title: { en: "Optimize", zh: "策略优化" },
+            note: { en: "Turn contrast into dense credit", zh: "将差异转为稠密信用" },
             steps: [
-              { en: "Reject non-RL", zh: "排除非 RL 工作", kind: "decision" },
-              { en: "Compare versions", zh: "比较版本", kind: "verify" },
-              { en: "Summarize method", zh: "总结方法", kind: "model" },
-              { en: "Cite source", zh: "引用来源", kind: "source" },
-              { en: "Present", zh: "返回结果", kind: "auto" }
+              { en: "Normalize weights", zh: "归一化权重", kind: "auto" },
+              { en: "Redistribute advantage", zh: "重分配优势", kind: "auto" },
+              { en: "Update policy", zh: "更新策略", kind: "model" },
+              { en: "Check objective", zh: "检查目标函数", kind: "verify" }
             ]
           }
         ],
         exception: {
-          title: { en: "Version repair", zh: "版本修复" },
-          note: { en: "Preprint chronology", zh: "预印本时间顺序" },
-          status: { en: "Version order repaired", zh: "版本顺序已修正" },
-          metrics: { automated: "12", model: "4", saving: "58%" },
+          title: { en: "Credit repair", zh: "信用修复" },
+          note: { en: "Counterfactual contrast is unstable", zh: "反事实差异不稳定" },
+          status: { en: "Credit path stabilized", zh: "信用链路已稳定" },
+          signals: {
+            harness: { en: "Replay kept", zh: "回放已保留" },
+            verifier: { en: "Re-checked", zh: "已复核" },
+            recovery: { en: "Triggered", zh: "已触发" }
+          },
           steps: [
-            { en: "Version drift", zh: "版本时间漂移", kind: "error" },
-            { en: "Refresh metadata", zh: "刷新元数据", kind: "source" },
-            { en: "Diff revisions", zh: "比较修订记录", kind: "auto" },
-            { en: "Resolve chronology", zh: "判断版本先后", kind: "model" }
+            { en: "Unstable contrast", zh: "差异不稳定", kind: "error" },
+            { en: "Inspect outliers", zh: "检查异常值", kind: "model" },
+            { en: "Bound weights", zh: "约束权重", kind: "auto" },
+            { en: "Re-check objective", zh: "重新检查目标", kind: "verify" }
+          ]
+        }
+      },
+      adapt: {
+        theme: "adapt",
+        prompt: { en: "Solve a new task without a hand-written workflow", zh: "在没有人工工作流的情况下解决新任务" },
+        strategy: {
+          icon: "fa-code-branch",
+          title: { en: "Self-constructed task harness", zh: "自主构建任务 harness" },
+          path: { en: "inspect → build tools → monitor → revise", zh: "检查 → 构建工具 → 监控 → 修订" }
+        },
+        resultLabel: { en: "Research direction", zh: "研究方向" },
+        resultKind: "vision",
+        resultIcon: "fa-compass",
+        result: {
+          en: "Toward self-improving task harnesses",
+          zh: "走向可自我改进的任务 Harness"
+        },
+        target: null,
+        interest: null,
+        signals: {
+          harness: { en: "Assembled", zh: "已组装" },
+          verifier: { en: "Monitoring", zh: "监控中" },
+          recovery: { en: "Standby", zh: "待命" }
+        },
+        rounds: [
+          {
+            number: "01",
+            title: { en: "Inspect", zh: "检查环境" },
+            note: { en: "Understand task and resources", zh: "理解任务与可用资源" },
+            steps: [
+              { en: "Parse task", zh: "解析任务", kind: "model" },
+              { en: "Inventory resources", zh: "盘点资源", kind: "source" },
+              { en: "Identify gaps", zh: "识别能力缺口", kind: "decision" },
+              { en: "Define checks", zh: "定义检查项", kind: "verify" }
+            ]
+          },
+          {
+            number: "02",
+            title: { en: "Build", zh: "构建 Harness" },
+            note: { en: "Create only what the task needs", zh: "只构建任务所需组件" },
+            steps: [
+              { en: "Write tools", zh: "编写工具", kind: "model" },
+              { en: "Test sandbox", zh: "测试沙盒", kind: "verify" },
+              { en: "Compose workflow", zh: "组合工作流", kind: "auto" },
+              { en: "Set stop conditions", zh: "设置停止条件", kind: "decision" }
+            ]
+          },
+          {
+            number: "03",
+            title: { en: "Operate", zh: "运行与改进" },
+            note: { en: "Automate, inspect, and revise", zh: "自动化、检查并修订" },
+            steps: [
+              { en: "Run workflow", zh: "运行工作流", kind: "auto" },
+              { en: "Inspect uncertainty", zh: "检查不确定性", kind: "model" },
+              { en: "Verify outputs", zh: "验证输出", kind: "verify" },
+              { en: "Revise harness", zh: "修订 Harness", kind: "decision" }
+            ]
+          }
+        ],
+        exception: {
+          title: { en: "Harness recovery", zh: "Harness 恢复" },
+          note: { en: "A generated tool fails", zh: "生成的工具发生故障" },
+          status: { en: "Harness reconfigured", zh: "Harness 已重新配置" },
+          signals: {
+            harness: { en: "Reconfigured", zh: "已重构" },
+            verifier: { en: "Re-checked", zh: "已复核" },
+            recovery: { en: "Triggered", zh: "已触发" }
+          },
+          steps: [
+            { en: "Tool failure", zh: "工具故障", kind: "error" },
+            { en: "Localize cause", zh: "定位原因", kind: "model" },
+            { en: "Patch or replace", zh: "修补或替换", kind: "auto" },
+            { en: "Replay affected stage", zh: "重放受影响阶段", kind: "verify" }
           ]
         }
       }
@@ -532,6 +578,17 @@
       zhNode.textContent = zh;
       node.appendChild(enNode);
       node.appendChild(zhNode);
+    }
+
+    function updateAriaLabels() {
+      var zh = currentLanguage() === "zh";
+      closeButton.setAttribute("aria-label", zh ? "关闭 Agent Harness Lab" : "Close Agent Harness Lab");
+      taskGroup.setAttribute("aria-label", zh ? "Harness 场景" : "Harness scenario");
+      resultButton.setAttribute("aria-label", zh ? "打开相关论文" : "Open related paper");
+      resultButton.setAttribute("title", zh ? "打开相关论文" : "Open related paper");
+      rounds.querySelectorAll(".workflow-round__nodes").forEach(function (node) {
+        node.setAttribute("aria-label", zh ? node.dataset.ariaZh : node.dataset.ariaEn);
+      });
     }
 
     function clearTimers() {
@@ -591,6 +648,9 @@
 
       var nodes = document.createElement("div");
       nodes.className = "workflow-round__nodes";
+      nodes.tabIndex = 0;
+      nodes.dataset.ariaEn = definition.title.en + " workflow steps";
+      nodes.dataset.ariaZh = definition.title.zh + "步骤";
       definition.steps.forEach(function (step, index) {
         if (index > 0) {
           var arrow = document.createElement("i");
@@ -614,6 +674,7 @@
       task.rounds.forEach(function (definition, roundIndex) {
         rounds.appendChild(createRoundRow(definition, roundIndex, false));
       });
+      updateAriaLabels();
     }
 
     function resetDemo() {
@@ -624,9 +685,12 @@
       runButton.disabled = false;
       exceptionButton.disabled = true;
       result.hidden = true;
-      automatedMetric.textContent = "--";
-      modelMetric.textContent = "--";
-      savingMetric.textContent = "--";
+      resultButton.hidden = !task.target;
+      result.classList.toggle("is-vision", task.resultKind === "vision");
+      resultIcon.className = "fas " + task.resultIcon;
+      setLocalizedText(harnessStatus, "Pending", "待构建");
+      setLocalizedText(verifierStatus, "Pending", "待接入");
+      setLocalizedText(recoveryStatus, "Standby", "待命");
       setLocalizedText(status, "Ready", "就绪");
       setLocalizedText(taskPrompt, task.prompt.en, task.prompt.zh);
       setLocalizedText(strategyTitle, task.strategy.title.en, task.strategy.title.zh);
@@ -650,7 +714,7 @@
       var task = tasks[selectedTask];
       resetDemo();
       runButton.disabled = true;
-      setLocalizedText(status, "Compiling", "编译中");
+      setLocalizedText(status, "Playing scenario", "正在播放场景");
       var nodes = Array.prototype.slice.call(rounds.querySelectorAll("[data-workflow-node]"));
       var activeRound = -1;
 
@@ -684,11 +748,12 @@
           row.classList.remove("is-current");
           row.classList.add("is-complete");
         });
-        automatedMetric.textContent = task.metrics.automated;
-        modelMetric.textContent = task.metrics.model;
-        savingMetric.textContent = task.metrics.saving;
-        setLocalizedText(status, "Workflow ready", "工作流就绪");
-        resultTitle.textContent = task.result;
+        setLocalizedText(harnessStatus, task.signals.harness.en, task.signals.harness.zh);
+        setLocalizedText(verifierStatus, task.signals.verifier.en, task.signals.verifier.zh);
+        setLocalizedText(recoveryStatus, task.signals.recovery.en, task.signals.recovery.zh);
+        setLocalizedText(status, "Harness ready", "Harness 已就绪");
+        setLocalizedText(resultLabel, task.resultLabel.en, task.resultLabel.zh);
+        setLocalizedText(resultTitle, task.result.en, task.result.zh);
         result.hidden = false;
       }, 250 + nodes.length * 135);
     }
@@ -716,6 +781,7 @@
       var lastRound = lastRow.querySelector(".workflow-round__nodes");
       lastRow.classList.add("is-current");
       rounds.appendChild(lastRow);
+      updateAriaLabels();
 
       schedule(function () {
         var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -743,9 +809,9 @@
         }
         lastRow.classList.remove("is-current");
         lastRow.classList.add("is-complete");
-        automatedMetric.textContent = task.exception.metrics.automated;
-        modelMetric.textContent = task.exception.metrics.model;
-        savingMetric.textContent = task.exception.metrics.saving;
+        setLocalizedText(harnessStatus, task.exception.signals.harness.en, task.exception.signals.harness.zh);
+        setLocalizedText(verifierStatus, task.exception.signals.verifier.en, task.exception.signals.verifier.zh);
+        setLocalizedText(recoveryStatus, task.exception.signals.recovery.en, task.exception.signals.recovery.zh);
         setLocalizedText(status, task.exception.status.en, task.exception.status.zh);
       }, 220 + nodes.length * 320);
     }
@@ -773,6 +839,7 @@
 
     function openResult() {
       var task = tasks[selectedTask];
+      if (!task.target) { return; }
       var targetLink = Array.prototype.slice.call(document.querySelectorAll(".publication-item h3 a")).find(function (link) {
         return link.textContent.indexOf(task.target) !== -1;
       });
@@ -807,7 +874,7 @@
     document.addEventListener("workflow:open", openLab);
     runButton.addEventListener("click", runDemo);
     exceptionButton.addEventListener("click", injectException);
-    lab.querySelector("[data-workflow-open-result]").addEventListener("click", openResult);
+    resultButton.addEventListener("click", openResult);
 
     lab.addEventListener("click", function (event) {
       if (event.target.closest("[data-workflow-close]")) { closeLab(); }
@@ -821,7 +888,7 @@
         return;
       }
       if (event.key === "Tab") {
-        var focusable = Array.prototype.slice.call(dialog.querySelectorAll("button:not([disabled])"));
+        var focusable = Array.prototype.slice.call(dialog.querySelectorAll("button:not([disabled]):not([hidden])"));
         if (!focusable.length) { return; }
         var first = focusable[0];
         var last = focusable[focusable.length - 1];
@@ -839,6 +906,7 @@
       if (event.target.closest(".lang-toggle") && !lab.hidden) {
         window.setTimeout(function () {
           setLocalizedText(taskPrompt, tasks[selectedTask].prompt.en, tasks[selectedTask].prompt.zh);
+          updateAriaLabels();
         }, 0);
       }
     });

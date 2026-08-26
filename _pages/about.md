@@ -24,12 +24,12 @@ redirect_from:
 
 <div class="research-outlook">
   <div class="interest-label"><span class="lang-en">Long-term Interest</span><span class="lang-zh">长期研究兴趣</span></div>
-  <button class="research-outlook__lab" type="button" data-workflow-open title="Open Workflow Lab">
+  <button class="research-outlook__lab" type="button" data-workflow-open title="Open Agent Harness Lab">
     <i class="fas fa-project-diagram" aria-hidden="true"></i>
-    <span class="visually-hidden"><span class="lang-en">Open Workflow Lab</span><span class="lang-zh">打开工作流实验室</span></span>
+    <span class="visually-hidden"><span class="lang-en">Open Agent Harness Lab</span><span class="lang-zh">打开 Agent Harness Lab</span></span>
   </button>
-  <p class="lang-en">My work so far has explored realistic agent tasks, constraint verification, and learning from fine-grained feedback. In the long term, I am interested in <strong>recursive self-improvement (RSI)</strong>: agents that can construct and verify task-specific harnesses, decide when to reason directly and when to rely on automation, and improve those workflows from feedback with minimal human scaffolding.</p>
-  <p class="lang-zh">我过去的工作关注面向真实场景的智能体任务、约束验证与细粒度反馈学习。长期来看，我希望研究<strong>递归式自我改进（RSI）</strong>：让智能体能够针对任务自主构建并验证脚手架，在直接推理与自动化之间作出选择，并根据反馈持续改进工作流，尽量减少人工干预。</p>
+  <p class="lang-en">My current work asks a practical question: how can an agent's work be made verifiable? I study this through realistic tasks, explicit constraints, and fine-grained feedback. In the long term, I want agents to improve not only their answers, but also the way they work: building the right harness for a new task, automating repeatable steps, recognizing when direct reasoning or inspection is needed, and refining the whole process from feedback. I see this as a practical path toward <strong>recursive self-improvement (RSI)</strong>.</p>
+  <p class="lang-zh">我目前关注一个实际问题：如何让智能体的工作变得可验证？我从真实任务、显式约束和细粒度反馈三个角度研究这个问题。长期来看，我希望智能体改进的不只是答案，也包括完成任务的方式：面对新任务时自主搭建合适的 harness，将重复步骤自动化，判断何时需要直接推理或检查，并根据反馈持续改进整个过程。我把这看作走向<strong>递归式自我改进（RSI）</strong>的一条实际路径。</p>
 </div>
 
 <p class="lang-en">I will begin my Ph.D. study in September 2026 under the supervision of Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>, a member of the LAMDA Group led by Prof. <a href="https://cs.nju.edu.cn/zhouzh/">Zhi-Hua Zhou</a>.</p>
@@ -78,6 +78,7 @@ redirect_from:
       </div>
       <p class="experience-role"><span class="lang-en">LLM Algorithm Intern</span><span class="lang-zh">大模型算法实习生</span></p>
       <p class="experience-team"><span class="lang-en">Douyin E-commerce</span><span class="lang-zh">抖音电商</span></p>
+      <p class="experience-detail"><span class="lang-en">Training and exploratory work in LLM reinforcement learning and agentic RL.</span><span class="lang-zh">参与大模型强化学习与 Agentic RL 的训练及探索性工作。</span></p>
     </div>
   </article>
 </div>

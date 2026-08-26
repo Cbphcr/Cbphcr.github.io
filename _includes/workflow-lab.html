@@ -3,10 +3,10 @@
   <section class="workflow-lab__dialog" role="dialog" aria-modal="true" aria-labelledby="workflow-lab-title">
     <header class="workflow-lab__header">
       <div>
-        <span class="workflow-lab__kicker"><i class="fas fa-project-diagram" aria-hidden="true"></i><span class="lang-en">Concept Demo</span><span class="lang-zh">概念演示</span></span>
-        <h2 id="workflow-lab-title">Workflow Lab</h2>
+        <span class="workflow-lab__kicker"><i class="fas fa-project-diagram" aria-hidden="true"></i><span class="lang-en">Interactive Research Sketch</span><span class="lang-zh">交互式研究构想</span></span>
+        <h2 id="workflow-lab-title">Agent Harness Lab</h2>
       </div>
-      <button class="workflow-lab__close" type="button" data-workflow-close aria-label="Close Workflow Lab" title="Close">
+      <button class="workflow-lab__close" type="button" data-workflow-close aria-label="Close Agent Harness Lab" title="Close">
         <i class="fas fa-times" aria-hidden="true"></i>
       </button>
     </header>
@@ -18,14 +18,14 @@
           <strong data-workflow-task-prompt></strong>
         </div>
         <div class="workflow-lab__task-options" role="group" aria-label="Workflow task">
-          <button type="button" data-workflow-task="constraints" aria-pressed="true"><i class="fas fa-check-double" aria-hidden="true"></i><span class="lang-en">Constraints</span><span class="lang-zh">约束论文</span></button>
-          <button type="button" data-workflow-task="award" aria-pressed="false"><i class="fas fa-award" aria-hidden="true"></i><span class="lang-en">Award</span><span class="lang-zh">获奖论文</span></button>
-          <button type="button" data-workflow-task="rl" aria-pressed="false"><i class="fas fa-sync-alt" aria-hidden="true"></i><span class="lang-en">Latest RL</span><span class="lang-zh">最新 RL</span></button>
+          <button type="button" data-workflow-task="planning" aria-pressed="true"><i class="fas fa-map-marked-alt" aria-hidden="true"></i><span class="lang-en">Plan</span><span class="lang-zh">真实规划</span></button>
+          <button type="button" data-workflow-task="credit" aria-pressed="false"><i class="fas fa-coins" aria-hidden="true"></i><span class="lang-en">Learn</span><span class="lang-zh">反馈学习</span></button>
+          <button type="button" data-workflow-task="adapt" aria-pressed="false"><i class="fas fa-code-branch" aria-hidden="true"></i><span class="lang-en">Adapt</span><span class="lang-zh">任务适应</span></button>
         </div>
         <div class="workflow-lab__strategy">
           <span class="workflow-lab__strategy-icon"><i class="fas fa-code-branch" data-workflow-strategy-icon aria-hidden="true"></i></span>
           <span class="workflow-lab__strategy-copy">
-            <small><span class="lang-en">Execution mode</span><span class="lang-zh">执行模式</span></small>
+            <small><span class="lang-en">Harness design</span><span class="lang-zh">Harness 设计</span></small>
             <strong data-workflow-strategy-title></strong>
           </span>
           <span class="workflow-lab__strategy-path" data-workflow-strategy-path></span>
@@ -34,22 +34,22 @@
 
       <section class="workflow-lab__process" aria-labelledby="workflow-process-label">
         <div class="workflow-lab__section-head">
-          <span id="workflow-process-label"><span class="lang-en">Task stream</span><span class="lang-zh">任务流</span></span>
-          <span class="workflow-lab__status" data-workflow-status><span class="lang-en">Ready</span><span class="lang-zh">就绪</span></span>
+          <span id="workflow-process-label"><span class="lang-en">Harness construction</span><span class="lang-zh">Harness 构建过程</span></span>
+          <span class="workflow-lab__status" data-workflow-status role="status" aria-live="polite"><span class="lang-en">Ready</span><span class="lang-zh">就绪</span></span>
         </div>
-        <div class="workflow-lab__rounds" data-workflow-rounds aria-live="polite"></div>
+        <div class="workflow-lab__rounds" data-workflow-rounds></div>
       </section>
 
       <div class="workflow-lab__metrics" aria-live="polite">
-        <div><strong data-workflow-automated>0</strong><span class="lang-en">automated steps</span><span class="lang-zh">自动化步骤</span></div>
-        <div><strong data-workflow-model>5</strong><span class="lang-en">model interventions</span><span class="lang-zh">模型介入</span></div>
-        <div><strong data-workflow-saving>0%</strong><span class="lang-en">estimated saving</span><span class="lang-zh">预计节省</span></div>
+        <div><strong data-workflow-harness>--</strong><span class="lang-en">harness</span><span class="lang-zh">任务脚手架</span></div>
+        <div><strong data-workflow-verifier>--</strong><span class="lang-en">verification</span><span class="lang-zh">验证机制</span></div>
+        <div><strong data-workflow-recovery>--</strong><span class="lang-en">recovery</span><span class="lang-zh">异常恢复</span></div>
       </div>
 
       <div class="workflow-lab__result" data-workflow-result hidden>
-        <i class="fas fa-check-circle" aria-hidden="true"></i>
+        <i class="fas fa-check-circle" data-workflow-result-icon aria-hidden="true"></i>
         <div>
-          <small><span class="lang-en">Result verified</span><span class="lang-zh">结果已验证</span></small>
+          <small data-workflow-result-label><span class="lang-en">Related work</span><span class="lang-zh">相关工作</span></small>
           <strong data-workflow-result-title></strong>
         </div>
         <button type="button" data-workflow-open-result aria-label="Open matching paper" title="Open matching paper">
@@ -60,10 +60,10 @@
 
     <footer class="workflow-lab__actions">
       <button class="workflow-lab__exception" type="button" data-workflow-exception disabled>
-        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i><span class="lang-en">Inject exception</span><span class="lang-zh">注入异常</span>
+        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i><span class="lang-en">Show recovery path</span><span class="lang-zh">展示恢复路径</span>
       </button>
       <button class="workflow-lab__run" type="button" data-workflow-run>
-        <i class="fas fa-play" aria-hidden="true"></i><span class="lang-en">Compile workflow</span><span class="lang-zh">编译工作流</span>
+        <i class="fas fa-play" aria-hidden="true"></i><span class="lang-en">Play scenario</span><span class="lang-zh">播放场景</span>
       </button>
     </footer>
   </section>

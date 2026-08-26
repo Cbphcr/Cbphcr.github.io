@@ -726,6 +726,34 @@ h3[id] {
     line-height: 1.2;
 }
 
+.paper-affiliation {
+    display: inline-flex;
+    min-height: 1.4rem;
+    align-items: center;
+    gap: .32rem;
+    padding: .1rem .5rem;
+    border: 1px solid rgba(67, 137, 239, .24);
+    border-radius: 7px;
+    background: rgba(67, 137, 239, .075);
+    color: #31579d;
+    font-size: .7em;
+    font-weight: 750;
+    line-height: 1.2;
+    text-decoration: none;
+
+    img {
+        width: 1rem;
+        height: 1rem;
+        object-fit: contain;
+    }
+
+    &:hover {
+        border-color: rgba(67, 137, 239, .42);
+        background: rgba(67, 137, 239, .12);
+        color: #244783;
+    }
+}
+
 .venue-badge {
     background: linear-gradient(135deg, var(--accent), #2fb6d2);
     color: #fff;
@@ -1044,6 +1072,14 @@ h3[id] {
     color: var(--text-muted);
     font-size: .9em;
     line-height: 1.45;
+}
+
+.experience-detail {
+    max-width: 46rem;
+    margin: .35rem 0 0;
+    color: var(--text-muted);
+    font-size: .88em;
+    line-height: 1.5;
 }
 
 .education-list {
@@ -1899,7 +1935,7 @@ body.command-palette-open {
 }
 
 /* ==========================================================================
-   Workflow Lab concept demo
+   Agent Harness Lab concept demo
    ========================================================================== */
 
 body.workflow-lab-open {
@@ -1933,25 +1969,25 @@ body.workflow-lab-open {
     }
 }
 
-.workflow-lab[data-workflow-theme="constraints"] {
+.workflow-lab[data-workflow-theme="planning"] {
     --workflow-accent: #23845b;
     --workflow-accent-strong: #176643;
     --workflow-tint: rgba(46, 170, 110, .11);
     --workflow-border: rgba(46, 170, 110, .38);
 }
 
-.workflow-lab[data-workflow-theme="award"] {
-    --workflow-accent: #ad2450;
-    --workflow-accent-strong: #86163b;
-    --workflow-tint: rgba(173, 36, 80, .09);
-    --workflow-border: rgba(173, 36, 80, .32);
+.workflow-lab[data-workflow-theme="credit"] {
+    --workflow-accent: #b8770b;
+    --workflow-accent-strong: #815106;
+    --workflow-tint: rgba(224, 148, 15, .11);
+    --workflow-border: rgba(224, 148, 15, .36);
 }
 
-.workflow-lab[data-workflow-theme="rl"] {
-    --workflow-accent: #a56709;
-    --workflow-accent-strong: #7d4c05;
-    --workflow-tint: rgba(224, 148, 15, .12);
-    --workflow-border: rgba(224, 148, 15, .38);
+.workflow-lab[data-workflow-theme="adapt"] {
+    --workflow-accent: #3c68b1;
+    --workflow-accent-strong: #294f8d;
+    --workflow-tint: rgba(60, 104, 177, .1);
+    --workflow-border: rgba(60, 104, 177, .34);
 }
 
 .workflow-lab__backdrop {
@@ -2032,6 +2068,10 @@ body.workflow-lab-open {
     }
 }
 
+.workflow-lab__result button[hidden] {
+    display: none;
+}
+
 .workflow-lab__body {
     overflow-y: auto;
     padding: 1rem;
@@ -2102,16 +2142,16 @@ body.workflow-lab-open {
         }
     }
 
-    [data-workflow-task="constraints"] i {
+    [data-workflow-task="planning"] i {
         color: var(--nesy-text);
     }
 
-    [data-workflow-task="award"] i {
-        color: #ad2450;
+    [data-workflow-task="credit"] i {
+        color: var(--rl-text);
     }
 
-    [data-workflow-task="rl"] i {
-        color: var(--rl-text);
+    [data-workflow-task="adapt"] i {
+        color: #3c68b1;
     }
 }
 
@@ -2284,6 +2324,11 @@ body.workflow-lab-open {
     padding: .72rem;
     overflow-x: auto;
     scrollbar-width: thin;
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: inset 0 0 0 2px var(--workflow-border);
+    }
 }
 
 .workflow-round__arrow {
@@ -2371,7 +2416,7 @@ body.workflow-lab-open {
     }
 
     &.is-pending {
-        opacity: .3;
+        opacity: .58;
     }
 
     &.is-active {
@@ -2467,6 +2512,16 @@ body.workflow-lab-open {
         line-height: 1.25;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+}
+
+.workflow-lab__result.is-vision {
+    border-color: var(--workflow-border);
+    background: var(--workflow-tint);
+
+    > i,
+    small {
+        color: var(--workflow-accent-strong);
     }
 }
 
