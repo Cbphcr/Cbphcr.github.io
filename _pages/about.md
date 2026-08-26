@@ -28,8 +28,8 @@ redirect_from:
     <i class="fas fa-project-diagram" aria-hidden="true"></i>
     <span class="visually-hidden"><span class="lang-en">Open Workflow Lab</span><span class="lang-zh">打开工作流实验室</span></span>
   </button>
-  <p class="lang-en">My work so far has explored realistic agent tasks, constraint verification, and learning from fine-grained feedback. In the long term, I am interested in <strong>self-automating agents</strong> that can build, verify, and continuously improve their own workflows with minimal task-specific human scaffolding.</p>
-  <p class="lang-zh">我过去的工作关注面向真实场景的智能体任务、约束验证与细粒度反馈学习。长期来看，我希望研究能够自主构建、验证并持续改进自身工作流的智能体，尽量减少针对具体任务的人工脚手架。</p>
+  <p class="lang-en">My work so far has explored realistic agent tasks, constraint verification, and learning from fine-grained feedback. In the long term, I am interested in <strong>recursive self-improvement (RSI)</strong>: agents that can construct and verify task-specific harnesses, decide when to reason directly and when to rely on automation, and improve those workflows from feedback with minimal human scaffolding.</p>
+  <p class="lang-zh">我过去的工作关注面向真实场景的智能体任务、约束验证与细粒度反馈学习。长期来看，我希望研究<strong>递归式自我改进（RSI）</strong>：让智能体能够针对任务自主构建并验证脚手架，在直接推理与自动化之间作出选择，并根据反馈持续改进工作流，尽量减少人工干预。</p>
 </div>
 
 <p class="lang-en">I will begin my Ph.D. study in September 2026 under the supervision of Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>, a member of the LAMDA Group led by Prof. <a href="https://cs.nju.edu.cn/zhouzh/">Zhi-Hua Zhou</a>.</p>

@@ -134,7 +134,7 @@
           href: "#",
           type: "command",
           action: "workflow",
-          keywords: "/automate automate workflow lab self-automating harness 自动化 工作流 实验室"
+          keywords: "/automate automate workflow lab rsi recursive self-improvement harness 自动化 工作流 递归式自我改进 实验室"
         }
       ].forEach(function (item) {
         if (!seen[item.href]) { items.push(item); }

@@ -392,6 +392,17 @@ h3[id] {
     }
 }
 
+.project-card--illustrated {
+    display: grid;
+    grid-template-columns: minmax(210px, 30%) minmax(0, 1fr);
+    align-items: start;
+    gap: 1.15rem;
+}
+
+.project-copy {
+    min-width: 0;
+}
+
 .interest-tag--nesy {
     border: 1px solid var(--nesy-border);
     background: var(--nesy-bg);
@@ -651,6 +662,47 @@ h3[id] {
     .authors {
         color: var(--text-muted);
         line-height: 1.5;
+    }
+}
+
+.publication-item--illustrated {
+    display: grid;
+    grid-template-columns: minmax(210px, 30%) minmax(0, 1fr);
+    align-items: start;
+    gap: 1.15rem;
+}
+
+.publication-copy {
+    min-width: 0;
+}
+
+.paper-figure {
+    position: relative;
+    display: block;
+    aspect-ratio: 8 / 5;
+    overflow: hidden;
+    border: 1px solid var(--border-2);
+    border-radius: 8px;
+    background: #f8fafc;
+    box-shadow: var(--shadow-1);
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s cubic-bezier(.22, .61, .36, 1);
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .25s cubic-bezier(.22, .61, .36, 1);
+    }
+
+    &:hover {
+        border-color: var(--accent-border);
+        box-shadow: var(--shadow-2);
+        transform: translateY(-2px);
+
+        img {
+            transform: scale(1.012);
+        }
     }
 }
 
@@ -1329,6 +1381,20 @@ h3[id] {
 
     .publication-item {
         padding: 1rem;
+    }
+
+    .publication-item--illustrated {
+        grid-template-columns: 1fr;
+        gap: .85rem;
+    }
+
+    .paper-figure {
+        width: 100%;
+    }
+
+    .project-card--illustrated {
+        grid-template-columns: 1fr;
+        gap: .85rem;
     }
 
     .experience-card {
