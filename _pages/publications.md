@@ -3,6 +3,7 @@ permalink: /publications/
 title: "Publications"
 excerpt: "Publications by Bo-Wen Zhang"
 author_profile: true
+wide: true
 ---
 
 # <span class="lang-en">Publications</span><span class="lang-zh">论文</span>

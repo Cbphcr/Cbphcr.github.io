@@ -33,6 +33,7 @@
 @import "page";
 @import "archive";
 @import "sidebar";
+@import "research";
 
 @import "vendor/font-awesome/fontawesome";
 @import "vendor/font-awesome/solid";
@@ -100,6 +101,12 @@
 
 html {
     background-color: var(--bg);
+}
+
+@include breakpoint($x-large) {
+    #main.main--wide {
+        max-width: 1440px;
+    }
 }
 
 a {
@@ -355,6 +362,18 @@ h3[id] {
     }
 }
 
+.research-outlook__paragraph {
+    margin-top: .2rem;
+
+    & + & {
+        margin-top: .55rem;
+    }
+
+    p {
+        margin: 0;
+    }
+}
+
 .research-outlook__lab {
     position: absolute;
     top: .72rem;
@@ -376,6 +395,26 @@ h3[id] {
         background: var(--accent-tint);
         box-shadow: var(--shadow-2);
         transform: translateY(-2px);
+    }
+}
+
+.research-outlook__link {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    margin-top: .55rem;
+    color: var(--accent-strong);
+    font-size: .82em;
+    font-weight: 800;
+    text-decoration: none !important;
+
+    i {
+        font-size: .8em;
+        transition: transform .18s ease;
+    }
+
+    &:hover i {
+        transform: translateX(3px);
     }
 }
 

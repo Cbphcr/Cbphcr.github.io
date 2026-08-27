@@ -3,6 +3,7 @@ permalink: /
 title: ""
 excerpt: ""
 author_profile: true
+wide: true
 redirect_from:
   - /about/
   - /about.html
@@ -28,8 +29,11 @@ redirect_from:
     <i class="fas fa-project-diagram" aria-hidden="true"></i>
     <span class="visually-hidden"><span class="lang-en">Open Agent Harness Lab</span><span class="lang-zh">打开 Agent Harness Lab</span></span>
   </button>
-  <p class="lang-en">My current work asks a practical question: how can an agent's work be made verifiable? I study this through realistic tasks, explicit constraints, and fine-grained feedback. In the long term, I want agents to improve not only their answers, but also the way they work: building the right harness for a new task, automating repeatable steps, recognizing when direct reasoning or inspection is needed, and refining the whole process from feedback. I see this as a practical path toward <strong>recursive self-improvement (RSI)</strong>.</p>
-  <p class="lang-zh">我目前关注一个实际问题：如何让智能体的工作变得可验证？我从真实任务、显式约束和细粒度反馈三个角度研究这个问题。长期来看，我希望智能体改进的不只是答案，也包括完成任务的方式：面对新任务时自主搭建合适的 harness，将重复步骤自动化，判断何时需要直接推理或检查，并根据反馈持续改进整个过程。我把这看作走向<strong>递归式自我改进（RSI）</strong>的一条实际路径。</p>
+  <div class="research-outlook__paragraph">
+    <p class="lang-en">In the long term, I hope agents can improve not only their answers, but also the way they work: building an appropriate harness for a new task, automating repeatable steps, recognizing when direct reasoning or inspection is needed, and refining the whole process from feedback. I see this as a possible practical route toward <strong>recursive self-improvement (RSI)</strong>.</p>
+    <p class="lang-zh">长期来看，我希望智能体改进的不只是答案，也包括完成任务的方式：面对新任务时自主搭建合适的 harness，将重复步骤自动化，判断何时需要直接推理或检查，并根据反馈持续改进整个过程。我把这看作走向<strong>递归式自我改进（RSI）</strong>的一条可能的实践路径。</p>
+  </div>
+  <a class="research-outlook__link" href="/research/"><span class="lang-en">Read the questions behind this direction</span><span class="lang-zh">阅读这一方向背后的研究问题</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </div>
 
 <p class="lang-en">I will begin my Ph.D. study in September 2026 under the supervision of Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>, a member of the LAMDA Group led by Prof. <a href="https://cs.nju.edu.cn/zhouzh/">Zhi-Hua Zhou</a>.</p>

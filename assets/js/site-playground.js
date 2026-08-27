@@ -114,6 +114,12 @@
       });
 
       [
+        {
+          title: currentLanguage() === "zh" ? "研究问题与经验闭环" : "Research questions and the experience loop",
+          href: "/research/",
+          type: "section",
+          keywords: "research vision experience environment evaluation attribution learning rsi 研究 问题 经验 环境 评价 归因 学习"
+        },
         { title: "GitHub · Cbphcr", href: "https://github.com/Cbphcr", type: "profile" },
         { title: "Google Scholar", href: "https://scholar.google.com/citations?user=_NHh89YAAAAJ&hl=en", type: "profile" },
         {

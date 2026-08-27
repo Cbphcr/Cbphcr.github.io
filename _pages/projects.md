@@ -3,6 +3,7 @@ permalink: /projects/
 title: "Projects"
 excerpt: "Projects by Bo-Wen Zhang"
 author_profile: true
+wide: true
 ---
 
 # <span class="lang-en">Projects</span><span class="lang-zh">项目</span>

@@ -4,6 +4,10 @@ main:
     title_zh: "关于我"
     url: "/#about-me"
 
+  - title: "Research"
+    title_zh: "研究"
+    url: "/research/"
+
   - title: "News"
     title_zh: "动态"
     url: "/#news"
