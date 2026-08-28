@@ -1,5 +1,9 @@
 <script src="{{ '/assets/js/main.min.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/site-playground.js' | relative_url }}"></script>
+{% if page.oni_network_lab %}
+<script src="{{ '/assets/lib/cytoscape.min.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/oni-network-lab.js' | relative_url }}"></script>
+{% endif %}
 
 {% include analytics.html %}
 {% include fetch_google_scholar_stats.html %}

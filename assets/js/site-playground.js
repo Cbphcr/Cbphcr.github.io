@@ -141,6 +141,12 @@
           type: "command",
           action: "workflow",
           keywords: "/automate automate workflow lab rsi recursive self-improvement harness 自动化 工作流 递归式自我改进 实验室"
+        },
+        {
+          title: currentLanguage() === "zh" ? "打开管网诊断实验台" : "Open Network Diagnostics Lab",
+          href: "/oni-network/",
+          type: "command",
+          keywords: "network diagnostics oxygen not included oni gas liquid power flow pipes capacity 缺氧 管网 气体 液体 电力 流量 容量"
         }
       ].forEach(function (item) {
         if (!seen[item.href]) { items.push(item); }
