@@ -120,6 +120,60 @@
           type: "section",
           keywords: "research vision experience environment evaluation attribution learning rsi 研究 问题 经验 环境 评价 归因 学习"
         },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8-Flash-Next 架构笔记 · 总览" : "Qwen3.8-Flash-Next architecture notes · overview",
+          href: "/notes/qwen3.8-flash-next/",
+          type: "note",
+          keywords: "qwen qwen3.8 flash next embedding attention qsa gdn norm rmsnorm ffn moe output mtp residual optimizer muon 架构 笔记"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8 · Embedding：从 Token Lookup 到条件记忆" : "Qwen3.8 · Embedding and conditional memory",
+          href: "/notes/qwen3.8-flash-next/embedding/",
+          type: "note",
+          keywords: "qwen embedding ngram n-gram host memory lookup table conditional memory 词表 查表 条件记忆"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8 · Attention：GDN 与 QSA" : "Qwen3.8 · Attention with GDN and QSA",
+          href: "/notes/qwen3.8-flash-next/attention/",
+          type: "note",
+          keywords: "qwen attention gated deltanet gdn qsa sparse attention linear attention 稀疏注意力 线性注意力"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8 · Norm：Zero-Centered RMSNorm" : "Qwen3.8 · Zero-Centered RMSNorm",
+          href: "/notes/qwen3.8-flash-next/norm/",
+          type: "note",
+          keywords: "qwen norm normalization rmsnorm zero centered pre norm layernorm 归一化"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8 · FFN：Ultra-Sparse MoE" : "Qwen3.8 · Ultra-Sparse MoE",
+          href: "/notes/qwen3.8-flash-next/ffn/",
+          type: "note",
+          keywords: "qwen ffn moe experts router swiglu shared expert load balance 专家 路由"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8 · Output：MTP 与投机解码" : "Qwen3.8 · MTP and speculative decoding",
+          href: "/notes/qwen3.8-flash-next/output/",
+          type: "note",
+          keywords: "qwen output lm head mtp multi token prediction speculative decoding 投机解码 多词预测"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8 · Residual：Gated Residual" : "Qwen3.8 · Gated Residual",
+          href: "/notes/qwen3.8-flash-next/residual/",
+          type: "note",
+          keywords: "qwen residual gated residual gr hyper connections mhc altup 残差 多分支"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8 · Optimizer：Muon 与 AdamW" : "Qwen3.8 · Muon and AdamW",
+          href: "/notes/qwen3.8-flash-next/optimizer/",
+          type: "note",
+          keywords: "qwen optimizer muon adam adamw newton schulz polar express canzona 优化器 正交化"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Qwen3.8 · 参考文献" : "Qwen3.8 · References",
+          href: "/notes/qwen3.8-flash-next/references/",
+          type: "note",
+          keywords: "qwen references bibliography citations 参考文献 引用"
+        },
         { title: "GitHub · Cbphcr", href: "https://github.com/Cbphcr", type: "profile" },
         { title: "Google Scholar", href: "https://scholar.google.com/citations?user=_NHh89YAAAAJ&hl=en", type: "profile" },
         {
@@ -159,8 +213,8 @@
 
     function typeLabel(type) {
       var labels = {
-        en: { section: "Section", paper: "Paper", project: "Project", profile: "Profile", command: "Command" },
-        zh: { section: "章节", paper: "论文", project: "项目", profile: "主页", command: "命令" }
+        en: { section: "Section", paper: "Paper", project: "Project", note: "Note", profile: "Profile", command: "Command" },
+        zh: { section: "章节", paper: "论文", project: "项目", note: "笔记", profile: "主页", command: "命令" }
       };
       return labels[currentLanguage()][type];
     }
@@ -205,7 +259,7 @@
         link.dataset.index = index;
 
         var icon = document.createElement("i");
-        icon.className = "fas " + ({ section: "fa-hashtag", paper: "fa-file-alt", project: "fa-code-branch", profile: "fa-user", command: "fa-terminal" }[item.type]);
+        icon.className = "fas " + ({ section: "fa-hashtag", paper: "fa-file-alt", project: "fa-code-branch", note: "fa-sticky-note", profile: "fa-user", command: "fa-terminal" }[item.type]);
         icon.setAttribute("aria-hidden", "true");
 
         var title = document.createElement("span");

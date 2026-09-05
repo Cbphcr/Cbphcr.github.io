@@ -1,0 +1,19 @@
+  </div>
+
+  <nav class="qwen-series__pagination" aria-label="章节翻页">
+    {% if page.note_prev_url %}
+      <a class="qwen-series__page-link qwen-series__page-link--prev" href="{{ page.note_prev_url | relative_url }}">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        <span><small>上一章</small><strong>{{ page.note_prev_label }}</strong></span>
+      </a>
+    {% else %}
+      <span></span>
+    {% endif %}
+    {% if page.note_next_url %}
+      <a class="qwen-series__page-link qwen-series__page-link--next" href="{{ page.note_next_url | relative_url }}">
+        <span><small>下一章</small><strong>{{ page.note_next_label }}</strong></span>
+        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+      </a>
+    {% endif %}
+  </nav>
+</article>

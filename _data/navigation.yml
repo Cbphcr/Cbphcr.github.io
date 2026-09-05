@@ -8,6 +8,10 @@ main:
     title_zh: "研究"
     url: "/research/"
 
+  - title: "Notes"
+    title_zh: "笔记"
+    url: "/notes/"
+
   - title: "News"
     title_zh: "动态"
     url: "/#news"

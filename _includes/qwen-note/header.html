@@ -1,0 +1,30 @@
+<article class="qwen-series qwen-series--{{ page.note_chapter | default: 'overview' }}">
+  <header class="qwen-series__header">
+    <a class="qwen-series__back" href="{{ '/notes/' | relative_url }}">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      <span>全部笔记</span>
+    </a>
+    <div class="qwen-series__heading">
+      <p class="qwen-series__eyebrow">{{ site.data.qwen38.title }} · {{ page.note_number }}</p>
+      <h1>{{ page.note_heading }}</h1>
+      {% if page.note_description %}<p class="qwen-series__description">{{ page.note_description }}</p>{% endif %}
+    </div>
+    <div class="qwen-series__meta">
+      <time datetime="{{ site.data.qwen38.updated_iso }}">更新于 {{ site.data.qwen38.updated }}</time>
+      <span><i class="fas fa-language" aria-hidden="true"></i>中文草稿</span>
+      <span>本笔记由 GPT-5.6-Sol 和 GPT-6-Astra 混合撰写。</span>
+      <a href="https://qwen.ai/blog?id=qwen3.8-flash-next" rel="noopener" target="_blank"><i class="fas fa-external-link-alt" aria-hidden="true"></i>官方博客</a>
+      <a href="https://github.com/QwenLM/Qwen3.8-Flash-Next/blob/main/tech_report.pdf" rel="noopener" target="_blank"><i class="fas fa-file-alt" aria-hidden="true"></i>技术报告</a>
+    </div>
+  </header>
+
+  <nav class="qwen-series__chapters" aria-label="Qwen3.8-Flash-Next 笔记章节">
+    {% for chapter in site.data.qwen38.chapters %}
+      <a href="{{ chapter.url | relative_url }}"{% if page.note_chapter == chapter.id %} class="is-current" aria-current="page"{% endif %} title="{{ chapter.label }}">
+        <span>{{ chapter.number }}</span>
+        <strong>{{ chapter.short }}</strong>
+      </a>
+    {% endfor %}
+  </nav>
+
+  <div class="qwen-series__content">

@@ -1,0 +1,59 @@
+title: Qwen3.8-Flash-Next 架构笔记
+short_title: Qwen3.8-Flash-Next
+updated: 2026.09.05
+updated_iso: "2026-09-05"
+chapters:
+  - id: overview
+    number: "00"
+    label: 总览
+    short: 总览
+    url: /notes/qwen3.8-flash-next/
+    icon: fa-sitemap
+  - id: embedding
+    number: "01"
+    label: Embedding：从 Token Lookup 到条件记忆
+    short: Embedding
+    url: /notes/qwen3.8-flash-next/embedding/
+    icon: fa-layer-group
+  - id: attention
+    number: "02"
+    label: Attention：压缩记忆与稀疏召回
+    short: Attention
+    url: /notes/qwen3.8-flash-next/attention/
+    icon: fa-project-diagram
+  - id: norm
+    number: "03"
+    label: Norm：稳定残差流的尺度
+    short: Norm
+    url: /notes/qwen3.8-flash-next/norm/
+    icon: fa-balance-scale
+  - id: ffn
+    number: "04"
+    label: FFN：从 Dense SwiGLU 到 Ultra-Sparse MoE
+    short: FFN / MoE
+    url: /notes/qwen3.8-flash-next/ffn/
+    icon: fa-random
+  - id: output
+    number: "05"
+    label: Output：从 Next-Token Head 到 MTP
+    short: Output / MTP
+    url: /notes/qwen3.8-flash-next/output/
+    icon: fa-forward
+  - id: residual
+    number: "06"
+    label: Residual：从单流到 Gated Residual
+    short: Residual
+    url: /notes/qwen3.8-flash-next/residual/
+    icon: fa-stream
+  - id: optimizer
+    number: "07"
+    label: Optimizer：Muon、AdamW 与参数分工
+    short: Optimizer
+    url: /notes/qwen3.8-flash-next/optimizer/
+    icon: fa-sliders-h
+  - id: references
+    number: "R"
+    label: 参考文献与资料边界
+    short: References
+    url: /notes/qwen3.8-flash-next/references/
+    icon: fa-book
