@@ -1,0 +1,354 @@
+[
+  {
+    "name": "overview",
+    "width": 1440,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 230,
+      "y": 537.78125,
+      "width": 980,
+      "height": 451.8125,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 3
+    }
+  },
+  {
+    "name": "embedding",
+    "width": 1440,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 230,
+      "y": 537.78125,
+      "width": 980,
+      "height": 678.375,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 61
+    }
+  },
+  {
+    "name": "attention",
+    "width": 1440,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 230,
+      "y": 537.78125,
+      "width": 980,
+      "height": 617.96875,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 11
+    }
+  },
+  {
+    "name": "norm",
+    "width": 1440,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 230,
+      "y": 537.78125,
+      "width": 980,
+      "height": 478.171875,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 7
+    }
+  },
+  {
+    "name": "ffn",
+    "width": 1440,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 230,
+      "y": 537.78125,
+      "width": 980,
+      "height": 592.703125,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 3
+    }
+  },
+  {
+    "name": "output",
+    "width": 1440,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 222.5,
+      "y": 537.78125,
+      "width": 980,
+      "height": 613.453125,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 13
+    }
+  },
+  {
+    "name": "residual",
+    "width": 1440,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 222.5,
+      "y": 537.78125,
+      "width": 980,
+      "height": 546.78125,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 8
+    }
+  },
+  {
+    "name": "optimizer",
+    "width": 1440,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 222.5,
+      "y": 537.78125,
+      "width": 980,
+      "height": 546.375,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 9
+    }
+  },
+  {
+    "name": "overview",
+    "width": 390,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 16,
+      "y": 610.8125,
+      "width": 358,
+      "height": 884,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 3
+    }
+  },
+  {
+    "name": "embedding",
+    "width": 390,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 16,
+      "y": 666.671875,
+      "width": 358,
+      "height": 986.5,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 61
+    }
+  },
+  {
+    "name": "attention",
+    "width": 390,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 16,
+      "y": 641.203125,
+      "width": 358,
+      "height": 952.515625,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 11
+    }
+  },
+  {
+    "name": "norm",
+    "width": 390,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 16,
+      "y": 641.203125,
+      "width": 358,
+      "height": 745.65625,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 7
+    }
+  },
+  {
+    "name": "ffn",
+    "width": 390,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 16,
+      "y": 610.8125,
+      "width": 358,
+      "height": 693.59375,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 3
+    }
+  },
+  {
+    "name": "output",
+    "width": 390,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 16,
+      "y": 636.28125,
+      "width": 358,
+      "height": 769.515625,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 13
+    }
+  },
+  {
+    "name": "residual",
+    "width": 390,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 16,
+      "y": 666.671875,
+      "width": 358,
+      "height": 1041.3125,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 8
+    }
+  },
+  {
+    "name": "optimizer",
+    "width": 390,
+    "closed": true,
+    "figures": 1,
+    "overflow": false,
+    "diagramOverflow": [],
+    "brokenAnchors": [],
+    "clip": {
+      "x": 16,
+      "y": 636.28125,
+      "width": 358,
+      "height": 842.515625,
+      "scale": 1
+    },
+    "detail": {
+      "open": true,
+      "overflow": false,
+      "mathErrors": 0,
+      "math": 9
+    }
+  }
+]

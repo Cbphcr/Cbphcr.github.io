@@ -1,14 +1,14 @@
 ---
 permalink: /notes/qwen3.8-flash-next/embedding/
 title: "Embedding：从 Token Lookup 到条件记忆"
-excerpt: "从普通 token embedding 出发，理解 N-Grammer、Over-Encoding、SCONE、Engram 与 Qwen3.8 的 N-gram memory"
+excerpt: "用“基础词典 + 短语词典”理解 Qwen 的输入表示。先走一遍查表过程，再看它为什么发展成这样。"
 author_profile: false
 wide: true
 note_page: true
 note_chapter: embedding
 note_number: "01 / EMBEDDING"
-note_heading: "从 Token Lookup 到条件记忆"
-note_description: "从一次普通查表开始，逐步理解局部上下文如何成为地址，以及 Qwen3.8 怎样把 51B 参数放进可预取的 N-gram memory。"
+note_heading: "Embedding：认识一个词，也认识它旁边的词"
+note_description: "用“基础词典 + 短语词典”理解 Qwen 的输入表示。先走一遍查表过程，再看它为什么发展成这样。"
 note_prev_url: /notes/qwen3.8-flash-next/
 note_prev_label: "总览：从 Transformer 到 Qwen3.8"
 note_next_url: /notes/qwen3.8-flash-next/attention/
@@ -16,6 +16,222 @@ note_next_label: "Attention：压缩记忆与稀疏召回"
 ---
 
 {% include qwen-note/header.html %}
+
+<p class="qwen-intro">读到“南京大学”，模型既要认识每个 token，也要理解它们放在一起的意思。Qwen 在普通 embedding 之外，加了一条按短 token 组合查表的路径，让模型更早拿到这类局部信息。</p>
+
+<nav class="qwen-learning-nav" aria-label="本章阅读路径"><a href="#changes">相对 LLaMA 的变化</a><a href="#evolution">再看演进</a><a href="#advanced">论文与公式</a></nav>
+
+
+<section class="qwen-chapter qwen-primer" id="changes" markdown="1">
+
+## 从单 token 查表，到额外的 N-gram 参数表
+
+LLaMA 的输入路径是 token ID → embedding → decoder；局部组合信息由后续层计算。这里保留普通路径，额外用相邻 token ID 寻址，读取一组独立训练的向量，在浅层注入。重点是地址计算与参数存储，而不是重新解释什么叫 embedding。
+
+| 对照项 | 熟悉的基线 | 本章关注的变化 |
+| --- | --- | --- |
+| 寻址输入 | 单个 token ID | 有顺序的 2 / 3 个 token ID |
+| 参数读取 | 普通词表的一行 | 额外多个 hash head 的表项，拼接后投影 |
+| 融合位置 | 主干入口 | 普通路径仍在；额外特征在第 2 层门控注入 |
+| 成本变化 | 词表参数与查表 | 增加大表存储和传输，利用确定性地址预取 |
+
+这里的比较基线是典型 dense LLaMA decoder（优化器章以 AdamW 为基线），不代表所有 LLaMA 版本；“变化”也不等于 Qwen 首创。报告、配置与实现分别见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>，历史来源见下文。
+
+</section>
+
+{% include qwen-note/visual.html kind="embedding" title="同一个位置，可以拿到两种提示" caption='假设分词为“我 / 喜欢 / 南京 / 大学”，仅用于示意。两种表都存训练得到的向量，不存文字释义；短语信息经过门控和局部处理后注入。依据 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>。' %}
+
+<section class="qwen-chapter qwen-primer" id="learn" markdown="1">
+
+## Qwen 多查的那一本“词典”，有什么不同？
+
+还是看图里的例子。读到“大学”时，额外查表的地址可以包含最近两个 token“南京、大学”，也可以包含最近三个 token“喜欢、南京、大学”。这叫 **N-gram**：N 个连续 token 组成的片段。
+
+为什么这样有帮助？“南京”和“大学”一起出现，包含的信息不只是两个孤立词。普通网络可以算出这种组合含义；额外查表给它一份可学习的局部提示。这里的“词典”只是比喻，表里没有一条人写的“南京大学是一所学校”。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-17">[17]</a>
+
+可能的组合太多，无法全都安排独立位置，所以实现用 **哈希** 把组合算成表地址。不同组合可能撞到同一地址；多组查表能提供多份特征，但不保证完全没有碰撞。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>
+
+## 拿几个真实形状的数字，完整查一次表
+
+下面把“局部提示”拆成具体操作。**地址来自 token ID；取出的向量来自另一张可训练的表。** 这里不会先把几个 token 各自的 embedding 相加，再拿结果做哈希。
+
+为方便手算，假设分词和编号是 `喜欢 → 2`、`南京 → 7`、`大学 → 12`。这些编号、乘数、表长和向量都只是教学数值，不是 Qwen 的实际配置。真实 tokenizer 也未必这样切词。
+
+### 第一步：保留有顺序的 ID
+
+读到“大学”时，我们能拿到以下整数：
+
+| 相对位置 | token | ID |
+| --- | --- | --- |
+| 前两个位置 | 喜欢 | 2 |
+| 前一个位置 | 南京 | 7 |
+| 当前位置 | 大学 | 12 |
+
+只取最近两个位置，就是 bigram `[7, 12]`；取最近三个，就是 trigram `[2, 7, 12]`。ID 是编号，12 比 7 大不表示语义更强，也不表示两个词更相近。
+
+### 第二步：把几个整数混合，再压到表的范围内
+
+直接相加会丢失顺序：`7 + 12` 与 `12 + 7` 完全相同。公开实现给不同相对位置分配不同的固定乘数，分别相乘，再做 **按位异或 XOR**，最后取余。乘数由 seed 确定，不是训练学出来的参数。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>
+
+假设当前位置的乘数是 3，前一个位置是 5，一张表有 11 行：
+
+```text
+大学：12 × 3 = 36
+南京： 7 × 5 = 35
+
+混合整数 = 36 XOR 35 = 7
+表内行号 = 7 % 11 = 7
+```
+
+`%` 表示取余：表有 11 行，合法行号就是 0 到 10，取余能保证地址落在其中。XOR 则是把整数写成二进制，每一位相同得 0，不同得 1：
+
+```text
+36 的二进制：100100
+35 的二进制：100011
+逐位 XOR：  000111  → 十进制 7
+```
+
+交换成“大学 / 南京”后，当前位置变成“南京”，所以得到 `(7 × 3) XOR (12 × 5) = 41`，`41 % 11 = 8`。这次查第 8 行。**不同位置使用不同乘数，让顺序参与计算，但不保证任意两个序列的地址都不同。**
+
+trigram 再加入前两个位置的 ID。假设那个位置的乘数是 7：
+
+```text
+混合整数 = (12 × 3) XOR (7 × 5) XOR (2 × 7)
+         = 36 XOR 35 XOR 14
+         = 9
+
+若这张 trigram 表有 17 行：9 % 17 = 9
+```
+
+XOR 和取余本身不理解“南京大学”的含义。它们的任务是快速、确定地生成地址；相同输入在相同配置下总能找到相同行。
+
+### 第三步：用行号读取向量
+
+你可以把它理解为 `<hash 得到的地址, embedding>`，但存储时不必为每行再保存一个 hash 字段。实现使用 embedding 矩阵，**行号天然就是地址，每一行是一串可训练的浮点数**。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>
+
+| 表内行号 | 行里保存的内容（四维教学示例） |
+| --- | --- |
+| 0 | `[0.12, -0.31, 0.08, 0.20]` |
+| 1 | `[-0.27, 0.45, 0.19, -0.06]` |
+| … | … |
+| 7 | `[0.63, 0.11, -0.42, 0.05]` |
+| … | … |
+| 10 | `[0.04, -0.18, 0.32, 0.21]` |
+
+刚才 bigram 算出 7，就读取 `bigram_table[7]`。这四个数不是由 `embedding(南京)` 和 `embedding(大学)` 现场计算而来，而是这张额外表里原本就有的参数。
+
+<figure class="qwen-visual" aria-labelledby="ngram-address-title">
+  <div class="qwen-visual__heading"><span>把一次查表展开</span><strong id="ngram-address-title">编号决定去哪里，训练决定那里存什么</strong></div>
+  <ol class="qwen-picture-flow">
+    <li><b>输入：整数</b><strong>南京 7 · 大学 12</strong><span>按相对位置乘固定数<br>35 与 36 做 XOR → 7</span></li>
+    <li><b>地址：行号</b><strong>7 % 11 → 第 7 行</strong><span>整数计算到这里结束<br>接着访问 embedding 表</span></li>
+    <li><b>输出：浮点向量</b><strong>读取 table[7]</strong><span>[0.63, 0.11, −0.42, 0.05]<br>这一行的值由训练调整</span></li>
+  </ol>
+  <figcaption>单个 bigram head 的教学示意，数字均为示例。实际实现有多个 head，各自取余并查表，最后拼接向量。哈希负责寻址，不负责计算语义。实现依据 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>。</figcaption>
+</figure>
+
+### 第四步：多个 head 各取一段，再拼起来
+
+这里的 **head 可以先理解成一个查表通道**，不需要套用 attention head 的计算过程。同一个混合整数对不同的表长取余，得到各通道的行号。即使行号碰巧都是 7，读的也是不同表里的两行。
+
+例如 bigram 的混合整数为 7：
+
+```text
+通道 A：7 % 11 = 7 → A表[7] → [0.63, 0.11]
+通道 B：7 % 13 = 7 → B表[7] → [-0.20, 0.48]
+
+拼接 → [0.63, 0.11, -0.20, 0.48]
+```
+
+实际实现把各通道的表放在一个大矩阵中，用“通道起始偏移 + 表内行号”访问。比如 A 有 11 行，B 紧接着放，那么 A 的第 7 行是大矩阵第 7 行，B 的第 7 行是大矩阵第 `11 + 7 = 18` 行。两者不会因为局部行号相同就读到同一份参数。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>
+
+本笔记对应配置使用 bigram、trigram 各 8 个通道，共 16 段，每段 160 维，拼成 2560 维。后面的投影和门控再把这份查表结果接入主干；**2560 维是拼接结果，不是给每个 token 新增了 2560 个编号。** <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a>
+
+## 哈希不懂语义，那表里的知识从哪里来？
+
+来自训练。设想模型读到“南京 / 大学”，查到第 7 行，并利用它预测后面的 token。预测产生损失，反向传播会计算“这一行的哪些数应该怎样调整”，优化器再更新它。反复训练后，这一行可能提供对这些上下文有用的特征。
+
+在这个过程中，**固定的是从 ID 到地址的规则；学习的是表里的浮点向量，以及后续如何使用向量的网络参数。** 不需要对整数 ID、XOR 或取余求导。梯度通过查表操作传到被读取的参数行。普通推理时，查表读取已训练好的参数，不会因为聊了一句话就把这行重新训练一次。
+
+这也是“同时利用几个 token”的准确含义：**几个 ID 共同决定读哪份参数；训练让这份参数成为组合特征。** 它并不意味着哈希函数先读懂了几个词，再算出它们的语义。
+
+## 两个不同短语查到同一行，会怎样？
+
+它们会共享那一行，训练时都可能影响其数值。这叫碰撞，通常不会像普通字典那样保存原始短语、比较 key 后再另找一格。因此表里的一行未必属于某一个短语，更不能把它当成人写的专属释义。
+
+用一个纯整数例子看多通道的作用：
+
+| 两个输入的混合整数 | 对 11 取余（通道 A） | 对 13 取余（通道 B） |
+| --- | --- | --- |
+| 7 | 7 | 7 |
+| 18 | 7 | 5 |
+
+它们在 A 通道撞到了同一行，但在 B 通道分开了。因此拼接后的整体特征仍可能不同。多通道不能保证消除所有碰撞：如果两个输入在取余前就得到相同的混合整数，这些通道也无法把它们分开。结合上下文的门控有助于调节取回的信息，但不负责恢复原始短语，也不保证修复每次碰撞。
+
+到这里，一次查表已经可以写成几行伪代码：
+
+```python
+# 教学版：一个 bigram 通道；忽略序列边界和批处理
+current_id = 12
+previous_id = 7
+mixed = (current_id * 3) ^ (previous_id * 5)
+row = mixed % 11
+phrase_vector = bigram_table[row]
+# bigram_table 是独立的可训练矩阵
+# phrase_vector 随后参与投影、门控等计算
+```
+
+
+## 查到了，也要看当前语境用不用得上
+
+模型已有的上下文表示会算出一个权重，控制短语提示加进来多少。这就是 **门控**，可以理解成一个可调大小的阀门。图里省略了后续的小范围混合，实际信息经过处理后才加回原来的表示。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>
+
+这个例子里还有两件事没有改变：输出仍然按原来的 token 词表预测；模型也没有偷看“大学”后面的文字。额外的输入特征不会自动把几个 token 合成一个新 token。
+
+## 为什么在第 2 层才加进来？
+
+这张额外的大表可以放在 CPU 主存里。输入 token 一到，就能知道要查什么；GPU 计算第 1 层时，可以同时把需要的表项搬过来，第 2 层再用。这样设计同时考虑了效果和搬运时间。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+可以把它想成：你读第一页的时候，助手已经去取第二页需要的资料。能提前做的是按编号查表；决定资料该影响多少，仍然要等模型读出上下文。
+
+</section>
+
+
+<details class="qwen-self-check" markdown="1">
+<summary>需要时回顾：已有 Transformer / LLaMA 基础</summary>
+
+## 先从“查词典”想起
+
+模型不能直接对汉字做矩阵计算，所以先把文字切成小片段，叫作 **token**。一个 token 可能是一个字、一个词，也可能是词的一部分。每个 token 有一个编号；embedding 根据编号查出一串数字，也就是向量。
+
+可以把这串数字想成模型内部的一张“特征卡”。卡片内容是训练学出来的，我们通常不能给每一项数字取一个明确的人类含义。
+
+普通查表有一个特点：**只要 token 编号相同，查出的初始向量就相同。** “南京大学”与“清华大学”里的“大学”，在这一步可以拿到同一张卡；它在不同句子中的含义，要靠后面的网络结合上下文加工。
+
+
+</details>
+
+<section class="qwen-chapter qwen-primer" id="evolution" markdown="1">
+
+## 怎么一步步走到这里？
+
+<div class="qwen-plain-history" markdown="1">
+
+1. **先给词一个向量。** 以 Word2Vec 为熟悉的坐标，同一个词有一个基础表示，便于模型计算相似关系。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-40">[40]</a>
+2. **词太多，就拆小；含义不同，就结合上下文。** 子词分词处理罕见词，Transformer 等网络让初始向量逐层带上语境。它们解决的是两个问题。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-41">[41]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a>
+3. **常见组合反复出现，能不能也查表？** N-Grammer、Over-Encoding 探索局部组合的额外表示；SCONE 进一步把部分表示提前算好，供推理时查用。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-14">[14]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-15">[15]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-16">[16]</a>
+4. **表更大，还要考虑怎么取、怎么用。** Engram 探索条件记忆，Qwen 将这一方向整合进自己的主干，并利用浅层计算时间预取表项。它们并不是完全相同的实现。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-17">[17]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+</div>
+
+<p class="qwen-everyday"><strong>读到这里，先记住：</strong>普通 embedding 回答“当前是哪个 token”；额外 N-gram 表补充“它和前面几个 token 组成了什么局部模式”。这份记忆来自训练，不是本次聊天的新记忆。</p>
+
+</section>
+
+<details class="qwen-advanced" id="advanced" markdown="1">
+<summary>继续深入：论文脉络、公式与实现细节<small>点此展开原有详细笔记；用于核对精确公式、配置和论文证据。</small></summary>
+<div class="qwen-advanced__body" markdown="1">
+
 
 <section class="qwen-chapter__lead" markdown="1">
 
@@ -25,7 +241,7 @@ note_next_label: "Attention：压缩记忆与稀疏召回"
 
 </section>
 
-<nav class="qwen-learning-nav" aria-label="本章阅读层次"><a href="#history">发展主线</a><a href="#mechanism">原理与 Qwen 实现</a><a href="#self-check">自测与答案</a></nav>
+
 
 <section class="qwen-chapter qwen-history" id="history" markdown="1">
 
@@ -465,6 +681,10 @@ N-gram 地址只依赖 token ID，因此不用等待第 1 层算出 hidden state
 3. tokenizer、语言比例或领域变化后，确定性局部地址的失配是否会比主干参数更明显？
 4. 在高 batch、高并发 serving 中，预取能覆盖多少延迟，热点 cache 与冷表访问应怎样分层？
 </aside>
+
+
+</div>
+</details>
 
 {% include qwen-note/references.html refs='<a href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> Qwen 技术报告 §2.3；<a href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a> 官方配置；<a href="/notes/qwen3.8-flash-next/references/#ref-14">[14]</a> N-Grammer；<a href="/notes/qwen3.8-flash-next/references/#ref-15">[15]</a> Over-Tokenized Transformer；<a href="/notes/qwen3.8-flash-next/references/#ref-16">[16]</a> SCONE；<a href="/notes/qwen3.8-flash-next/references/#ref-17">[17]</a> Engram / Conditional Memory；<a href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a> Transformers 实现。' %}
 

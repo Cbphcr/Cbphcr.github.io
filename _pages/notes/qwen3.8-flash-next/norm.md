@@ -1,14 +1,14 @@
 ---
 permalink: /notes/qwen3.8-flash-next/norm/
 title: "Norm：稳定残差流的尺度"
-excerpt: "从 LayerNorm、Pre-Norm 到 Qwen3.8 的 Zero-Centered RMSNorm"
+excerpt: "用 (3, 4) 这个小例子，看懂归一化在做什么，以及它为什么有好几种名字。"
 author_profile: false
 wide: true
 note_page: true
 note_chapter: norm
 note_number: "03 / NORMALIZATION"
-note_heading: "稳定残差流的尺度"
-note_description: "这里的重点不是一种全新的 normalization，而是 RMSNorm、zero-centered gain、门控与多分支残差如何共同组成稳定性方案。"
+note_heading: "Norm：先把数值尺度调合适"
+note_description: "用 (3, 4) 这个小例子，看懂归一化在做什么，以及它为什么有好几种名字。"
 note_prev_url: /notes/qwen3.8-flash-next/attention/
 note_prev_label: "Attention：压缩记忆与稀疏召回"
 note_next_url: /notes/qwen3.8-flash-next/ffn/
@@ -17,13 +17,98 @@ note_next_label: "FFN：从 Dense SwiGLU 到 Ultra-Sparse MoE"
 
 {% include qwen-note/header.html %}
 
+<p class="qwen-intro">模型每一层都在处理一串数字。数字的整体尺度会影响后面的计算与训练；Norm 帮助调整这个尺度，让后续层更容易处理。它不负责给句子增加新知识。</p>
+
+<nav class="qwen-learning-nav" aria-label="本章阅读路径"><a href="#changes">相对 LLaMA 的变化</a><a href="#evolution">再看演进</a><a href="#advanced">论文与公式</a></nav>
+
+
+<section class="qwen-chapter qwen-primer" id="changes" markdown="1">
+
+## RMSNorm 不是新点，参数化和使用位置才是
+
+以 LLaMA 的 RMSNorm 和 Pre-Norm 为已知前提。这章重点是 zero-centered scale、对 norm 参数施加衰减，以及不同分支的归一化范围。Qwen3.8 延续了此前设计，不应把 RMSNorm 本身写成本次创新。
+
+| 对照项 | 熟悉的基线 | 本章关注的变化 |
+| --- | --- | --- |
+| 缩放参数 | 直接学习 gamma，通常初始化为 1 | 学习偏移 w，实际乘数为 1 + w |
+| 初始化 | gamma = 1 | w = 0，同样从恒等缩放开始 |
+| 对参数衰减的效果 | 若衰减 gamma，会推向 0 | 衰减 w 会把实际缩放推向 1 |
+| 应检查什么 | 是否使用 RMSNorm | 哪一处 norm、按哪些维度归一化、该参数是否衰减 |
+
+这里的比较基线是典型 dense LLaMA decoder（优化器章以 AdamW 为基线），不代表所有 LLaMA 版本；“变化”也不等于 Qwen 首创。报告、配置与实现分别见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>，历史来源见下文。
+
+</section>
+
+{% include qwen-note/visual.html kind="norm" title="数值变小了，比例可以保留" caption='RMSNorm 的二维算术例子，忽略 epsilon，gain 设为 1。输出约为 (0.85, 1.13)，均方根为 1，均值不为零。方法依据 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-8">[8]</a>。' %}
+
+<section class="qwen-chapter qwen-primer" id="learn" markdown="1">
+
+## 为什么还会看到 LayerNorm、Pre-Norm 等名字？
+
+它们不全在回答同一个问题。
+
+**LayerNorm 与 RMSNorm：怎么算？** LayerNorm 先减去均值，再按标准差缩放。RMSNorm 不做减均值。还是 (3, 4)，在同样省略参数的条件下，LayerNorm 得到 (-1, 1)，与图中的结果不同。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-51">[51]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-8">[8]</a>
+
+**Pre-Norm 与 Post-Norm：放哪儿？** 可以先调整尺度再交给一个子层，也可以在子层结果与旧表示相加后再调整。这会改变信息和梯度沿着深层网络传播的路径。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-7">[7]</a>
+
+**Zero-centered：学哪个缩放参数？** 可以直接学缩放倍数，也可以学它相对 1 的偏移。后者配合参数衰减时，会倾向回到“不额外放大或缩小”的基点。这里的“零中心”指参数，不是说输出均值为零。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a>
+
+## Qwen 怎么使用这些东西？
+
+Qwen3.8 沿用了 zero-centered RMSNorm，并在不同部位调整不同张量的尺度。例如，多条残差分支被读出时先分别归一化；GDN 的输出也会被归一化。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+所以只记“这个模型用了 RMSNorm”还不够。看结构图时，继续问一句：**这一处到底在调整哪一串数字？** 这个问题通常比先记住全部公式更有帮助。
+
+</section>
+
+
+<details class="qwen-self-check" markdown="1">
+<summary>需要时回顾：已有 Transformer / LLaMA 基础</summary>
+
+## 把它想成调音量，但别把它想成改内容
+
+同一段录音，音量过大或过小都会影响后续处理。调音量的目的，是把整体大小放到更合适的范围。归一化也在做类似的尺度调整，不过它处理的是隐藏向量的数值。
+
+这个比喻只说明“尺度”。真实网络里的每个维度并不是一个声音频道，Norm 也不能保证整段训练一定稳定。
+
+## 看一个能手算的例子
+
+向量是 (3, 4)。先把两个数平方，求平均，再开平方，得到约 3.54；然后两个数都除以 3.54，得到约 (0.85, 1.13)。这就是图里的 **RMSNorm** 的核心操作。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-8">[8]</a>
+
+它没有把每个数变成一样大，而是按共同的尺度缩放。图里省略了很小的数值保护项和可学习的缩放参数；实际模型还会用这些参数调节输出。
+
+
+</details>
+
+<section class="qwen-chapter qwen-primer" id="evolution" markdown="1">
+
+## 怎么一步步走到这里？
+
+<div class="qwen-plain-history" markdown="1">
+
+1. **先解决单个样本怎么归一化。** LayerNorm 不用依赖同一批次其他样本的统计，适合序列模型的使用场景。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-51">[51]</a>
+2. **网络深了，开始研究放置位置。** Pre / Post 的区别影响梯度传播；它们不是两个不同的均值公式。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-7">[7]</a>
+3. **保留缩放，简化统计。** RMSNorm 省去减均值；LLaMA 等模型采用它。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-8">[8]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-36">[36]</a>
+4. **继续细调结构和参数。** DeepNorm 研究缩放与初始化，Gemma 2 在子层前后都做归一化，Qwen 还关注缩放参数的增长。这里有多条并行路线。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-52">[52]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-38">[38]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a>
+
+</div>
+
+<p class="qwen-everyday"><strong>读到这里，先记住：</strong>先问“调哪串数字、怎么算、放在哪儿”，再看参数怎么学。这四个问题分开后，Norm 的几个名字就不容易混淆。</p>
+
+</section>
+
+<details class="qwen-advanced" id="advanced" markdown="1">
+<summary>继续深入：论文脉络、公式与实现细节<small>点此展开原有详细笔记；用于核对精确公式、配置和论文证据。</small></summary>
+<div class="qwen-advanced__body" markdown="1">
+
+
 <section class="qwen-chapter__lead" markdown="1">
 
 Qwen3.8 延续 Qwen3-Next 的 zero-centered RMSNorm，并对 norm weight 使用 weight decay。官方博客把它列为“retained”的训练稳定性设计，而不是本次发布的新结构。理解这一章的关键，是把三个容易混在一起的概念分开：**归一化放在哪里、统计哪些量、缩放参数怎样参数化与优化。**<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-1">[1]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a>
 
 </section>
 
-<nav class="qwen-learning-nav" aria-label="本章阅读层次"><a href="#history">发展主线</a><a href="#mechanism">原理与 Qwen 实现</a><a href="#self-check">自测与答案</a></nav>
+
 
 <section class="qwen-chapter qwen-history" id="history" markdown="1">
 
@@ -166,6 +251,10 @@ RMSNorm 没有减均值，只按均方根缩放。Pre-Norm 描述归一化的位
 2. branch-wise RMSNorm 在 GR 中的收益来自独立尺度，还是主要来自后续 gate 更容易优化？
 3. 当 residual state 使用 FP8 时，norm 与 gate 对动态范围的控制各贡献多少？
 </aside>
+
+
+</div>
+</details>
 
 {% include qwen-note/references.html refs='<a href="/notes/qwen3.8-flash-next/references/#ref-1">[1]</a> Qwen3.8 官方博客；<a href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> 技术报告 §2.1 与 §2.2；<a href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a> Transformer；<a href="/notes/qwen3.8-flash-next/references/#ref-7">[7]</a> Pre-LN 分析；<a href="/notes/qwen3.8-flash-next/references/#ref-8">[8]</a> RMSNorm；<a href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a> Qwen3-Next 官方博客。' %}
 

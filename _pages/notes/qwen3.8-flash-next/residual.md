@@ -1,14 +1,14 @@
 ---
 permalink: /notes/qwen3.8-flash-next/residual/
 title: "Residual：从单流到 Gated Residual"
-excerpt: "Qwen3.8-Flash-Next 的四分支 Gated Residual 读写机制"
+excerpt: "从“旧表示 + 新结果”开始，理解为什么要保留多条状态，以及为什么不需要计算四次。"
 author_profile: false
 wide: true
 note_page: true
 note_chapter: residual
 note_number: "06 / RESIDUAL"
-note_heading: "从单残差流到 Gated Residual"
-note_description: "Residual 不再只是固定的 x + F(x)：Qwen3.8 用四条并行分支保存状态，再以逐通道门控读取、逐分支标量写回。"
+note_heading: "Residual：保留旧笔记，再写入新发现"
+note_description: "从“旧表示 + 新结果”开始，理解为什么要保留多条状态，以及为什么不需要计算四次。"
 note_prev_url: /notes/qwen3.8-flash-next/output/
 note_prev_label: "Output：从 Next-Token Head 到 MTP"
 note_next_url: /notes/qwen3.8-flash-next/optimizer/
@@ -17,13 +17,102 @@ note_next_label: "Optimizer：Muon、AdamW 与参数分工"
 
 {% include qwen-note/header.html %}
 
+<p class="qwen-intro">模型每层都产生新结果，但不必把上一层的表示全部抹掉。残差连接保留旧表示，再加上本层的更新。Qwen 将保存中间信息的空间扩为四条分支，并学习怎样读取和写入。</p>
+
+<nav class="qwen-learning-nav" aria-label="本章阅读路径"><a href="#changes">相对 LLaMA 的变化</a><a href="#evolution">再看演进</a><a href="#advanced">论文与公式</a></nav>
+
+
+<section class="qwen-chapter qwen-primer" id="changes" markdown="1">
+
+## 子层宽度不变，把单条残差流扩成四条
+
+以 x + F(norm(x)) 为基线。GR 改的是 F 周围的读写结构：保存四份状态，门控读成一个普通宽度输入，计算一次 F，再分别写回。它不是把 Attention 或 FFN 复制执行四次。
+
+| 对照项 | 熟悉的基线 | 本章关注的变化 |
+| --- | --- | --- |
+| 保存状态 | 一条 d 维残差流 | 四条 d 维状态 |
+| 子层输入 | 归一化后的单条状态 | 各分支归一化后，逐通道门控组合 |
+| 子层输出 | 直接加回原状态 | 同一输出按分支写入强度加回 |
+| 成本变化 | 单流读写 | 增加状态显存、门控计算和内存流量 |
+
+这里的比较基线是典型 dense LLaMA decoder（优化器章以 AdamW 为基线），不代表所有 LLaMA 版本；“变化”也不等于 Qwen 首创。报告、配置与实现分别见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>，历史来源见下文。
+
+</section>
+
+{% include qwen-note/visual.html kind="residual" title="四条状态，一次子层计算" caption='展示 GR 的读—算—写顺序，四条分支来自 Qwen 报告 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>。分支只是不同的向量空间，图中未给它们指定固定语义。' %}
+
+<section class="qwen-chapter qwen-primer" id="learn" markdown="1">
+
+## 为什么只保留一条状态还不够？
+
+当模型一层层加工信息，所有结果都要写进同一个向量空间。一个自然想法是扩大这个空间；但如果连每个子层的输入和输出都一起加宽，矩阵计算通常也会更贵。
+
+另一种办法是多保存几条状态，真正计算时再组合成一个普通宽度的输入。这样可以把“存多少信息”与“每层按多宽来计算”部分分开。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-22">[22]</a>
+
+## Qwen 的四条分支怎样配合？
+
+先看图里的三个动作。**读**：先调整各分支的尺度，再用门控组合信息；**算**：组合成一个输入，执行一次子层；**写**：把同一个新结果，以不同强度加回各分支。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+读取还可以细到向量的不同维度。例如某些维度更多取自分支 1，另一些更多取自分支 2。不需要给整个分支统一一个“全用或不用”的决定。
+
+这就是 Gated Residual，简称 **GR**。“门控”表示读取和写入的强度由网络计算出来，而不是始终固定。
+
+## 别把四条分支理解成四个模型
+
+四条状态会共同参与形成一个子层输入，图中的子层仍计算一次。它们也没有被硬编码为“事实、逻辑、语言、代码”四类笔记。能不能形成可解释的分工，需要观察训练后的模型。
+
+这和 MoE 也不同：GR 调整**信息从哪里读、写到哪里**；MoE 调整**哪些专家参数参与计算**。同一个模型可以同时使用它们。
+
+## 多留几页纸，仍然有代价
+
+多条状态要占内存，还要被读取和写回。即使昂贵子层没有多算四遍，数据搬运也可能变慢。所以 Qwen 的选择同时包括简化分支操作和优化存储、执行方式。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+</section>
+
+
+<details class="qwen-self-check" markdown="1">
+<summary>需要时回顾：已有 Transformer / LLaMA 基础</summary>
+
+## 先理解最普通的残差连接
+
+你读文章做笔记，每读完一段，通常是在旧笔记上补充或修改，而不是把纸扔掉重新写。模型里的残差连接也保留一条旧信息路径：
+
+<p class="qwen-everyday">下一层收到的表示 = 原来的表示 + 这一层算出的更新</p>
+
+这里的“加”就是向量相加，不是把两个文件拼在一起。原来的信息仍可能被新结果抵消或改变，因此残差也不保证旧内容永远不会丢。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-6">[6]</a>
+
+
+</details>
+
+<section class="qwen-chapter qwen-primer" id="evolution" markdown="1">
+
+## 怎么一步步走到这里？
+
+<div class="qwen-plain-history" markdown="1">
+
+1. **保留旧路径，让网络学增量。** ResNet 的残差思想进入 Transformer，成为深层模型的重要组成。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-6">[6]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a>
+2. **进一步研究怎样加得稳定。** 归一化位置、残差缩放与初始化共同影响深层训练。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-7">[7]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-52">[52]</a>
+3. **把保存空间与计算宽度分开。** AltUp 用预测与校正维护更宽表示，HC 学习多流连接，mHC 给连接加约束。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-22">[22]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-23">[23]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-24">[24]</a>
+4. **Qwen 选择细读、简写。** GR 保留细粒度读取，简化写入与分支混合；这是特定模型上的设计取舍，不代表更复杂的连接始终无用。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+</div>
+
+<p class="qwen-everyday"><strong>读到这里，先记住：</strong>残差决定层间信息如何留下来。四条分支增加的是保存和选择信息的空间，不是四套互不相关的推理过程。</p>
+
+</section>
+
+<details class="qwen-advanced" id="advanced" markdown="1">
+<summary>继续深入：论文脉络、公式与实现细节<small>点此展开原有详细笔记；用于核对精确公式、配置和论文证据。</small></summary>
+<div class="qwen-advanced__body" markdown="1">
+
+
 <section class="qwen-chapter__lead" markdown="1">
 
 Residual connection 最常见的写法是 `x_{l+1} = x_l + F_l(x_l)`：每一层从同一条 `d` 维状态读取，再把输出加回去。它让深层网络保留近似恒等路径，但也规定了层间通信的带宽只有一条 hidden vector。Gated Residual（GR）把这条流扩成 4 个 branch，并让 block 根据当前状态决定怎样读、向每个 branch 写多少。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
 
 </section>
 
-<nav class="qwen-learning-nav" aria-label="本章阅读层次"><a href="#history">发展主线</a><a href="#mechanism">原理与 Qwen 实现</a><a href="#self-check">自测与答案</a></nav>
+
 
 <section class="qwen-chapter qwen-history" id="history" markdown="1">
 
@@ -174,6 +263,10 @@ GR 先把四条流读成一个子层输入，昂贵子层仍执行一次，再�
 2. FP8 residual state 的“几乎无损”能否在 post-training、长上下文与不同硬件上保持？
 3. elementwise read gate 的收益究竟来自选择信息，还是来自额外的低秩非线性容量？
 </aside>
+
+
+</div>
+</details>
 
 {% include qwen-note/references.html refs='<a href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> Qwen 技术报告 §2.2；<a href="/notes/qwen3.8-flash-next/references/#ref-6">[6]</a> ResNet；<a href="/notes/qwen3.8-flash-next/references/#ref-22">[22]</a> AltUp；<a href="/notes/qwen3.8-flash-next/references/#ref-23">[23]</a> Hyper-Connections；<a href="/notes/qwen3.8-flash-next/references/#ref-24">[24]</a> mHC；<a href="/notes/qwen3.8-flash-next/references/#ref-25">[25]</a> GatedNorm / residual sinks。' %}
 

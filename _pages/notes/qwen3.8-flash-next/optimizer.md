@@ -1,14 +1,14 @@
 ---
 permalink: /notes/qwen3.8-flash-next/optimizer/
 title: "Optimizer：Muon、AdamW 与参数分工"
-excerpt: "Qwen3.8-Flash-Next 的 Muon、AdamW、Adam 分工与分布式实现"
+excerpt: "把梯度与优化器分开，再理解 AdamW 和 Muon 为什么会分工合作。"
 author_profile: false
 wide: true
 note_page: true
 note_chapter: optimizer
 note_number: "07 / OPTIMIZER"
-note_heading: "Muon、AdamW 与参数分工"
-note_description: "Qwen3.8 不把 Muon 当成 AdamW 的全量替代，而是先判断一个参数是否真的是值得正交化的二维线性映射。"
+note_heading: "Optimizer：知道哪里错了，接下来怎么改？"
+note_description: "把梯度与优化器分开，再理解 AdamW 和 Muon 为什么会分工合作。"
 note_prev_url: /notes/qwen3.8-flash-next/residual/
 note_prev_label: "Residual：从单流到 Gated Residual"
 note_next_url: /notes/qwen3.8-flash-next/references/
@@ -17,13 +17,102 @@ note_next_label: "参考文献与资料边界"
 
 {% include qwen-note/header.html %}
 
+<p class="qwen-intro">训练时，模型先预测，再和答案比较。反向传播算出参数该往什么方向调整的线索；优化器根据这些线索和历史记录，决定实际怎么更新参数。</p>
+
+<nav class="qwen-learning-nav" aria-label="本章阅读路径"><a href="#changes">相对 LLaMA 的变化</a><a href="#evolution">再看演进</a><a href="#advanced">论文与公式</a></nav>
+
+
+<section class="qwen-chapter qwen-primer" id="changes" markdown="1">
+
+## 从逐坐标 AdamW，到按参数用途混用优化器
+
+假设你已经理解反向传播、Adam 的一二阶矩和解耦权重衰减。Muon 的新增操作作用于矩阵动量：近似正交化更新方向。重点是它改变了什么几何结构，以及哪些参数适合这一操作。
+
+| 对照项 | 熟悉的基线 | 本章关注的变化 |
+| --- | --- | --- |
+| 处理对象 | AdamW 逐坐标自适应缩放 | Muon 对矩阵更新做近似正交化 |
+| 线性映射 | 通常交给 AdamW | 适用的矩阵使用 Muon |
+| 查表与特殊参数 | 常使用同类优化器 | embedding、输出头、router 等保留 AdamW；N-gram 表用无衰减 Adam |
+| 实现问题 | 维护逐坐标统计 | 还需考虑矩阵拆分、迭代近似、形状缩放与通信 |
+
+这里的比较基线是典型 dense LLaMA decoder（优化器章以 AdamW 为基线），不代表所有 LLaMA 版本；“变化”也不等于 Qwen 首创。报告、配置与实现分别见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>，历史来源见下文。
+
+</section>
+
+{% include qwen-note/visual.html kind="optimizer" title="逐坐标调整，和按矩阵调整" caption='AdamW 的箭头仅示意不同坐标可有不同更新。Muon 右图是 diag(100,1) 的理想 polar factor，表示更新方向的变换，不是模型实测，也不是把权重变成单位矩阵。依据 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-29">[29]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-30">[30]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-31">[31]</a>。' %}
+
+<section class="qwen-chapter qwen-primer" id="learn" markdown="1">
+
+## Muon：一组旋钮组成了矩阵，能不能一起看？
+
+很多神经网络参数其实是一张矩阵，负责把一组特征变成另一组特征。Muon 对矩阵动量形成的更新做近似正交化，调整它在不同奇异方向上的尺度。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-31">[31]</a>
+
+用 SVD 的视角看，理想 polar factor 保留左右奇异向量，并压平非零奇异值。看图中很特殊的对角矩阵：两个方向的更新大小分别是 100 和 1。理想化处理后可以变成 1 和 1。例子表达的是对方向尺度的重新安排，实际算法有有限步近似、动量和额外缩放，远比这个例子复杂。
+
+最关键的一点是：**它处理的是准备采取的更新，不是直接把模型权重改成正交矩阵。**
+
+## 为什么 Qwen 不把所有参数都交给 Muon？
+
+不同参数的用途不同。一张矩阵可能负责线性变换，也可能是一张按 token 编号查行的表，或负责给专家打分的路由器。虽然存储形状类似，更新时需要保留的结构并不相同。
+
+Qwen 对适合的线性映射使用 Muon，对输入 embedding、输出头、router 等保留 AdamW，N-gram 表则使用不带权重衰减的 Adam。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> 这是一套按用途分工的训练方案，不是一个算法名字替换另一个名字。
+
+## 普通聊天时，它还会运行吗？
+
+通常不会。普通推理使用已经训练好的参数，不会每回答一句就运行优化器。对话变长时增加的是请求相关的状态，不能据此说模型正在通过 AdamW 或 Muon 学习你刚输入的内容。
+
+</section>
+
+
+<details class="qwen-self-check" markdown="1">
+<summary>需要时回顾：已有 Transformer / LLaMA 基础</summary>
+
+## 梯度告诉你什么，优化器又做了什么？
+
+想象你有很多可调旋钮，模型的参数就是这些旋钮。预测错了以后，梯度提供局部线索：稍微向哪个方向转，损失可能下降。
+
+但这还没回答“这次转多大、该不该参考前几次的方向”。优化器负责决定实际更新。它只使用数学量，不理解题目本身，也不代替反向传播计算梯度。
+
+## AdamW：参考每个旋钮的历史表现
+
+Adam 会记录梯度的历史方向与大小，再对不同参数坐标调整步长。可以理解为：某个坐标的梯度长期很大，与另一个长期很小的坐标，不必用完全相同的处理方式。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-29">[29]</a>
+
+AdamW 在此基础上把权重衰减单独处理。权重衰减让参数有向零收缩的趋势；把它与自适应梯度更新分开，改变了实际的正则化效果。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-30">[30]</a>
+
+这里的“二阶矩”只是平方梯度的统计，不是求出了整个损失函数的曲率。
+
+
+</details>
+
+<section class="qwen-chapter qwen-primer" id="evolution" markdown="1">
+
+## 怎么一步步走到这里？
+
+<div class="qwen-plain-history" markdown="1">
+
+1. **先沿梯度走，再参考过去的方向。** SGD 与动量提供基础的参数更新方式。
+2. **不同坐标的尺度不同。** Adam 使用历史统计调整更新，AdamW 进一步解耦权重衰减。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-29">[29]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-30">[30]</a>
+3. **参数多了，状态和矩阵结构都值得研究。** Adafactor 关注少存优化器状态，Shampoo 利用张量结构；这两条路线不是同一件事。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-58">[58]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-59">[59]</a>
+4. **Muon 从更新矩阵的方向结构入手。** 大规模训练还要处理形状缩放、跨设备矩阵重建和超参数选择；Qwen 因而采用按参数用途分工的方案。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-31">[31]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-32">[32]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+</div>
+
+<p class="qwen-everyday"><strong>读到这里，先记住：</strong>梯度提供局部调整线索，优化器决定怎么走。Muon 的对象是矩阵更新方向；它不会在普通聊天中自动改写模型参数。</p>
+
+</section>
+
+<details class="qwen-advanced" id="advanced" markdown="1">
+<summary>继续深入：论文脉络、公式与实现细节<small>点此展开原有详细笔记；用于核对精确公式、配置和论文证据。</small></summary>
+<div class="qwen-advanced__body" markdown="1">
+
+
 <section class="qwen-chapter__lead" markdown="1">
 
 Adam/AdamW 为每个参数维护一阶与二阶矩估计，再逐元素缩放更新；这种统一接口非常稳健，却不会显式利用“这个参数其实是一张线性映射矩阵”的几何结构。Muon 对矩阵动量做近似正交化，希望让更新的奇异方向更均衡。Qwen3.8 的关键不只是“用了 Muon”，而是建立了一套**按参数语义、形状和训练行为分配优化器**的规则。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-31">[31]</a>
 
 </section>
 
-<nav class="qwen-learning-nav" aria-label="本章阅读层次"><a href="#history">发展主线</a><a href="#mechanism">原理与 Qwen 实现</a><a href="#self-check">自测与答案</a></nav>
+
 
 <section class="qwen-chapter qwen-history" id="history" markdown="1">
 
@@ -182,6 +271,10 @@ Muon 正交化的是权重还是更新？为什么 embedding 也是矩阵，却�
 2. Muon 的收益有多少来自 update geometry，有多少来自重新调过的 learning rate 与 batch？
 3. 当模型进一步增加极小 experts 或更细分的 fused operators 时，矩阵重建成本会不会超过正交化收益？
 </aside>
+
+
+</div>
+</details>
 
 {% include qwen-note/references.html refs='<a href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> Qwen 技术报告 §3；<a href="/notes/qwen3.8-flash-next/references/#ref-29">[29]</a> Adam；<a href="/notes/qwen3.8-flash-next/references/#ref-30">[30]</a> AdamW；<a href="/notes/qwen3.8-flash-next/references/#ref-31">[31]</a> Muon；<a href="/notes/qwen3.8-flash-next/references/#ref-32">[32]</a> Scalable Muon；<a href="/notes/qwen3.8-flash-next/references/#ref-33">[33]</a> Polar Express；<a href="/notes/qwen3.8-flash-next/references/#ref-34">[34]</a> Canzona。' %}
 

@@ -1,14 +1,14 @@
 ---
 permalink: /notes/qwen3.8-flash-next/attention/
 title: "Attention：压缩记忆与稀疏召回"
-excerpt: "Qwen3.8-Flash-Next 的 Gated DeltaNet 与 Qwen Sparse Attention 混合架构"
+excerpt: "从一段很长的文章出发，理解 GDN 的压缩记忆和 QSA 的选择性回看。"
 author_profile: false
 wide: true
 note_page: true
 note_chapter: attention
 note_number: "02 / ATTENTION"
-note_heading: "压缩记忆与稀疏召回"
-note_description: "Qwen3.8 没有用一种近似替代全部 full attention，而是让固定状态记忆与稀疏 token-level retrieval 周期性交替。"
+note_heading: "Attention：边读边记，还是回头翻？"
+note_description: "从一段很长的文章出发，理解 GDN 的压缩记忆和 QSA 的选择性回看。"
 note_prev_url: /notes/qwen3.8-flash-next/embedding/
 note_prev_label: "Embedding：从 Token Lookup 到条件记忆"
 note_next_url: /notes/qwen3.8-flash-next/norm/
@@ -17,13 +17,102 @@ note_next_label: "Norm：稳定残差流的尺度"
 
 {% include qwen-note/header.html %}
 
+<p class="qwen-intro">文章越长，逐字回看越费时间；只记摘要，又可能忘掉关键细节。Qwen 把这两种处理历史的方式搭配起来：多数层维护一份紧凑状态，间隔一些层再选择性地访问历史位置。</p>
+
+<nav class="qwen-learning-nav" aria-label="本章阅读路径"><a href="#changes">相对 LLaMA 的变化</a><a href="#evolution">再看演进</a><a href="#advanced">论文与公式</a></nav>
+
+
+<section class="qwen-chapter qwen-primer" id="changes" markdown="1">
+
+## 从全局 softmax attention，到 GDN + QSA 混合层
+
+以你熟悉的带 KV cache 的 causal attention 为起点。这里主要改变两件事：一部分层用矩阵状态代替逐位置历史访问；另一部分层保留历史表示，但先选择位置再计算稀疏 attention。
+
+| 对照项 | 熟悉的基线 | 本章关注的变化 |
+| --- | --- | --- |
+| 历史表示 | 逐位置保存 K/V | GDN 保存固定大小状态；QSA 保留可访问的历史表示 |
+| 本步计算 | 与可见历史计算 attention | GDN 更新 / 读取状态；QSA 先选块再访问 |
+| 层间安排 | 各层采用同类 attention | 3 个 GDN + 1 个 QSA，重复 12 次 |
+| 新增代价 | 随长度增长的访问 | 状态压缩会损失细节；选择器有开销和漏选风险 |
+
+这里的比较基线是典型 dense LLaMA decoder（优化器章以 AdamW 为基线），不代表所有 LLaMA 版本；“变化”也不等于 Qwen 首创。报告、配置与实现分别见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>，历史来源见下文。
+
+</section>
+
+{% include qwen-note/visual.html kind="attention" title="两种处理长上下文的办法" caption='“笔记”和“原文”是教学比喻：GDN 存矩阵状态，QSA 访问历史 token 的向量，不是人类可读的文档。下方四层周期来自 Qwen 报告 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>。' %}
+
+<section class="qwen-chapter qwen-primer" id="learn" markdown="1">
+
+## 第一种办法：不反复翻全文，边读边更新笔记
+
+GDN（Gated DeltaNet）把已读信息压进一份固定大小的状态。新内容到来时，它决定保留多少旧信息，再修改相关关联。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-11">[11]</a>
+
+比如教学上可以想象：原来记着“钥匙 → 蓝盒子”，后来读到“钥匙被移到了抽屉”。有用的更新应该调整原关联，而不只是把两句话毫无区别地叠在一起。GDN 的误差写入提供了这种修改关联的机制。
+
+但真实状态不是一张清晰的键值清单。很多信息共同挤在有限的数字空间里，可能干扰或丢失。**固定大小，是它省资源的原因，也是它不能无限保留细节的原因。**
+
+## 第二种办法：原来的记录还在，只挑有关的地方看
+
+QSA（Qwen Sparse Attention）先用一个轻量的“挑选器”估计哪些历史块值得读，再对选中的位置做 attention。它更像先找目录，再翻相关页。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+这和只保留最近几页不同：被选中的位置可以很远。但如果第一步没选中“蓝盒子”所在的位置，后面再仔细读选中的内容也补不回来。挑选器本身也要计算，所以“稀疏”不等于所有成本都消失。
+
+## 为什么把两种办法搭配起来？
+
+Qwen 的主干每四层安排三个 GDN 层和一个 QSA 层。**两种处理发生在不同层，前一层的结果会交给后一层**，不是两个互不交流的独立助手。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+可以这样理解它的取舍：压缩状态负责以较低的长度相关成本处理历史，周期性的 attention 提供直接访问历史位置的机会。搭配使用仍然可能犯错，并不能保证所有长文细节都被记住。
+
+## 其他几个常见名字，先各记一句话
+
+**GQA** 让多个注意力头共享一部分历史缓存；**FlashAttention** 改善计算时的数据搬运；**RoPE** 给位置关系提供线索。它们分别改“怎么存”“怎么算”“怎么表达位置”，可以与其他设计组合。不要把这些名字排成一条谁淘汰谁的名单。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-44">[44]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-45">[45]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-12">[12]</a>
+
+</section>
+
+
+<details class="qwen-self-check" markdown="1">
+<summary>需要时回顾：已有 Transformer / LLaMA 基础</summary>
+
+## 读到后面，为什么还需要前面的信息？
+
+假设一篇长文开头写：“小林把钥匙放进蓝盒子。”许多段之后问：“钥匙在哪里？”模型需要让后面的回答利用前面的句子。
+
+**Attention** 就是一种按当前需要，从其他位置取信息的机制。可以粗略理解为：当前的位置提出需求，历史位置提供线索，模型算出哪些线索更相关，再把它们的内容组合起来。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a>
+
+普通的全局 attention 能直接访问前面的所有位置。但文章很长时，比较和搬运历史数据也会越来越贵。
+
+
+</details>
+
+<section class="qwen-chapter qwen-primer" id="evolution" markdown="1">
+
+## 怎么一步步走到这里？
+
+<div class="qwen-plain-history" markdown="1">
+
+1. **先让每个位置按需访问历史。** Transformer 的 attention 提供了直接的内容关联，但长序列会放大计算与缓存成本。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a>
+2. **保留这种能力，先把存储和搬运做省。** MQA、GQA 减少 KV 缓存的重复，FlashAttention 改善执行方式。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-43">[43]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-44">[44]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-45">[45]</a>
+3. **另一条路是压缩历史。** 线性 attention、状态空间模型探索递推状态；GDN 结合遗忘和误差写入，让状态更灵活地更新。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-46">[46]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-47">[47]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-48">[48]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-11">[11]</a>
+4. **还有一条路是少看一些位置。** 从局部窗口到内容相关的稀疏选择，重点变成“省下访问的同时，别漏掉重要信息”。QSA 属于这条路线，并与 GDN 组合。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-57">[57]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-13">[13]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+</div>
+
+<p class="qwen-everyday"><strong>读到这里，先记住：</strong>GDN 的难点是“压缩后还记得多少”，QSA 的难点是“重要位置有没有选中”。这两种误差不同，所以有组合使用的价值。</p>
+
+</section>
+
+<details class="qwen-advanced" id="advanced" markdown="1">
+<summary>继续深入：论文脉络、公式与实现细节<small>点此展开原有详细笔记；用于核对精确公式、配置和论文证据。</small></summary>
+<div class="qwen-advanced__body" markdown="1">
+
+
 <section class="qwen-chapter__lead" markdown="1">
 
 Full attention 的优势是：每个 query 都能直接按内容访问此前所有 token。代价也很明确：训练时注意力矩阵随序列长度二次增长，自回归生成时 KV Cache 随上下文线性增长。Qwen3.8 的处理方式不是只保留局部窗口，而是把 48 层按 `3 × GDN + 1 × QSA` 排列：多数层把历史压缩进固定状态，周期性层再对原始 token 做稀疏召回。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
 
 </section>
 
-<nav class="qwen-learning-nav" aria-label="本章阅读层次"><a href="#history">发展主线</a><a href="#mechanism">原理与 Qwen 实现</a><a href="#self-check">自测与答案</a></nav>
+
 
 <section class="qwen-chapter qwen-history" id="history" markdown="1">
 
@@ -201,6 +290,10 @@ GQA 的 KV 减为四分之一，是否表示 attention 只看四分之一的 tok
 2. QSA 的 block 粒度和预算能否根据 query 或 layer 动态变化，而不是固定 4 与 2,048？
 3. 在并发推理中，稀疏访问带来的不规则内存行为会抵消多少理论计算节省？
 </aside>
+
+
+</div>
+</details>
 
 {% include qwen-note/references.html refs='<a href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> Qwen 技术报告 §2.1；<a href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a> 官方配置；<a href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a> Transformer；<a href="/notes/qwen3.8-flash-next/references/#ref-10">[10]</a> Fast-weight view；<a href="/notes/qwen3.8-flash-next/references/#ref-11">[11]</a> Gated DeltaNet；<a href="/notes/qwen3.8-flash-next/references/#ref-12">[12]</a> RoPE；<a href="/notes/qwen3.8-flash-next/references/#ref-13">[13]</a> DeepSeek Sparse Attention。' %}
 

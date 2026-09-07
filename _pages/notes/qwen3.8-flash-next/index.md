@@ -1,19 +1,80 @@
 ---
 permalink: /notes/qwen3.8-flash-next/
 title: "Qwen3.8-Flash-Next 架构笔记"
-excerpt: "以 Qwen3.8-Flash-Next 为切面，梳理当代大模型各个架构部件的演变过程"
+excerpt: "先认识模型每一步在做什么，再沿着问题看技术如何演进。第一次阅读可以不看公式。"
 author_profile: false
 wide: true
 note_page: true
 note_chapter: overview
 note_number: "00 / OVERVIEW"
-note_heading: "从 Qwen3.8 回看 LLM 架构的演进"
-note_description: "从每个模块最初解决的问题出发，串起关键转折、并行路线与设计代价，再读懂 Qwen3.8-Flash-Next 的具体选择。"
+note_heading: "从一个例子，读懂 Qwen 的七个模块"
+note_description: "先认识模型每一步在做什么，再沿着问题看技术如何演进。第一次阅读可以不看公式。"
 note_next_url: /notes/qwen3.8-flash-next/embedding/
 note_next_label: "Embedding：从 Token Lookup 到条件记忆"
 ---
 
 {% include qwen-note/header.html %}
+
+<p class="qwen-intro">如果架构图上的名字都换了，先别急着逐个背缩写。我们从“模型读到一句话后，怎样继续写下去”开始，把七个模块放回它们各自负责的位置。</p>
+
+<nav class="qwen-learning-nav" aria-label="本章阅读路径"><a href="#learn">先读例子</a><a href="#evolution">再看演进</a><a href="#advanced">论文与公式</a></nav>
+
+{% include qwen-note/visual.html kind="overview" title="一次预测，先看清这条主线" caption='这是常见 decoder 的教学简图，不是 Qwen 全部组件的逐层接线图。中间计算反复执行，Norm 与 Residual 参与各层；Optimizer 属于训练过程。基线与 Qwen 细节见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-36">[36]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>。' %}
+
+<section class="qwen-chapter qwen-primer" id="learn" markdown="1">
+
+## 阅读前提：已经理解 Transformer 与 LLaMA
+
+这组笔记默认你熟悉 causal attention、KV cache、RoPE、RMSNorm、SwiGLU、残差连接、next-token loss 和 AdamW。正文聚焦相对熟悉基线的改动，不从 token 和向量的定义重新讲起。
+
+每章先给出 **基线 → 改动** 对照，再跟踪新增计算的输入、参数、运算与输出。涉及哈希、门控、路由等新机制时，用具体数字或张量形状拆开；基础回顾放入折叠区。
+
+## 按变化来选择章节
+
+- **[Embedding](/notes/qwen3.8-flash-next/embedding/)**：额外 N-gram 表如何从有顺序的 ID 计算地址、读取参数，再融合进主干。
+- **[Attention](/notes/qwen3.8-flash-next/attention/)**：GDN 如何改用矩阵状态，QSA 如何选择历史位置，两种层如何配合。
+- **[FFN / MoE](/notes/qwen3.8-flash-next/ffn/)**：保留专家内的 SwiGLU，改变专家参数的选择与输出组合。
+- **[Norm](/notes/qwen3.8-flash-next/norm/)**：RMSNorm 沿用，重点看 zero-centered 参数化、权重衰减及归一化范围。
+- **[Residual](/notes/qwen3.8-flash-next/residual/)**：从单流加法变成四分支的门控读取与写回。
+- **[Output / MTP](/notes/qwen3.8-flash-next/output/)**：新增预测目标如何服务投机解码，QSA 选择结果如何复用。
+- **[Optimizer](/notes/qwen3.8-flash-next/optimizer/)**：Muon 怎样变换矩阵更新，为什么不同参数仍使用不同优化器。
+
+“相对 LLaMA 不同”和“Qwen3.8 首次提出”是两回事。每章保留历史脉络，区分沿用组件、已有技术的组合与本次修改。
+
+## 为什么不直接把模型做得更大？
+
+因为要付的成本不止一种。参数更多，存储更大；文章更长，访问历史更贵；层数更多，训练与信息传递也更难；生成每次只能推进一点，又会带来等待。
+
+所以技术演进经常是围绕某个具体问题找办法：让容量增加时少增加计算，让读长文时少搬一些数据，让新结果更容易进入旧表示。理解“它想省哪一笔、又多花了哪一笔”，比只记“这代换了什么组件”更有用。
+
+## 比喻能帮我们入门，但不替代实际结构
+
+本组图解会用词典、笔记、专家和草稿解释机制。它们在模型里对应向量、矩阵与计算模块，不是真实的书、人或文字记录。图中凡是简化了数量、分词或运算，都会在图注说明。
+
+正文里的“怎么一步步走到这里”保留发展主线。想继续查论文、看公式和配置，可以展开页末的进阶部分；原有参考文献编号与章节链接仍可使用。
+
+</section>
+
+<section class="qwen-chapter qwen-primer" id="evolution" markdown="1">
+
+## 怎么一步步走到这里？
+
+<div class="qwen-plain-history" markdown="1">
+
+1. **先理解普通 Transformer 的分工。** 在同一个 block 中，Attention 联系位置，FFN 加工特征，Norm 与残差帮助组织计算。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a>
+2. **模型与上下文规模扩大，各种瓶颈分开出现。** 缓存共享、专家路由、归一化和解码加速因此形成多条路线，而不是同一条升级链。
+3. **回到 Qwen，看它怎样组合这些路线。** GDN 与 QSA、MoE、N-gram 记忆、GR 和 MTP 各有目标；优化器的选择还要与训练配合。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+</div>
+
+<p class="qwen-everyday"><strong>读到这里，先记住：</strong>每读一个新增模块，先回答：它接收什么、做了什么、把结果交给谁？然后再问，为什么原来的办法不够用了。</p>
+
+</section>
+
+<details class="qwen-advanced" id="advanced" markdown="1">
+<summary>继续深入：论文脉络、公式与实现细节<small>点此展开原有详细笔记；第一次阅读可以先跳过。</small></summary>
+<div class="qwen-advanced__body" markdown="1">
+
 
 <section class="qwen-chapter__lead" markdown="1">
 
@@ -181,6 +242,10 @@ N-gram 表变大是增加第一类容量，GDN 固定状态是在压缩第二类
 如果只想理解推理路径，先读 **Embedding → Attention → FFN → Output**。如果更关心训练稳定性和系统实现，再读 **Norm → Residual → Optimizer**。
 
 </section>
+
+
+</div>
+</details>
 
 {% include qwen-note/references.html refs='<a href="/notes/qwen3.8-flash-next/references/#ref-1">[1]</a> Qwen 官方博客；<a href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> 技术报告；<a href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a> 官方配置；<a href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a> Transformer；<a href="/notes/qwen3.8-flash-next/references/#ref-7">[7]</a> Pre-LN 分析；<a href="/notes/qwen3.8-flash-next/references/#ref-36">[36]</a> LLaMA；<a href="/notes/qwen3.8-flash-next/references/#ref-37">[37]</a> PaLM；<a href="/notes/qwen3.8-flash-next/references/#ref-38">[38]</a> Gemma 2。' %}
 

@@ -1,14 +1,14 @@
 ---
 permalink: /notes/qwen3.8-flash-next/ffn/
 title: "FFN：从 Dense SwiGLU 到 Ultra-Sparse MoE"
-excerpt: "Qwen3.8-Flash-Next 的 512-expert Ultra-Sparse MoE"
+excerpt: "从“所有输入走同一套计算”到“按输入选择一部分计算”，理解专家模型。"
 author_profile: false
 wide: true
 note_page: true
 note_chapter: ffn
 note_number: "04 / FFN & MOE"
-note_heading: "从 Dense SwiGLU 到 Ultra-Sparse MoE"
-note_description: "MoE 保留 FFN 的接口，却把“每个 token 使用同一组参数”改成动态路由到少量专家。容量扩大了，系统问题也随之改变。"
+note_heading: "FFN / MoE：不必每次都动用全部专家"
+note_description: "从“所有输入走同一套计算”到“按输入选择一部分计算”，理解专家模型。"
 note_prev_url: /notes/qwen3.8-flash-next/norm/
 note_prev_label: "Norm：稳定残差流的尺度"
 note_next_url: /notes/qwen3.8-flash-next/output/
@@ -17,13 +17,98 @@ note_next_label: "Output：从 Next-Token Head 到 MTP"
 
 {% include qwen-note/header.html %}
 
+<p class="qwen-intro">模型想学得更多，通常需要更多参数；但参数越多，每次全部计算就越贵。MoE 的办法是准备很多组计算模块，每个 token 只选择其中一部分。</p>
+
+<nav class="qwen-learning-nav" aria-label="本章阅读路径"><a href="#changes">相对 LLaMA 的变化</a><a href="#evolution">再看演进</a><a href="#advanced">论文与公式</a></nav>
+
+
+<section class="qwen-chapter qwen-primer" id="changes" markdown="1">
+
+## SwiGLU 内核保留，变化在参数如何被选择
+
+以 dense LLaMA 的 SwiGLU FFN 为基线。这里不用重新学习激活函数，而要跟踪一次 token 的 router logits、top-k 专家选择、专家输出加权，以及共享专家路径。
+
+| 对照项 | 熟悉的基线 | 本章关注的变化 |
+| --- | --- | --- |
+| 专家内部 | 一套 SwiGLU 参数 | 多个独立参数的专家 |
+| 执行参数 | 每个 token 使用同一套 FFN | 512 个路由专家中选 10 个，另有 1 个共享专家 |
+| 输出合成 | 一个 FFN 输出 | 组合选中专家输出与共享路径 |
+| 系统代价 | 规则的 dense 矩阵乘 | 额外路由、负载均衡、分发与聚合通信 |
+
+这里的比较基线是典型 dense LLaMA decoder（优化器章以 AdamW 为基线），不代表所有 LLaMA 版本；“变化”也不等于 Qwen 首创。报告、配置与实现分别见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>，历史来源见下文。
+
+</section>
+
+{% include qwen-note/visual.html kind="ffn" title="参数都在那里，这次只执行一部分" caption='为便于看清，图中只画 6 个路由专家并选 2 个；这不是 Qwen 的真实数量。勾选代表参与本次计算，未勾选代表本次未执行。实际配置见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a>。' %}
+
+<section class="qwen-chapter qwen-primer" id="learn" markdown="1">
+
+## 如果每次都用同一套加工设备
+
+普通的 dense FFN 就是这样：无论输入是什么，每个 token 都使用同一组参数。实现整齐、容易并行；想通过加宽它增加容量时，逐 token 的计算也往往随之增加。
+
+**MoE（混合专家）** 把这一组计算变成许多组，并加一个路由器。路由器看当前向量，算出专家得分，再选择少数专家执行。专家输出随后组合起来。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-18">[18]</a>
+
+## “专家”不是一群已经分好工的人
+
+这些专家本质上是参数不同的小型前馈网络，并没有预先贴好“数学老师”“代码老师”的标签。训练可能让它们形成某些分工，但不能看到编号 7 就断言它专门负责数学。
+
+选择也按当前 token 的隐藏表示进行，不是整篇文章只挑一个专家从头用到尾。即便是同一个词，在不同上下文或不同层里也可能走不同的专家。
+
+## Qwen 选择了什么方案？
+
+Qwen3.8 每层有 512 个可路由专家，每个 token 选 10 个；另有一个共享专家始终参与。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a> 共享专家可以理解成每次都走的公共加工步骤，路由专家提供可选择的额外加工。
+
+这样总参数可以很多，而单个 token 不必执行全部专家。但 **只选少数专家，不等于速度按专家数量成倍增加**：还要算路由、移动数据、等待忙碌设备，以及其他非专家模块的成本。
+
+## 那 SwiGLU 又是什么？
+
+它描述的是一个专家内部怎样加工向量：一路产生特征，另一路调节这些特征，再把两路相乘。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-9">[9]</a> MoE 则决定使用哪些专家。一个问“机器里面怎么做”，另一个问“这次开哪些机器”，所以二者可以同时存在。
+
+</section>
+
+
+<details class="qwen-self-check" markdown="1">
+<summary>需要时回顾：已有 Transformer / LLaMA 基础</summary>
+
+## FFN 是什么？先不急着记缩写
+
+在一个常见 Transformer 层里，Attention 先把不同位置的信息联系起来；然后 **FFN（前馈网络）** 对每个位置的向量再做一轮非线性加工。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a>
+
+可以想成：先收集与当前问题有关的材料，再把材料加工成更有用的特征。FFN 这一步不直接去读别的位置，但它收到的向量已经可以包含前文信息。
+
+
+</details>
+
+<section class="qwen-chapter qwen-primer" id="evolution" markdown="1">
+
+## 怎么一步步走到这里？
+
+<div class="qwen-plain-history" markdown="1">
+
+1. **先改进一套 FFN 的内部计算。** 从 ReLU、GELU 到门控形式，研究者寻找更合适的非线性变换。SwiGLU 属于这条路线。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-5">[5]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-42">[42]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-9">[9]</a>
+2. **想增加容量，但不全部计算。** 稀疏 MoE 通过路由选择部分专家，GShard 推动多设备执行，Switch 用 top-1 简化路由。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-18">[18]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-53">[53]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-19">[19]</a>
+3. **专家多了，还要让容量用得起来。** 细分专家、设置共享专家、改进负载均衡，分别处理组合灵活性、重复计算与拥塞。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-20">[20]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-28">[28]</a>
+4. **Qwen 使用大专家池、小激活子集。** 关键不仅是 512 和 10 这两个数，还在于真实执行时能否让专家分布合理、减少等待。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a>
+
+</div>
+
+<p class="qwen-everyday"><strong>读到这里，先记住：</strong>MoE 把“模型一共准备了多少参数”和“一个 token 实际调用多少参数”分开。多出来的容量需要路由和系统配合，才能变成真实收益。</p>
+
+</section>
+
+<details class="qwen-advanced" id="advanced" markdown="1">
+<summary>继续深入：论文脉络、公式与实现细节<small>点此展开原有详细笔记；用于核对精确公式、配置和论文证据。</small></summary>
+<div class="qwen-advanced__body" markdown="1">
+
+
 <section class="qwen-chapter__lead" markdown="1">
 
 Transformer block 中，attention 负责跨位置交换信息，FFN 则在每个位置独立地扩张、变换再压回 hidden size。随着模型扩大，FFN 往往占据很大一部分参数与计算。Qwen3.8 没有取消这一子层，而是让每层 FFN 变成 512 个 routed experts 的 SwiGLU MoE；每个 token 只激活 10 个 routed expert，再加 1 个 shared expert。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a>
 
 </section>
 
-<nav class="qwen-learning-nav" aria-label="本章阅读层次"><a href="#history">发展主线</a><a href="#mechanism">原理与 Qwen 实现</a><a href="#self-check">自测与答案</a></nav>
+
 
 <section class="qwen-chapter qwen-history" id="history" markdown="1">
 
@@ -171,6 +256,10 @@ top-10 改成 top-1 一定更快、更好吗？专家编号是否对应固定人
 2. global balancing 改善总体利用率时，会不会压制某些天然长尾但有价值的路由？
 3. N-gram memory 与 MoE 都在扩展条件容量；它们分别更适合记住什么，是否存在可测量的替代关系？
 </aside>
+
+
+</div>
+</details>
 
 {% include qwen-note/references.html refs='<a href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> Qwen 技术报告；<a href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a> 官方配置；<a href="/notes/qwen3.8-flash-next/references/#ref-9">[9]</a> SwiGLU；<a href="/notes/qwen3.8-flash-next/references/#ref-18">[18]</a> Sparsely-Gated MoE；<a href="/notes/qwen3.8-flash-next/references/#ref-19">[19]</a> Switch Transformer；<a href="/notes/qwen3.8-flash-next/references/#ref-20">[20]</a> DeepSeekMoE；<a href="/notes/qwen3.8-flash-next/references/#ref-21">[21]</a> Global-batch load balancing；<a href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a> Qwen3-Next。' %}
 

@@ -1,14 +1,14 @@
 ---
 permalink: /notes/qwen3.8-flash-next/output/
 title: "Output：从 Next-Token Head 到 MTP"
-excerpt: "Qwen3.8-Flash-Next 的 LM Head、Multi-Token Prediction 与投机解码"
+excerpt: "用 A、B、C 的小例子，理解多 token 预测为何能加速，以及为什么猜错后必须回退。"
 author_profile: false
 wide: true
 note_page: true
 note_chapter: output
 note_number: "05 / OUTPUT & MTP"
-note_heading: "从 Next-Token Head 到 MTP"
-note_description: "主模型仍然逐 token 给出 logits；MTP 额外预测多个未来位置，为投机解码提供更便宜的候选。"
+note_heading: "Output / MTP：先猜几步，再一起检查"
+note_description: "用 A、B、C 的小例子，理解多 token 预测为何能加速，以及为什么猜错后必须回退。"
 note_prev_url: /notes/qwen3.8-flash-next/ffn/
 note_prev_label: "FFN：从 Dense SwiGLU 到 Ultra-Sparse MoE"
 note_next_url: /notes/qwen3.8-flash-next/residual/
@@ -17,13 +17,102 @@ note_next_label: "Residual：从单流到 Gated Residual"
 
 {% include qwen-note/header.html %}
 
+<p class="qwen-intro">普通生成要等上一个 token 确定，才能继续下一个。投机解码让较便宜的模块先提出几步候选，再交给主模型检查；MTP 可以为它提供候选。</p>
+
+<nav class="qwen-learning-nav" aria-label="本章阅读路径"><a href="#changes">相对 LLaMA 的变化</a><a href="#evolution">再看演进</a><a href="#advanced">论文与公式</a></nav>
+
+
+<section class="qwen-chapter qwen-primer" id="changes" markdown="1">
+
+## LM Head 保留，新增候选生成和批量验证
+
+以标准 next-token loss 和自回归解码为起点。MTP 增加未来位置的辅助预测；投机解码利用候选已知这一条件，让主模型一次验证多个位置。训练目标和解码协议需要分开分析。
+
+| 对照项 | 熟悉的基线 | 本章关注的变化 |
+| --- | --- | --- |
+| 主输出 | 隐藏状态映射到词表 logits | 主模型仍按条件前缀预测 |
+| 训练辅助 | next-token 监督 | 增加 MTP 预测目标 |
+| 推理过程 | 主模型逐轮推进 | 提案、并行验证、接受前缀、拒绝后修正 |
+| Qwen 进一步改动 | 一般 MTP 提案机制 | MTP 使用 QSA，多个投机步复用选择位置 |
+
+这里的比较基线是典型 dense LLaMA decoder（优化器章以 AdamW 为基线），不代表所有 LLaMA 版本；“变化”也不等于 Qwen 首创。报告、配置与实现分别见 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-39">[39]</a>，历史来源见下文。
+
+</section>
+
+{% include qwen-note/visual.html kind="output" title="猜三步，不代表能直接输出三步" caption='贪心解码的教学例子，不是随机采样的完整接受协议，也不是 Qwen 的真实模型输出。A、B、C、D 代表 token。标准投机解码依据 <a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-27">[27]</a>。' %}
+
+<section class="qwen-chapter qwen-primer" id="learn" markdown="1">
+
+## 换一个做事方式：先打草稿，再审稿
+
+假设主模型很强、运行也贵。让一个便宜的提案器先猜 A、B、C，主模型再一次处理这段已知候选，检查每个位置的预测。这叫 **投机解码**。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-27">[27]</a>
+
+为什么检查可以一起做，生成却不能？因为检查时候选已经给出来了。主模型可以并行计算“在这些候选前缀成立时，各位置应该预测什么”，然后再判断哪些前缀真的成立。
+
+图里第一步 A 正确，第二步主模型认为应该是 D，所以提交 A、D，丢弃后面的 C。C 原来是基于 A、B 猜的，前提已经错了，不能跳过 B 直接保留 C。
+
+## MTP 在这里做什么？
+
+**MTP（多 token 预测）** 让模型学习多个未来位置的预测，而不只监督紧邻的下一个位置。它可以帮助训练出用于打草稿的辅助模块。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-26">[26]</a>
+
+要分开看两个问题：多未来目标能否帮助学习；它提出的候选能否让推理更快。前者是训练问题，后者还取决于验证方式和接受了多少 token。MTP 与投机解码有关，但不是同一个概念。
+
+## Qwen 在这条路上进一步做了什么？
+
+Qwen 有原生 MTP 辅助模块。到了 Qwen3.8，这个模块也使用 QSA，并在多个投机步之间复用挑选出来的历史位置，减少重复选择的开销。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a>
+
+可以把它理解为：审一段紧挨着的草稿时，可能反复用到相近的参考材料，于是尝试复用一次检索的结果。但候选仍然要经过验证。
+
+## 多猜几步一定更快吗？
+
+不一定。假设普通生成一个 token 花 10 毫秒；打草稿加验证一共花 25 毫秒。若这轮能提交 4 个，比原来 40 毫秒划算；若只提交 2 个，反而比原来 20 毫秒更慢。这只是教学算账，不是模型实测。
+
+图中使用“主模型也选这个 token”解释贪心情况。随机采样还要使用正确的接受概率和拒绝后的补偿采样，才能保持目标分布；进阶部分再看具体公式。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-27">[27]</a>
+
+</section>
+
+
+<details class="qwen-self-check" markdown="1">
+<summary>需要时回顾：已有 Transformer / LLaMA 基础</summary>
+
+## 为什么模型不能直接把后面十个词一起写出来？
+
+普通自回归生成中，下一个 token 的预测要基于已经确定的前缀。先写“我喜欢”，下一步可能是“南京”；确定了“南京”，后面才继续判断。后一步依赖前一步的结果。
+
+**LM Head** 是把最终隐藏向量变成词表分数的模块。它能给许多候选打分，但普通解码这一轮只确定下一个 token。瓶颈来自条件依赖，而不是输出矩阵只能处理一个位置。
+
+
+</details>
+
+<section class="qwen-chapter qwen-primer" id="evolution" markdown="1">
+
+## 怎么一步步走到这里？
+
+<div class="qwen-plain-history" markdown="1">
+
+1. **普通生成逐步推进。** 训练文本的答案已知，可以并行监督很多位置；生成时答案未知，存在串行依赖。
+2. **先让便宜模型打草稿。** 投机解码把候选生成与主模型验证分开，已有主模型也可以配独立提案器。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-27">[27]</a>
+3. **提案器开始借用主模型的内部信息。** Medusa 增加解码头，EAGLE 在特征层提出候选；它们的具体训练和验证方式不同。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-54">[54]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-55">[55]</a>
+4. **多未来预测进入训练设计。** MTP 提供额外目标，DeepSeek-V3、Qwen 等各自整合辅助模块，再继续优化推理开销。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-26">[26]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-28">[28]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a>
+
+</div>
+
+<p class="qwen-everyday"><strong>读到这里，先记住：</strong>先猜不等于先确认。能否加速，要看一轮额外工作最终换来了多少个已确认 token。</p>
+
+</section>
+
+<details class="qwen-advanced" id="advanced" markdown="1">
+<summary>继续深入：论文脉络、公式与实现细节<small>点此展开原有详细笔记；用于核对精确公式、配置和论文证据。</small></summary>
+<div class="qwen-advanced__body" markdown="1">
+
+
 <section class="qwen-chapter__lead" markdown="1">
 
 把 MTP 直接叫作“新 output head”容易混淆两个接口。Qwen3.8 的正常生成路径仍由 LM Head 把最后隐藏状态映射到 248,320 维 logits；这组输出权重不与输入 embedding 共享。MTP 是主模型之外的一层辅助模块，约 4B 参数，用于学习多个未来位置的预测。它可以参与训练，也可以在推理时作为 speculative proposal model。<a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a><a class="qwen-cite" href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a>
 
 </section>
 
-<nav class="qwen-learning-nav" aria-label="本章阅读层次"><a href="#history">发展主线</a><a href="#mechanism">原理与 Qwen 实现</a><a href="#self-check">自测与答案</a></nav>
+
 
 <section class="qwen-chapter qwen-history" id="history" markdown="1">
 
@@ -178,6 +267,10 @@ MTP 是典型的“用额外训练和少量推理计算，换取更少串行主�
 2. 当 batch 增大时，MTP 的低延迟优势与 continuous batching 的吞吐优势怎样权衡？
 3. MTP 的训练收益和 speculative decoding 收益能否通过独立消融彻底拆开？
 </aside>
+
+
+</div>
+</details>
 
 {% include qwen-note/references.html refs='<a href="/notes/qwen3.8-flash-next/references/#ref-2">[2]</a> Qwen 技术报告 §2.1.2；<a href="/notes/qwen3.8-flash-next/references/#ref-4">[4]</a> 官方配置；<a href="/notes/qwen3.8-flash-next/references/#ref-26">[26]</a> Multi-Token Prediction；<a href="/notes/qwen3.8-flash-next/references/#ref-27">[27]</a> Speculative Decoding；<a href="/notes/qwen3.8-flash-next/references/#ref-28">[28]</a> DeepSeek-V3 MTP；<a href="/notes/qwen3.8-flash-next/references/#ref-35">[35]</a> Qwen3-Next。' %}
 

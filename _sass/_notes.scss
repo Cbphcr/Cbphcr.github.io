@@ -324,6 +324,106 @@
 
 /* Shared reading components */
 
+/* Beginner reading layer: live text diagrams that reflow on small screens. */
+.qwen-intro { max-width: 780px; margin: 0 0 2rem; font-size: 1.08em; line-height: 1.9; color: var(--text-strong); }
+.qwen-primer { max-width: 820px; margin: 0 auto 2.5rem; }
+.qwen-primer p { line-height: 1.95; }
+.qwen-primer h3 { margin-top: 1.7rem; }
+.qwen-primer .qwen-everyday { padding: 1rem 1.2rem; border-left: 3px solid var(--chapter); background: var(--chapter-soft); color: var(--text-strong); }
+.qwen-plain-history { padding-left: 1.4rem; }
+.qwen-plain-history li { padding-left: 0.35rem; margin: 0.9rem 0; }
+.qwen-advanced {
+  margin: 2rem 0;
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  background: var(--surface);
+  > summary { cursor: pointer; padding: 1.2rem; color: var(--text-strong); font-weight: 700; line-height: 1.65; }
+  > summary small { display: block; margin: 0.4rem 0 0 1.1rem; color: var(--text-muted); font-weight: 400; }
+  > summary:focus-visible { outline: 2px solid var(--chapter); outline-offset: 4px; }
+  > .qwen-advanced__body { padding: 1.2rem; border-top: 1px solid var(--border); }
+}
+.qwen-visual {
+  display: block;
+  margin: 1.7rem 0 2.3rem !important;
+  padding: 1.4rem;
+  border: 1px solid var(--border-2);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text-strong);
+  box-shadow: 0 8px 24px rgba(20, 45, 75, 0.04);
+  font-size: 15px;
+  line-height: 1.6;
+  * { box-sizing: border-box; }
+  h3 { font-size: 19px !important; margin: 0.35rem 0 0.9rem !important; padding: 0 !important; border: 0 !important; color: var(--text-strong); }
+  p { font-size: 15px; line-height: 1.75; margin: 0.75rem 0 0; color: var(--text-muted); }
+  small { font-size: 13px; color: var(--text-muted); }
+  figcaption { display: block; margin: 1.1rem 0 0; padding-top: 0.85rem; border-top: 1px solid var(--border); font-size: 13px; line-height: 1.75; color: var(--text-muted); text-align: left; }
+}
+.qwen-visual__heading { margin-bottom: 1.2rem; }
+.qwen-visual__heading > span { display: block; color: var(--chapter); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+.qwen-visual__heading > strong { font-size: 20px; line-height: 1.5; }
+.qwen-picture-pair { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; }
+.qwen-picture-box { min-width: 0; padding: 1.15rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); }
+.qwen-picture-box.is-accent { border-color: var(--chapter); background: var(--chapter-soft); }
+.qwen-picture-flow { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.4rem; list-style: none !important; margin: 1rem 0 !important; padding: 0 !important; }
+.qwen-picture-flow li { position: relative; display: flex; flex-direction: column; gap: 0.4rem; margin: 0 !important; padding: 1rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); line-height: 1.65; }
+.qwen-picture-flow li + li::before { content: '→'; position: absolute; left: -1.25rem; top: 45%; color: var(--chapter); }
+.qwen-picture-flow li > b { color: var(--chapter); font-size: 13px; }
+.qwen-picture-flow li > strong { color: var(--text-strong); font-size: 17px; }
+.qwen-picture-flow li > span { color: var(--text-muted); font-size: 14px; }
+.qwen-picture-support { display: flex; flex-wrap: wrap; gap: 0.65rem 1.3rem; margin: 1rem 0; font-size: 14px; }
+.qwen-picture-support > span { padding: 0.5rem 0.7rem; border-radius: 6px; background: var(--surface-2); }
+.qwen-picture-training { margin-top: 1rem; border-top: 1px dashed var(--border-2); padding-top: 1rem; color: var(--text-muted); }
+.qwen-picture-training > b { color: var(--chapter); margin-right: 0.6rem; }
+.qwen-token-line { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.65rem; margin: 0.8rem 0 1.4rem; }
+.qwen-token-line > span,.qwen-token-line > strong { padding: 0.55rem 0.85rem; border: 1px solid var(--border-2); border-radius: 8px; background: var(--surface-2); }
+.qwen-token-line > strong { border-color: var(--chapter); background: var(--chapter-soft); }
+.qwen-token-line small { display: block; font-size: 11px; font-weight: 400; }
+.qwen-address { padding: 0.65rem; border-left: 3px solid var(--chapter); color: var(--text-strong); font-size: 16px; line-height: 1.85; }
+.qwen-picture-join { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0.8rem 0; text-align: center; font-size: 13px; color: var(--text-muted); }
+.qwen-picture-join > span::after { content: '↓'; display: block; font-size: 20px; color: var(--chapter); }
+.qwen-picture-result { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 1rem; padding: 1rem 1.1rem; border-radius: 9px; background: var(--chapter-soft); border: 1px solid var(--border); }
+.qwen-picture-result > b { font-size: 16px; color: var(--text-strong); }
+.qwen-picture-result > span { font-size: 14px; color: var(--text-muted); }
+.qwen-note-paper { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.6rem 1rem; border-left: 2px solid var(--chapter); }
+.qwen-note-paper span { color: var(--text-muted); }
+.qwen-document-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+.qwen-document-strip > * { padding: 0.5rem; border: 1px solid var(--border-2); border-radius: 5px; text-align: center; }
+.qwen-document-strip strong { border: 2px solid var(--chapter); color: var(--chapter); }
+.qwen-picture-cycle,.qwen-streams { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0.5rem; margin: 1rem 0; }
+.qwen-picture-cycle > *,.qwen-streams > * { padding: 0.7rem 0.3rem; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--border-2); text-align: center; font-size: 14px; }
+.qwen-picture-cycle > strong { background: var(--chapter-soft); border: 2px solid var(--chapter); color: var(--chapter); }
+.qwen-number-bars > div { display: grid; grid-template-columns: 3.8rem 1fr 2.5rem; align-items: center; gap: 0.5rem; margin: 0.8rem 0; font-size: 13px; }
+.qwen-number-bars i { display: block; width: var(--bar); height: 12px; background: var(--chapter); border-radius: 3px; }
+.qwen-number-bars b { font-variant-numeric: tabular-nums; }
+.qwen-router-label { text-align: center; padding: 0.9rem 0; color: var(--text-muted); font-size: 14px; }
+.qwen-expert-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0.65rem; }
+.qwen-expert-grid > * { text-align: center; padding: 0.85rem 0.4rem; border-radius: 7px; background: var(--surface-2); border: 1px solid var(--border-2); }
+.qwen-expert-grid > strong { border: 2px solid var(--chapter); background: var(--chapter-soft); color: var(--chapter); }
+.qwen-verification { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0.65rem; }
+.qwen-verification > div { padding: 0.8rem; border: 1px solid var(--border-2); border-radius: 8px; }
+.qwen-verification b { display: block; color: var(--chapter); font-size: 18px; margin-bottom: 0.4rem; }
+.qwen-verification span { color: var(--text-muted); font-size: 14px; }
+.qwen-coordinate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; max-width: 125px; }
+.qwen-coordinate-grid span { padding: 0.25rem; border: 1px solid var(--border-2); text-align: center; color: var(--chapter); }
+.qwen-matrix-example { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.qwen-matrix-example > span { border-right: 2px solid var(--chapter); border-left: 2px solid var(--chapter); padding: 0.3rem; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) {
+  .qwen-visual { padding: 1rem; }
+  .qwen-picture-pair,.qwen-picture-flow { grid-template-columns: 1fr; }
+  .qwen-picture-flow li + li::before { content: '↓'; left: 48%; top: -1.4rem; }
+  .qwen-picture-join { grid-template-columns: 1fr; text-align: left; gap: 0.5rem; }
+  .qwen-picture-join > span::after { display: inline; margin-left: 0.4rem; }
+  .qwen-verification { grid-template-columns: 1fr; }
+  .qwen-verification > div { display: grid; grid-template-columns: 5rem 1fr; align-items: start; }
+  .qwen-visual__heading > strong { font-size: 18px; }
+  .qwen-streams { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .qwen-advanced > .qwen-advanced__body { padding: 0.85rem; }
+}
+@media print {
+  .qwen-visual { break-inside: avoid; }
+}
+
 .qwen-callout {
   margin: 1.4rem 0 2.2rem;
   padding: 0.95rem 1rem 0.95rem 1.1rem;

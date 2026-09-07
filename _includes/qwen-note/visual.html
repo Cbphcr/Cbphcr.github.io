@@ -1,0 +1,62 @@
+{% assign kind = include.kind %}
+<figure class="qwen-visual qwen-visual--{{ kind }}" aria-labelledby="visual-title-{{ kind }}">
+  <div class="qwen-visual__heading"><span>看图理解</span><strong id="visual-title-{{ kind }}">{{ include.title }}</strong></div>
+  {% case kind %}
+  {% when 'overview' %}
+  <ol class="qwen-picture-flow">
+    <li><b>01</b><strong>给文字一个表示</strong><span>Embedding<br>把 token 变成向量</span></li>
+    <li><b>02</b><strong>结合前文，反复加工</strong><span>Attention + FFN<br>读上下文，再做变换</span></li>
+    <li><b>03</b><strong>预测下一个 token</strong><span>LM Head<br>给候选打分</span></li>
+  </ol>
+  <div class="qwen-picture-support"><span><b>Norm</b> 调整数值尺度</span><span><b>Residual</b> 保留并更新中间表示</span></div>
+  <div class="qwen-picture-training"><b>训练时</b> 预测与答案比较 → 得到梯度 → Optimizer 更新参数</div>
+  {% when 'embedding' %}
+  <div class="qwen-token-line" aria-label="假设分词为我、喜欢、南京、大学，当前读到大学"><span>我</span><span>喜欢</span><span>南京</span><strong>大学<small>当前位置</small></strong></div>
+  <div class="qwen-picture-pair">
+    <div class="qwen-picture-box"><small>普通输入路径</small><h3>查单个 token</h3><div class="qwen-address">大学</div><p>普通 embedding 表<br>提供这个 token 的基础向量</p></div>
+    <div class="qwen-picture-box is-accent"><small>额外的短语路径</small><h3>查最近的组合</h3><div class="qwen-address">南京 · 大学<br>喜欢 · 南京 · 大学</div><p>N-gram 表<br>提供局部组合的补充向量</p></div>
+  </div>
+  <div class="qwen-picture-join"><span>基础向量先经过第 1 层</span><span>短语向量提前查好、搬过来</span></div>
+  <div class="qwen-picture-result"><b>在第 2 层汇合</b><span>根据上下文调节补充量，处理后加进原来的表示</span></div>
+  {% when 'attention' %}
+  <div class="qwen-picture-pair">
+    <div class="qwen-picture-box"><small>GDN · 固定大小的状态</small><h3>边读，边改笔记</h3><div class="qwen-note-paper"><span>上一步的状态</span><b>保留 / 遗忘</b><b>写入新的关联</b></div><p>历史被压进一份状态<br>越读越长，状态大小不随之增长</p></div>
+    <div class="qwen-picture-box is-accent"><small>QSA · 稀疏访问历史</small><h3>先找位置，再翻原文</h3><div class="qwen-document-strip" aria-label="从多块历史中选择第二和第五块"><span>1</span><strong>2 ✓</strong><span>3</span><span>4</span><strong>5 ✓</strong><span>6</span></div><p>先估计哪些块有关<br>再读取选中位置的历史表示</p></div>
+  </div>
+  <div class="qwen-picture-cycle"><span>GDN</span><span>GDN</span><span>GDN</span><strong>QSA</strong></div>
+  <div class="qwen-picture-result"><b>这样的四层组合重复 12 次</b><span>记笔记可能遗漏细节；挑位置也可能漏选。两种方式搭配使用。</span></div>
+  {% when 'norm' %}
+  <div class="qwen-picture-pair">
+    <div class="qwen-picture-box"><small>忽略 epsilon，缩放参数设为 1</small><h3>输入是 (3, 4)</h3><div class="qwen-number-bars"><div><span>第 1 维</span><i style="--bar:75%"></i><b>3</b></div><div><span>第 2 维</span><i style="--bar:100%"></i><b>4</b></div></div><p>均方根约为 3.54</p></div>
+    <div class="qwen-picture-box is-accent"><small>两维都除以同一个 3.54</small><h3>约为 (0.85, 1.13)</h3><div class="qwen-number-bars"><div><span>第 1 维</span><i style="--bar:75%"></i><b>0.85</b></div><div><span>第 2 维</span><i style="--bar:100%"></i><b>1.13</b></div></div><p>整体尺度变了，3 : 4 的比例保留</p></div>
+  </div>
+  <div class="qwen-picture-result"><b>RMSNorm 调整整体尺度，不减去均值</b><span>两侧条形图各自按最大值缩放，用来比较比例；绝对大小请看数字。</span></div>
+  {% when 'ffn' %}
+  <div class="qwen-picture-result"><b>当前 token 的隐藏表示</b><span>已经可以包含前文的信息</span></div>
+  <div class="qwen-router-label">↓ 路由器打分：这次使用哪些专家？</div>
+  <div class="qwen-expert-grid" aria-label="教学示意：六个路由专家中选择第二和第五个"><span>专家 1</span><strong>专家 2 ✓</strong><span>专家 3</span><span>专家 4</span><strong>专家 5 ✓</strong><span>专家 6</span></div>
+  <div class="qwen-picture-support"><span>✓ 只执行选中的路由专家</span><span><b>共享专家</b> 每个 token 都执行</span></div>
+  <div class="qwen-picture-result"><b>组合专家输出，交给后面的层</b><span>Qwen 的实际规模：512 个路由专家中选 10 个，另加 1 个共享专家。</span></div>
+  {% when 'output' %}
+  <div class="qwen-picture-box"><small>贪心解码教学例子</small><h3>便宜的提案器先猜三步</h3><div class="qwen-token-line"><span>A</span><span>B</span><span>C</span></div></div>
+  <div class="qwen-router-label">↓ 主模型验证每一步的条件前缀</div>
+  <div class="qwen-verification"><div><b>A ✓</b><span>第一步相同<br>接受 A</span></div><div><b>B → D</b><span>在 A 后应选 D<br>用 D 修正</span></div><div><b>C ×</b><span>前缀 A、B 已失效<br>这一步也丢弃</span></div></div>
+  <div class="qwen-picture-result"><b>本轮最终提交：A、D</b><span>不能跳过错误的 B，直接保留 C。</span></div>
+  {% when 'residual' %}
+  <div class="qwen-streams" aria-label="四条输入残差流"><span>状态 1</span><span>状态 2</span><span>状态 3</span><span>状态 4</span></div>
+  <ol class="qwen-picture-flow">
+    <li><b>读</b><strong>选择、组合信息</strong><span>四条状态合成<br>一个子层输入</span></li>
+    <li><b>算</b><strong>执行一次子层</strong><span>例如一次 Attention<br>得到一份新结果</span></li>
+    <li><b>写</b><strong>分别加入各条状态</strong><span>同一个结果<br>写入强度各不相同</span></li>
+  </ol>
+  <div class="qwen-streams" aria-label="四条更新后的残差流"><span>更新后的 1</span><span>更新后的 2</span><span>更新后的 3</span><span>更新后的 4</span></div>
+  <div class="qwen-picture-result"><b>增加保存信息的空间，子层不因此计算四次</b><span>图中省略归一化和具体门控公式。</span></div>
+  {% when 'optimizer' %}
+  <div class="qwen-picture-pair">
+    <div class="qwen-picture-box"><small>看每个坐标</small><h3>AdamW</h3><div class="qwen-coordinate-grid"><span>↘</span><span>↓</span><span>↗</span><span>↑</span></div><p>参考各坐标的历史梯度<br>分别调整更新幅度</p></div>
+    <div class="qwen-picture-box is-accent"><small>看整张矩阵的方向结构</small><h3>Muon</h3><div class="qwen-matrix-example"><span>100　0<br>0　1</span><b>→</b><span>1　0<br>0　1</span></div><p>理想化的更新方向例子<br>压平奇异值的尺度差异</p></div>
+  </div>
+  <div class="qwen-picture-result"><b>处理的是参数怎样更新</b><span>Muon 的图不是权重本身的变化；实际算法用有限步迭代近似计算。</span></div>
+  {% endcase %}
+  <figcaption>{{ include.caption }}</figcaption>
+</figure>
