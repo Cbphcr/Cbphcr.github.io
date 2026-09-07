@@ -1,0 +1,11 @@
+{% assign contribution_stars = 0 %}
+{% assign contribution_repos = site.data.github_contributions.repositories | map: "repo" | uniq %}
+{% for repo in contribution_repos %}
+  {% assign repo_stars = site.data.github_stars[repo] | default: 0 %}
+  {% assign contribution_stars = contribution_stars | plus: repo_stars %}
+{% endfor %}
+<div class="github-total-stars" title="Stars across selected repositories with verified commits">
+  <i class="fas fa-star" aria-hidden="true"></i>
+  <strong>{{ contribution_stars }}</strong>
+  <span>Total Stars</span>
+</div>

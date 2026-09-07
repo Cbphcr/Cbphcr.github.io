@@ -21,26 +21,7 @@ jobs:
       - name: Fetch Star Counts
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          # repositories whose star counts are shown on the site
-          repos=(
-            "LAMDASZ-ML/ChinaTravel"
-            "LAMDASZ-ML/Awesome-LLM-Reasoning-with-NeSy"
-          )
-          mkdir -p _data
-          tmp="$(mktemp)"
-          echo "{" > "$tmp"
-          first=1
-          for repo in "${repos[@]}"; do
-            stars="$(gh api "repos/${repo}" --jq '.stargazers_count')"
-            if [ "$first" -eq 0 ]; then echo "," >> "$tmp"; fi
-            printf '  "%s": %s' "$repo" "$stars" >> "$tmp"
-            first=0
-          done
-          printf '\n}\n' >> "$tmp"
-          mv "$tmp" _data/github_stars.json
-          cat _data/github_stars.json
+        run: python3 scripts/update_github_stars.py
       - name: Commit Star Data
         run: |
           git config --local user.name "${GITHUB_ACTOR}"

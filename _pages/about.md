@@ -66,6 +66,8 @@ redirect_from:
 
 {% include projects.html %}
 
+{% include github-contributions.html %}
+
 <span class='anchor' id='experience'></span>
 
 # <span class="lang-en">Experience</span><span class="lang-zh">经历</span>

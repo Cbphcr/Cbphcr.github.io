@@ -74,6 +74,7 @@ include:
   - _pages
   - files
 exclude:
+  - scripts
   - docs
   - google_scholar_crawler
   - "*.sublime-project"

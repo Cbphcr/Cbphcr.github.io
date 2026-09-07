@@ -1,0 +1,26 @@
+{
+  "username": "Cbphcr",
+  "verified_on": "2026-09-07",
+  "repositories": [
+    {
+      "repo": "RL-VIG/LibFewShot",
+      "evidence_url": "https://github.com/RL-VIG/LibFewShot/commit/2582a4c8412076b87778c91aafbb60296b267eb1"
+    },
+    {
+      "repo": "LAMDA-NeSy/ChinaTravel",
+      "evidence_url": "https://github.com/LAMDA-NeSy/ChinaTravel/commit/993c67291d813802fb2bb53f29012ce4108e2a3c"
+    },
+    {
+      "repo": "LAMDA-NeSy/verl-agent-travelplanner",
+      "evidence_url": "https://github.com/LAMDA-NeSy/verl-agent-travelplanner/commit/5d783206a89125f1a14cf404b9811a2231096087"
+    },
+    {
+      "repo": "Cbphcr/Reproduce-of-AgentSquare",
+      "evidence_url": "https://github.com/Cbphcr/Reproduce-of-AgentSquare/commit/c0214a1f398c8be269537e993bc450cbb624ae75"
+    },
+    {
+      "repo": "chinatravel-competition/IJCAI2026",
+      "evidence_url": "https://github.com/chinatravel-competition/IJCAI2026/commit/9913815d29d3e2fbe8e95ceaedbefa97aee9b32a"
+    }
+  ]
+}
