@@ -1,0 +1,416 @@
+{
+  "tabpfn": [
+    {
+      "id": "T1",
+      "title": "Transformers Can Do Bayesian Inference",
+      "authors": "Samuel Müller, Noah Hollmann, Sebastian Pineda Arango et al.",
+      "year": "2021",
+      "url": "https://arxiv.org/abs/2112.10510",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T2",
+      "title": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second",
+      "authors": "Noah Hollmann, Samuel Müller, Katharina Eggensperger et al.",
+      "year": "2022",
+      "url": "https://arxiv.org/abs/2207.01848",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T3",
+      "title": "Accurate predictions on small data with a tabular foundation model",
+      "authors": "Noah Hollmann, Samuel Müller, Lennart Purucker et al.",
+      "year": "2025",
+      "url": "https://www.nature.com/articles/s41586-024-08328-6",
+      "read": "正文相关章节",
+      "kind": "Nature 637, 319–326",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T4",
+      "title": "TabPFN-2.5: Advancing the State of the Art in Tabular Foundation Models",
+      "authors": "Léo Grinsztajn, Klemens Flöge, Oscar Key et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2511.08667v2",
+      "read": "正文相关章节",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T5",
+      "title": "TabICL: A Tabular Foundation Model for In-Context Learning on Large Data",
+      "authors": "Jingang Qu, David Holzmüller, Gaël Varoquaux et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2502.05564",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T6",
+      "title": "TabICLv2: A better, faster, scalable, and open tabular foundation model",
+      "authors": "Jingang Qu, David Holzmüller, Gaël Varoquaux et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2602.11139",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T7",
+      "title": "TabPFN-3: Technical Report",
+      "authors": "Léo Grinsztajn, Klemens Flöge, Oscar Key et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2605.13986v2",
+      "read": "正文相关章节",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T8",
+      "title": "Fine-tuned In-Context Learning Transformers are Excellent Tabular Data Classifiers",
+      "authors": "Felix den Breejen, Sangmin Bae, Stephen Cha et al.",
+      "year": "2024",
+      "url": "https://arxiv.org/abs/2405.13396",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T9",
+      "title": "Real-TabPFN: Improving Tabular Foundation Models via Continued Pre-training With Real-World Data",
+      "authors": "Anurag Garg, Muhammad Ali, Noah Hollmann et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2507.03971",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T10",
+      "title": "EquiTabPFN: A Target-Permutation Equivariant Prior Fitted Networks",
+      "authors": "Michael Arbel, David Salinas, Frank Hutter",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2502.06684",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T11",
+      "title": "TabArena: A Living Benchmark for Machine Learning on Tabular Data",
+      "authors": "Nick Erickson, Lennart Purucker, Andrej Tschalzev et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2506.16791",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T12",
+      "title": "Realistic Evaluation of TabPFN v2 in Open Environments",
+      "authors": "Zi-Jian Cheng, Zi-Yi Jia, Zhi Zhou et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2505.16226",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T13",
+      "title": "Localized TabICLv2: Scaling Tabular In-Context Learning through k-NN",
+      "authors": "Beimnet Bekele Guta",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2608.16429",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T14",
+      "title": "Advancing Open and Reproducible Relational Learning: RelArena-α, TabPFN-Rel and RPI",
+      "authors": "Adrian Hayler, Klemens Flöge, Alan Arazi et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2608.16319",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T15",
+      "title": "TabPFN models and version capabilities",
+      "authors": "Prior Labs",
+      "year": "2026",
+      "url": "https://docs.priorlabs.ai/models",
+      "read": "官方文档",
+      "kind": "模型文档",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T16",
+      "title": "End-to-End Compression for Tabular Foundation Models",
+      "authors": "Guri Zabërgja, Rafiq Kamel, Arlind Kadra et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2602.05649",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T17",
+      "title": "Retrieval-aligned Tabular Foundation Models Enable Robust Clinical Risk Prediction in Electronic Health Records Under Real-world Constraints",
+      "authors": "Minh-Khoi Pham, Thang-Long Nguyen Ho, Thao Thi Phuong Dao et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2604.01841",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "T18",
+      "title": "TabSwift: An Efficient Tabular Foundation Model with Row-Wise Attention",
+      "authors": "Si-Yang Liu, Han-Jia Ye",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2606.07345",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    }
+  ],
+  "loop-llm": [
+    {
+      "id": "L1",
+      "title": "Adaptive Computation Time for Recurrent Neural Networks",
+      "authors": "Alex Graves",
+      "year": "2016",
+      "url": "https://arxiv.org/abs/1603.08983",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L2",
+      "title": "Universal Transformers",
+      "authors": "Mostafa Dehghani, Stephan Gouws, Oriol Vinyals et al.",
+      "year": "2018",
+      "url": "https://arxiv.org/abs/1807.03819",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L3",
+      "title": "ALBERT: A Lite BERT for Self-supervised Learning of Language Representations",
+      "authors": "Zhenzhong Lan, Mingda Chen, Sebastian Goodman et al.",
+      "year": "2019",
+      "url": "https://arxiv.org/abs/1909.11942",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L4",
+      "title": "Deep Equilibrium Models",
+      "authors": "Shaojie Bai, J. Zico Kolter, Vladlen Koltun",
+      "year": "2019",
+      "url": "https://arxiv.org/abs/1909.01377",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L5",
+      "title": "PonderNet: Learning to Ponder",
+      "authors": "Andrea Banino, Jan Balaguer, Charles Blundell",
+      "year": "2021",
+      "url": "https://arxiv.org/abs/2107.05407",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L6",
+      "title": "Training Large Language Models to Reason in a Continuous Latent Space",
+      "authors": "Shibo Hao, Sainbayar Sukhbaatar, DiJia Su et al.",
+      "year": "2024",
+      "url": "https://arxiv.org/abs/2412.06769",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L7",
+      "title": "Reasoning with Latent Thoughts: On the Power of Looped Transformers",
+      "authors": "Nikunj Saunshi, Nishanth Dikkala, Zhiyuan Li et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2502.17416",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L8",
+      "title": "Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach",
+      "authors": "Jonas Geiping, Sean McLeish, Neel Jain et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2502.05171v1",
+      "read": "正文相关章节",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L9",
+      "title": "Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation",
+      "authors": "Sangmin Bae, Yujin Kim, Reza Bayat et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2507.10524v1",
+      "read": "正文相关章节",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L10",
+      "title": "Scaling Latent Reasoning via Looped Language Models",
+      "authors": "Rui-Jie Zhu, Zixuan Wang, Kai Hua et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2510.25741v1",
+      "read": "正文相关章节",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L11",
+      "title": "LoopFormer: Elastic-Depth Looped Transformers for Latent Reasoning via Shortcut Modulation",
+      "authors": "Ahmadreza Jeddi, Marco Ciccone, Babak Taati",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2602.11451v1",
+      "read": "正文相关章节",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L12",
+      "title": "Parcae: Scaling Laws For Stable Looped Language Models",
+      "authors": "Hayden Prairie, Zachary Novack, Taylor Berg-Kirkpatrick et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2604.12946",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L13",
+      "title": "Solve the Loop: Attractor Models for Language and Reasoning",
+      "authors": "Jacob Fein-Ashley, Paria Rashidinejad",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2605.12466",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L14",
+      "title": "Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers",
+      "authors": "Ying Fan, Anej Svete, Kangwook Lee",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2606.31779v2",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L15",
+      "title": "CHASE: Cache-Hole-Adapted Skip Exit for Looped State-Space Language Models",
+      "authors": "Zhenxuan Yu, Takeshi Kojima, Yutaka Matsuo et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2607.10110v2",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L16",
+      "title": "Hierarchical Reasoning Model",
+      "authors": "Guan Wang, Jin Li, Yuhao Sun et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2506.21734",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L17",
+      "title": "Less is More: Recursive Reasoning with Tiny Networks",
+      "authors": "Alexia Jolicoeur-Martineau",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2510.04871",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L18",
+      "title": "Prioritize the Process, Not Just the Outcome: Rewarding Latent Thought Trajectories Improves Reasoning in Looped Language Models",
+      "authors": "Jonathan Williams, Esin Tureci",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2602.10520",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L19",
+      "title": "A Mechanistic Analysis of Looped Reasoning Language Models",
+      "authors": "Hugh Blayney, Álvaro Arroyo, Johan Obando-Ceron et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2604.11791",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L20",
+      "title": "Looped Transformers as Programmable Computers",
+      "authors": "Angeliki Giannou, Shashank Rajput, Jy-yong Sohn et al.",
+      "year": "2023",
+      "url": "https://arxiv.org/abs/2301.13196v1",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L21",
+      "title": "Looped Transformers are Better at Learning Learning Algorithms",
+      "authors": "Liu Yang, Kangwook Lee, Robert Nowak et al.",
+      "year": "2023",
+      "url": "https://arxiv.org/abs/2311.12424v3",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L22",
+      "title": "Looped Transformers for Length Generalization",
+      "authors": "Ying Fan, Yilun Du, Kannan Ramchandran et al.",
+      "year": "2024",
+      "url": "https://arxiv.org/abs/2409.15647v5",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "L23",
+      "title": "On Expressive Power of Looped Transformers: Theoretical Analysis and Enhancement via Timestep Encoding",
+      "authors": "Kevin Xu, Issei Sato",
+      "year": "2024",
+      "url": "https://arxiv.org/abs/2410.01405v7",
+      "read": "摘要与元数据",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-09-08"
+    }
+  ]
+}

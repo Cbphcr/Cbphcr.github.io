@@ -1,0 +1,12 @@
+  </div>
+  <section class="review-note__references" id="references" aria-labelledby="references-heading">
+    <h2 id="references-heading">参考文献与阅读范围</h2>
+    <p>年份通常指 arXiv 首发年，发表时间可能更晚。下面区分已读正文相关章节和仅依据摘要的文献；结论按对应版本记录。研究方向是待验证的提案。</p>
+    <ol>
+      {% for source in site.data.reading_sources[page.source_key] %}
+      <li id="ref-{{ source.id }}"><span class="review-note__source-id">{{ source.id }}</span> <a href="{{ source.url }}">{{ source.title }}</a><br><span>{{ source.authors }} · {{ source.year }} · {{ source.kind }} · {{ source.read }}</span></li>
+      {% endfor %}
+    </ol>
+  </section>
+  <p class="review-note__sibling">关联笔记：<a href="{{ page.related_url | relative_url }}">{{ page.related_title }}</a></p>
+</article>

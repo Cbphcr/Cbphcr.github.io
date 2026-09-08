@@ -1,0 +1,10 @@
+<article class="review-note review-note--{{ page.source_key }}" lang="zh-CN">
+  <header class="review-note__header">
+    <a href="{{ '/notes/' | relative_url }}">← 全部笔记</a>
+    <p class="review-note__eyebrow">{{ page.note_topic }} · 演化与研究问题</p>
+    <h1>{{ page.note_heading }}</h1>
+    <p class="review-note__lead">{{ page.note_description }}</p>
+    <div class="review-note__meta"><time datetime="2026-09-08">文献核对：2026.09.08</time><span>中文研究笔记</span><span>面向有 AI 基础的读者</span>{% if page.note_model %}<span>由 {{ page.note_model | escape }} 完成</span>{% endif %}</div>
+  </header>
+  <nav class="review-note__nav" aria-label="本篇阅读路径"><a href="#baseline">核心改动</a><a href="#evolution">演化主线</a><a href="#mechanism">机制与算例</a><a href="#evidence">证据与局限</a><a href="#directions">研究方向</a><a href="#references">参考文献</a></nav>
+  <div class="review-note__body" markdown="1">

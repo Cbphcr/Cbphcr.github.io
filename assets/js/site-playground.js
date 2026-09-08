@@ -121,6 +121,18 @@
           keywords: "research vision experience environment evaluation attribution learning rsi 研究 问题 经验 环境 评价 归因 学习"
         },
         {
+          title: currentLanguage() === "zh" ? "TabPFN · 演化、机制与研究方向" : "TabPFN · Evolution and research directions (Chinese)",
+          href: "/notes/tabpfn/",
+          type: "note",
+          keywords: "tabpfn pfn tabicl tabpfn3 tabular prior bayesian retrieval calibration 表格 基础模型 贝叶斯 上下文学习 检索 校准 演化 研究"
+        },
+        {
+          title: currentLanguage() === "zh" ? "Loop LLM · 深度循环与潜在推理" : "Loop LLM · Recurrent depth and latent reasoning (Chinese)",
+          href: "/notes/loop-llm/",
+          type: "note",
+          keywords: "loop llm looplm looped transformer universal huginn ouro mor loopformer coconut latent reasoning recurrent halting kv cache 循环 递归 共享参数 潜在推理 提前退出 研究"
+        },
+        {
           title: currentLanguage() === "zh" ? "Qwen3.8-Flash-Next 架构笔记 · 总览" : "Qwen3.8-Flash-Next architecture notes · overview",
           href: "/notes/qwen3.8-flash-next/",
           type: "note",
