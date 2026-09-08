@@ -18,6 +18,9 @@
   <div class="author__content">
     <h3 class="author__name">{% if author.name_zh %}<span class="lang-en">{{ author.name }}</span><span class="lang-zh">{{ author.name_zh }}</span>{% else %}{{ author.name }}{% endif %}</h3>
     {% if author.bio %}<p class="author__bio">{% if author.bio_zh %}<span class="lang-en">{{ author.bio }}</span><span class="lang-zh">{{ author.bio_zh }}</span>{% else %}{{ author.bio }}{% endif %}</p>{% endif %}
+  {% if author.github == site.data.github_contributions.username %}
+    {% include github-contributions.html %}
+  {% endif %}
   </div>
 
   <div class="author__urls-wrapper">
