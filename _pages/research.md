@@ -174,6 +174,6 @@ author_profile: true
       <p class="lang-en">I am especially interested in evidence that challenges this framing: tasks whose outcomes are difficult to verify, settings where process feedback restricts exploration, or cases where a more realistic environment does not improve transfer. Such cases would help clarify which parts of this agenda are useful and which need revision.</p>
       <p class="lang-zh">我也希望了解与这套表述不一致的证据，例如结果难以验证的任务、过程反馈限制探索的情形，或更真实的环境并未改善迁移的案例。这些反例有助于判断哪些问题值得继续推进，哪些表述需要修改。</p>
     </div>
-    <a href="mailto:221900200@smail.nju.edu.cn"><i class="fas fa-comment-dots" aria-hidden="true"></i><span class="lang-en">Discuss by email</span><span class="lang-zh">邮件讨论</span></a>
+    <a href="mailto:{{ site.author.email }}"><i class="fas fa-comment-dots" aria-hidden="true"></i><span class="lang-en">Discuss by email</span><span class="lang-zh">邮件讨论</span></a>
   </div>
 </div>
