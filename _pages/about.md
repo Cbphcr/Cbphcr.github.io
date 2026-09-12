@@ -36,8 +36,8 @@ redirect_from:
   <a class="research-outlook__link" href="/research/"><span class="lang-en">Read the questions behind this direction</span><span class="lang-zh">阅读这一方向背后的研究问题</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </div>
 
-<p class="lang-en">I will begin my Ph.D. study in September 2026 under the supervision of Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>, a member of the LAMDA Group led by Prof. <a href="https://cs.nju.edu.cn/zhouzh/">Zhi-Hua Zhou</a>.</p>
-<p class="lang-zh">我将于 2026 年 9 月在<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授的指导下开始博士学习；郭老师是<a href="https://cs.nju.edu.cn/zhouzh/">周志华</a>教授领导的 LAMDA 团队成员。</p>
+<p class="lang-en">I am pursuing my Ph.D. under the supervision of Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>, a member of the LAMDA Group led by Prof. <a href="https://cs.nju.edu.cn/zhouzh/">Zhi-Hua Zhou</a>.</p>
+<p class="lang-zh">目前，我在<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授的指导下攻读博士学位；郭老师是<a href="https://cs.nju.edu.cn/zhouzh/">周志华</a>教授领导的 LAMDA 团队成员。</p>
 
 <span class='anchor' id='news'></span>
 
@@ -107,7 +107,7 @@ redirect_from:
           <span class="education-degree education-degree--engineering"><span class="lang-en">Engineering</span><span class="lang-zh">工学</span></span>
           <h3><span class="lang-en">Ph.D. Student</span><span class="lang-zh">博士生</span></h3>
         </div>
-        <span class="education-date">2026.09 - 2031.06</span>
+        <span class="education-date"><span class="lang-en">2026.09 - Present</span><span class="lang-zh">2026.09 - 至今</span></span>
       </div>
       <p class="education-school"><span class="lang-en">School of Intelligence Science and Technology, Nanjing University</span><span class="lang-zh">南京大学智能科学与技术学院</span></p>
       <p class="education-advisor"><span class="lang-en">Advisor: Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a></span><span class="lang-zh">导师：<a href="https://www.lamda.nju.edu.cn/guolz/">郭兰哲</a>教授</span></p>
