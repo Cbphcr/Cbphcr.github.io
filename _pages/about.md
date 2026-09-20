@@ -30,10 +30,10 @@ redirect_from:
     <span class="visually-hidden"><span class="lang-en">Open Agent Harness Lab</span><span class="lang-zh">打开 Agent Harness Lab</span></span>
   </button>
   <div class="research-outlook__paragraph">
-    <p class="lang-en">In the long term, I hope agents can improve not only their answers, but also the way they work: building an appropriate harness for a new task, automating repeatable steps, recognizing when direct reasoning or inspection is needed, and refining the whole process from feedback. I see this as a possible practical route toward <strong>recursive self-improvement (RSI)</strong>.</p>
-    <p class="lang-zh">长期来看，我希望智能体改进的不只是答案，也包括完成任务的方式：面对新任务时自主搭建合适的 harness，将重复步骤自动化，判断何时需要直接推理或检查，并根据反馈持续改进整个过程。我把这看作走向<strong>递归式自我改进（RSI）</strong>的一条可能的实践路径。</p>
+    <p class="lang-en">In the long term, I hope agents can accumulate useful experience across tasks, improving how they choose problems, obtain evidence, and revise decisions, alongside their tools and harnesses. My current focus is <strong>research taste</strong>: how LLMs can learn better research judgment from experimentation and revision under noisy, delayed feedback. I see this as a possible route toward <strong>recursive self-improvement (RSI)</strong>.</p>
+    <p class="lang-zh">长期来看，我希望智能体能够跨任务积累有用经验，改进选择问题、获取证据与修正决策的方式，并持续完善工具与 harness。当前关注的是 <strong>research taste（研究判断力）</strong>：在反馈噪声大、验证周期长的情况下，LLM 如何从实验与判断修正中学习。这可能是走向<strong>递归式自我改进（RSI）</strong>的一条路径。</p>
   </div>
-  <a class="research-outlook__link" href="/research/"><span class="lang-en">Read the questions behind this direction</span><span class="lang-zh">阅读这一方向背后的研究问题</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+  <a class="research-outlook__link" href="/research/"><span class="lang-en">Research taste and learning from experience</span><span class="lang-zh">研究判断与经验学习：问题和假设</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </div>
 
 <p class="lang-en">I am pursuing my Ph.D. under the supervision of Prof. <a href="https://www.lamda.nju.edu.cn/guolz/">Lan-Zhe Guo</a>, a member of the LAMDA Group led by Prof. <a href="https://cs.nju.edu.cn/zhouzh/">Zhi-Hua Zhou</a>.</p>

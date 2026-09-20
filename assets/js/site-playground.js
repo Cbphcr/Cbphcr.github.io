@@ -115,10 +115,10 @@
 
       [
         {
-          title: currentLanguage() === "zh" ? "研究问题与经验闭环" : "Research questions and the experience loop",
+          title: currentLanguage() === "zh" ? "研究判断与经验学习" : "Research taste and learning from experience",
           href: "/research/",
           type: "section",
-          keywords: "research vision experience environment evaluation attribution learning rsi 研究 问题 经验 环境 评价 归因 学习"
+          keywords: "research taste scientific judgment vision experience environment evaluation feedback uncertainty attribution learning rsi 研究 判断 品味 问题 经验 环境 评价 反馈 噪声 延迟 归因 学习"
         },
         {
           title: currentLanguage() === "zh" ? "TabPFN · 演化、机制与研究方向" : "TabPFN · Evolution and research directions (Chinese)",

@@ -1,7 +1,7 @@
 ---
 permalink: /research/
 title: "Research Questions"
-excerpt: "Notes toward a research agenda on task design, evaluation, feedback, and agent self-improvement"
+excerpt: "Learning research judgment from experience under noisy, delayed feedback"
 author_profile: true
 ---
 
@@ -12,32 +12,42 @@ author_profile: true
 
   <header class="research-vision__intro">
     <p class="research-vision__kicker"><i class="fas fa-compass" aria-hidden="true"></i><span class="lang-en">Notes toward a research agenda</span><span class="lang-zh">一份仍在形成的研究笔记</span></p>
-    <p class="research-vision__lead lang-en">Under limited resources, how should <strong>useful interaction experience</strong> be defined, constructed, evaluated, and used, so that an agent can improve beyond a single task?</p>
-    <p class="research-vision__lead lang-zh">在资源有限的情况下，应该如何<strong>定义、构造、评价并利用有价值的交互经验</strong>，使智能体获得不局限于单个任务的改进？</p>
+    <p class="research-vision__lead lang-en">How can agents <strong>learn better research judgment from experience</strong>, choosing worthwhile problems, acquiring useful evidence, and revising decisions under limited resources and noisy, delayed feedback?</p>
+    <p class="research-vision__lead lang-zh">在资源有限、反馈噪声大且验证周期长的情况下，智能体如何<strong>从经验中积累更好的研究判断</strong>，学会选择值得做的问题、获取有用证据，并修正自己的决策？</p>
   </header>
+
+  <span class="anchor" id="research-taste"></span>
+
+  <h2><span class="lang-en">Current Focus: Learning Research Taste</span><span class="lang-zh">当前切入点：从经验中学习 research taste</span></h2>
+
+  <p class="lang-en">My broader interest is how useful interaction experience leads to improvement across tasks. Scientific research makes this question concrete: an agent must decide what is worth pursuing before the final value is known. Here, I use <strong>research taste</strong> to mean judgment about a problem's potential value, the evidence worth obtaining, and when to continue, redirect, or stop. Idea selection, experimental execution, and evaluation reliability need to be examined separately.</p>
+  <p class="lang-zh">我更广泛的兴趣，是有价值的交互经验如何带来跨任务的改进。科学研究让这个问题变得具体：智能体必须在最终价值尚不明确时，决定什么值得投入。在这里，我用 <strong>research taste（研究判断力）</strong>指对问题潜在价值、值得获取的证据，以及何时继续、转向或停止的判断。选题能力、实验执行能力与评价可靠性需要分别考察。</p>
+
+  <p class="lang-en">Obvious flaws may be easy to reject; ranking plausible, promising ideas is harder, and lasting value may take years to establish. A hypothesis I want to test is that research judgment improves through repeated prediction, experimentation, and revision. The useful unit of experience would then include what was known at the time, what alternatives were considered, and which evidence changed the decision. More experience alone does not guarantee better judgment.</p>
+  <p class="lang-zh">明显的漏洞可能较快排除；在几个看起来都有希望的想法之间排序则更难，长期价值也可能需要多年才能确认。我想检验的一个假设是：研究判断可以通过反复的预测、实验与修正逐渐改善。这样，有用的经验就应包含当时知道什么、考虑过哪些备选，以及哪条证据改变了决策。经历更多，本身并不保证判断更准。</p>
 
   <span class="anchor" id="experience-loop"></span>
 
-  <h2><span class="lang-en">The Experience Loop</span><span class="lang-zh">经验闭环</span></h2>
+  <h2><span class="lang-en">An Experience Loop for Research Judgment</span><span class="lang-zh">围绕研究判断的经验闭环</span></h2>
 
-  <p class="research-section-lead lang-en">I currently separate this loop into five related decisions. This is only one way to organize the questions; it does not assume that every agent must learn through a fixed five-stage pipeline.</p>
-  <p class="research-section-lead lang-zh">我暂时把这个闭环拆成五个相互关联的决策。这只是整理问题的一种方式，并不意味着所有智能体都必须遵循固定的五阶段流程。</p>
+  <p class="research-section-lead lang-en">This focus connects my questions about task design, environments, evaluation, credit assignment, and learning. The five decisions below may recur within one project; they are a way to organize the questions, not a fixed pipeline.</p>
+  <p class="research-section-lead lang-zh">这个切入点串起了我对任务设计、环境、评价、信用分配与学习的关注。下面五类决策可能在一个项目中反复发生；它们是整理问题的方式，不是固定流水线。</p>
 
   <ol class="research-loop" aria-label="Research experience loop">
     <li class="research-loop__step research-loop__step--define">
-      <a href="#define-experience"><span class="research-loop__number">01</span><i class="fas fa-bullseye" aria-hidden="true"></i><strong><span class="lang-en">Define</span><span class="lang-zh">定义问题</span></strong><small><span class="lang-en">What experience?</span><span class="lang-zh">需要什么经验？</span></small></a>
+      <a href="#define-experience"><span class="research-loop__number">01</span><i class="fas fa-bullseye" aria-hidden="true"></i><strong><span class="lang-en">Choose</span><span class="lang-zh">选择问题</span></strong><small><span class="lang-en">Worth pursuing?</span><span class="lang-zh">值得投入吗？</span></small></a>
     </li>
     <li class="research-loop__step research-loop__step--build">
-      <a href="#build-environment"><span class="research-loop__number">02</span><i class="fas fa-cogs" aria-hidden="true"></i><strong><span class="lang-en">Build</span><span class="lang-zh">构造环境</span></strong><small><span class="lang-en">How much reality?</span><span class="lang-zh">需要多真实？</span></small></a>
+      <a href="#build-environment"><span class="research-loop__number">02</span><i class="fas fa-cogs" aria-hidden="true"></i><strong><span class="lang-en">Experiment</span><span class="lang-zh">获取证据</span></strong><small><span class="lang-en">What to test next?</span><span class="lang-zh">先验证什么？</span></small></a>
     </li>
     <li class="research-loop__step research-loop__step--judge">
-      <a href="#judge-behavior"><span class="research-loop__number">03</span><i class="fas fa-check-double" aria-hidden="true"></i><strong><span class="lang-en">Judge</span><span class="lang-zh">评价行为</span></strong><small><span class="lang-en">Result and process</span><span class="lang-zh">结果与过程</span></small></a>
+      <a href="#judge-behavior"><span class="research-loop__number">03</span><i class="fas fa-check-double" aria-hidden="true"></i><strong><span class="lang-en">Evaluate</span><span class="lang-zh">评价反馈</span></strong><small><span class="lang-en">What is supported?</span><span class="lang-zh">证据支持什么？</span></small></a>
     </li>
     <li class="research-loop__step research-loop__step--attribute">
-      <a href="#attribute-value"><span class="research-loop__number">04</span><i class="fas fa-search-plus" aria-hidden="true"></i><strong><span class="lang-en">Attribute</span><span class="lang-zh">归因价值</span></strong><small><span class="lang-en">What deserves learning?</span><span class="lang-zh">什么值得学习？</span></small></a>
+      <a href="#attribute-value"><span class="research-loop__number">04</span><i class="fas fa-search-plus" aria-hidden="true"></i><strong><span class="lang-en">Learn</span><span class="lang-zh">积累经验</span></strong><small><span class="lang-en">Which lesson transfers?</span><span class="lang-zh">哪些经验可复用？</span></small></a>
     </li>
     <li class="research-loop__step research-loop__step--update">
-      <a href="#route-update"><span class="research-loop__number">05</span><i class="fas fa-code-branch" aria-hidden="true"></i><strong><span class="lang-en">Update</span><span class="lang-zh">实施更新</span></strong><small><span class="lang-en">Where should it change?</span><span class="lang-zh">应该改进哪里？</span></small></a>
+      <a href="#route-update"><span class="research-loop__number">05</span><i class="fas fa-code-branch" aria-hidden="true"></i><strong><span class="lang-en">Revise</span><span class="lang-zh">修正策略</span></strong><small><span class="lang-en">What changes next?</span><span class="lang-zh">下一步如何改变？</span></small></a>
     </li>
   </ol>
 
@@ -46,15 +56,15 @@ author_profile: true
       <header class="research-question__header">
         <span class="research-question__index">01</span>
         <span class="research-question__icon"><i class="fas fa-bullseye" aria-hidden="true"></i></span>
-        <div><small><span class="lang-en">Problem definition</span><span class="lang-zh">问题定义</span></small><h3><span class="lang-en">What experience is worth producing?</span><span class="lang-zh">什么经验值得被产生？</span></h3></div>
+        <div><small><span class="lang-en">Problem selection</span><span class="lang-zh">问题选择</span></small><h3><span class="lang-en">Which plausible idea deserves the next investment?</span><span class="lang-zh">几个都有希望的想法中，哪个值得下一笔投入？</span></h3></div>
       </header>
       <div class="research-question__body">
-        <p class="lang-en">Before implementing an environment, a task designer has to choose what capability or failure mode the task is intended to expose. Difficulty alone does not make a task useful. A stronger criterion may be whether success provides evidence about a capability that matters beyond a particular benchmark.</p>
-        <p class="lang-zh">在实现环境之前，需要先明确任务希望考察什么能力，又希望暴露什么失败模式。难度本身并不足以说明任务有价值；一个更值得考察的标准，或许是任务表现能否反映某种不局限于特定基准的能力。</p>
+        <p class="lang-en">Difficulty, novelty, and a high chance of producing a positive result each capture only part of a research choice. I want to study how an agent weighs potential value, feasibility, uncertainty, and cost. A useful evaluation should include choices among credible candidates and test whether the judgment transfers beyond one benchmark.</p>
+        <p class="lang-zh">难度、新颖性和做出正结果的概率，都只反映研究选择的一部分。我想研究智能体如何权衡潜在价值、可行性、不确定性与成本。评价应包含可信候选之间的选择，并检验这种判断能否迁移到单个基准之外。</p>
         <ul>
-          <li><span class="lang-en">Which task distribution represents the capability we actually care about?</span><span class="lang-zh">什么样的任务分布能够代表我们真正关心的能力？</span></li>
-          <li><span class="lang-en">How should tasks evolve as the agent improves, instead of becoming a static test set?</span><span class="lang-zh">任务应如何随着智能体进步而变化，而不是退化成静态测试集？</span></li>
-          <li><span class="lang-en">Can the agent help discover coverage gaps without becoming the sole author of its own examination?</span><span class="lang-zh">智能体能否帮助发现能力覆盖的空白，同时又不成为自己考试的唯一出题人？</span></li>
+          <li><span class="lang-en">If an idea succeeds, what important limitation would it remove, and for whom?</span><span class="lang-zh">即使一个想法完全做成了，它会为谁解除什么重要限制？</span></li>
+          <li><span class="lang-en">How should a fixed budget balance likely improvements with uncertain but potentially valuable directions?</span><span class="lang-zh">固定预算应如何分配给较有把握的改进和不确定但可能有价值的方向？</span></li>
+          <li><span class="lang-en">Can tasks evolve with the agent while keeping the evaluation grounded in independently specified goals?</span><span class="lang-zh">任务能否随智能体进步而变化，同时仍由独立定义的目标约束评价？</span></li>
         </ul>
       </div>
     </article>
@@ -63,15 +73,15 @@ author_profile: true
       <header class="research-question__header">
         <span class="research-question__index">02</span>
         <span class="research-question__icon"><i class="fas fa-cogs" aria-hidden="true"></i></span>
-        <div><small><span class="lang-en">Resource-bounded environments</span><span class="lang-zh">资源受限的环境</span></small><h3><span class="lang-en">What must an environment preserve from the real task?</span><span class="lang-zh">环境需要保留真实任务中的哪些部分？</span></h3></div>
+        <div><small><span class="lang-en">Experiment and environment design</span><span class="lang-zh">实验与环境设计</span></small><h3><span class="lang-en">Which experiment would change the next decision?</span><span class="lang-zh">哪个实验最可能改变下一步决策？</span></h3></div>
       </header>
       <div class="research-question__body">
-        <p class="lang-en">Once a task is specified, building its environment is largely an engineering effort. What remains unclear is which parts of reality need to be modeled faithfully under a limited budget. An environment can be expensive without being useful, while a cheap abstraction may omit the constraints that determine success.</p>
-        <p class="lang-zh">任务确定后，环境搭建很大程度上是工程实现。仍然值得研究的是：在资源有限时，真实世界的哪些部分必须被准确建模。一个环境可能成本很高却没有提供更多有效经验，廉价抽象也可能遗漏真正决定任务成败的约束。</p>
+        <p class="lang-en">An agent can actively seek faster, clearer feedback on the assumptions behind a direction. Suppose a new module improves a small-scale result: a matched-budget control may be more useful than immediately scaling up. Even without a higher score, that experiment may reveal whether further investment is justified. Its value depends on the decision it informs.</p>
+        <p class="lang-zh">智能体可以主动为一个方向背后的假设寻找更快、更清楚的反馈。例如，新模块在小规模实验中带来提升后，一次等预算对照可能比立刻扩大训练更有用。即使没有带来更高分数，这个实验也可能帮助判断是否值得继续投入；它的价值取决于改善了什么决策。</p>
         <ul>
-          <li><span class="lang-en">Which task-relevant structures and constraints must remain faithful for learning to transfer?</span><span class="lang-zh">为了使学习结果能够迁移，哪些与任务有关的结构和约束必须保持真实？</span></li>
-          <li><span class="lang-en">How can we tell when a simplification has changed the capability being learned or evaluated?</span><span class="lang-zh">如何判断某种简化已经改变了原本希望学习或评价的能力？</span></li>
-          <li><span class="lang-en">How should interaction, simulation, and verification budgets be allocated jointly?</span><span class="lang-zh">交互、模拟与验证预算应该如何联合分配？</span></li>
+          <li><span class="lang-en">Which low-cost test can distinguish a useful mechanism from an alternative explanation?</span><span class="lang-zh">哪个低成本实验能够区分有用机制与其他可能的解释？</span></li>
+          <li><span class="lang-en">Which costs, uncertainties, and constraints must a simplified environment preserve for learning to transfer?</span><span class="lang-zh">简化环境必须保留哪些成本、不确定性和约束，才能使学习结果迁移？</span></li>
+          <li><span class="lang-en">How can we reward information that improves important decisions without encouraging easy but irrelevant investigations?</span><span class="lang-zh">怎样奖励有助于重要决策的信息，同时避免鼓励容易回答却无关紧要的调查？</span></li>
         </ul>
       </div>
     </article>
@@ -80,15 +90,15 @@ author_profile: true
       <header class="research-question__header">
         <span class="research-question__index">03</span>
         <span class="research-question__icon"><i class="fas fa-check-double" aria-hidden="true"></i></span>
-        <div><small><span class="lang-en">Outcome and process evaluation</span><span class="lang-zh">结果与过程评价</span></small><h3><span class="lang-en">What does the final outcome leave unverified?</span><span class="lang-zh">只看最终结果会遗漏什么？</span></h3></div>
+        <div><small><span class="lang-en">Noisy and delayed feedback</span><span class="lang-zh">高噪声与长延迟反馈</span></small><h3><span class="lang-en">What can feedback establish before long-term value is known?</span><span class="lang-zh">长期价值尚未明确时，反馈能说明什么？</span></h3></div>
       </header>
       <div class="research-question__body">
-        <p class="lang-en">For many well-specified tasks, terminal outcomes are easier to judge than the trajectory. Yet the same successful result may come from a robust procedure, a lucky shortcut, or evaluator exploitation. I am therefore interested in process signals that can be tied to observable evidence, without assuming that an evaluator can recover the agent's private reasoning.</p>
-        <p class="lang-zh">对于许多定义清晰的任务，最终结果确实比执行轨迹更容易判断。但相同的成功结果，可能来自稳健流程、偶然捷径，也可能来自对评价器的利用。因此，我更关心能够落到可观察证据上的过程信号，而不假设评价器能够还原智能体不可见的内部推理。</p>
+        <p class="lang-en">Experimental randomness, disagreement about scientific goals, and delayed validation pose different problems. A result can also reflect execution quality, resources, or luck. I want evaluators to separate verifiable process evidence, estimates of future value, and later outcomes, and to express uncertainty when the available evidence cannot settle a judgment.</p>
+        <p class="lang-zh">实验随机性、对科学目标的分歧和验证延迟，是不同的问题。结果还可能受执行质量、资源与运气影响。我希望评价能够区分可验证的过程证据、对未来价值的估计和后来实际发生的结果，并在证据不足时保留不确定性。</p>
         <ul>
-          <li><span class="lang-en">Actions, tool calls, state transitions, intermediate artifacts, and recovery behavior.</span><span class="lang-zh">动作、工具调用、状态变化、中间产物与异常恢复行为。</span></li>
-          <li><span class="lang-en">Constraint satisfaction, robustness under perturbation, efficiency, and whether the agent asks for help at an appropriate time.</span><span class="lang-zh">约束满足、扰动下的稳健性、效率，以及智能体是否在合适的时机请求帮助。</span></li>
-          <li><span class="lang-en">Evaluators that expose uncertainty instead of forcing every trajectory into a confident scalar reward.</span><span class="lang-zh">允许表达不确定性的评价器，而不是把每条轨迹强行压成一个自信的标量奖励。</span></li>
+          <li><span class="lang-en">Use artifacts, controls, and repeated measurements to check what an experiment actually supports; a well-executed experiment does not by itself establish importance.</span><span class="lang-zh">通过产物、对照和重复测量检查实验实际支持什么；执行严谨本身还不能证明问题重要。</span></li>
+          <li><span class="lang-en">Record whose goals a judgment reflects. Novelty, explanation, practical use, and community attention need not yield the same ranking.</span><span class="lang-zh">记录评价对应谁的目标；新颖性、解释力、实际用途和社区关注度不必给出相同排序。</span></li>
+          <li><span class="lang-en">Treat immature outcomes as unresolved, and audit methodological drift and evaluator exploitation separately from idea quality.</span><span class="lang-zh">将尚未成熟的结果保留为未决，并把实验偏离方案、利用评价漏洞与想法质量分开检查。</span></li>
         </ul>
       </div>
     </article>
@@ -97,15 +107,15 @@ author_profile: true
       <header class="research-question__header">
         <span class="research-question__index">04</span>
         <span class="research-question__icon"><i class="fas fa-search-plus" aria-hidden="true"></i></span>
-        <div><small><span class="lang-en">Credit and experience selection</span><span class="lang-zh">信用分配与经验筛选</span></small><h3><span class="lang-en">What can be learned from a successful or failed trajectory?</span><span class="lang-zh">一条成功或失败的轨迹中，什么值得学习？</span></h3></div>
+        <div><small><span class="lang-en">Experience and credit assignment</span><span class="lang-zh">经验积累与信用分配</span></small><h3><span class="lang-en">What made a decision reasonable at the time?</span><span class="lang-zh">在当时的信息条件下，什么使一个决策合理？</span></h3></div>
       </header>
       <div class="research-question__body">
-        <p class="lang-en">Knowing that an outcome is good or bad is not enough. A long trajectory mixes decisive choices, harmless variation, recovery steps, and errors whose effects appear much later. Learning requires both selecting useful episodes and assigning credit within them.</p>
-        <p class="lang-zh">知道结果好坏还不够。一条长轨迹混合了关键决策、无害差异、恢复步骤，以及很久以后才显现影响的错误。学习既需要选择有价值的轨迹，也需要在轨迹内部进行信用分配。</p>
+        <p class="lang-en">A successful project can contain poor decisions, and a reasonable decision can lead to an unlucky failure. I want to preserve records made before outcomes were known: available evidence, alternatives, predictions, confidence, costs, and subsequent revisions. These records may support learning from successes, failures, and changes of direction without turning every outcome into hindsight justification.</p>
+        <p class="lang-zh">成功项目可能包含糟糕的决策，合理决策也可能遇到不走运的失败。我希望保留在结果揭晓前记录的证据、备选方案、预测、置信度、成本与后续修正。这些记录可能帮助模型从成功、失败和转向中学习，减少把每个结果都事后解释为必然的倾向。</p>
         <ul>
-          <li><span class="lang-en">Prioritize novelty, uncertainty, regret, failure coverage, and verifier confidence rather than reward alone.</span><span class="lang-zh">除奖励外，还应考虑新颖性、不确定性、遗憾值、失败覆盖与评价器置信度。</span></li>
-          <li><span class="lang-en">Use counterfactuals to ask which decision actually changed the outcome.</span><span class="lang-zh">利用反事实判断究竟是哪一步决策改变了结果。</span></li>
-          <li><span class="lang-en">Separate policy failure from missing knowledge, tool failure, and evaluator ambiguity.</span><span class="lang-zh">区分策略错误、知识缺失、工具故障与评价歧义。</span></li>
+          <li><span class="lang-en">Which evidence justified an update, and which apparent lesson disappears under repeated trials or controlled comparisons?</span><span class="lang-zh">哪条证据足以支持更新判断？哪些表面的教训会在重复实验或受控比较下消失？</span></li>
+          <li><span class="lang-en">Unchosen ideas usually lack observed outcomes. How can selective feedback be handled without labeling every abandoned idea a failure?</span><span class="lang-zh">未被选择的想法通常没有可观察结果。如何处理这种选择性反馈，而不把所有放弃的想法标成失败？</span></li>
+          <li><span class="lang-en">Where controlled interventions are possible, can we compare alternative decisions from the same state without presenting imagined outcomes as observed facts?</span><span class="lang-zh">在允许受控干预的环境中，能否从同一状态比较不同决策，同时区分设想中的结果与实际观测？</span></li>
         </ul>
       </div>
     </article>
@@ -114,16 +124,16 @@ author_profile: true
       <header class="research-question__header">
         <span class="research-question__index">05</span>
         <span class="research-question__icon"><i class="fas fa-code-branch" aria-hidden="true"></i></span>
-        <div><small><span class="lang-en">Learning and update routing</span><span class="lang-zh">学习与更新路由</span></small><h3><span class="lang-en">What should change after feedback?</span><span class="lang-zh">获得反馈之后，究竟应该改变什么？</span></h3></div>
+        <div><small><span class="lang-en">Learning and transfer</span><span class="lang-zh">学习与迁移</span></small><h3><span class="lang-en">How should experience improve the next research decision?</span><span class="lang-zh">研究经验怎样改善下一次决策？</span></h3></div>
       </header>
       <div class="research-question__body">
-        <p class="lang-en">Feedback does not necessarily imply a model-weight update. Depending on the cause of a failure, the appropriate target may be the model policy, memory, a tool, the task harness, or even the evaluator. One open question is whether a system can distinguish these cases well enough to avoid repeatedly training around an infrastructure defect.</p>
-        <p class="lang-zh">获得反馈并不意味着一定要更新模型参数。根据失败原因，真正需要改变的可能是模型策略、记忆、工具、任务 harness，甚至评价器本身。一个尚未解决的问题是，系统能否充分区分这些情况，避免反复训练模型去绕开基础设施缺陷。</p>
+        <p class="lang-en">Useful experience should change later choices: what to investigate, which experiment to run, or when to stop. The appropriate update may target model weights, memory, tools, the task harness, or the evaluator. I want to test whether these changes accumulate across tasks, and whether the agent can recognize when an old lesson no longer applies.</p>
+        <p class="lang-zh">有用的经验应改变后续选择：研究什么、做哪个实验，或何时停止。适合更新的对象可能是模型参数、记忆、工具、任务 harness，也可能是评价器。我想检验这些改进能否跨任务积累，以及智能体能否识别旧经验不再适用的情形。</p>
         <ul>
-          <li><span class="lang-en"><strong>Weights:</strong> reusable policy or capability gaps.</span><span class="lang-zh"><strong>参数：</strong>可复用的策略或能力缺口。</span></li>
-          <li><span class="lang-en"><strong>Memory:</strong> task-specific facts, precedents, and reusable experience.</span><span class="lang-zh"><strong>记忆：</strong>任务相关事实、先例与可复用经验。</span></li>
-          <li><span class="lang-en"><strong>Tools and harness:</strong> repeated procedures, checks, and recovery paths.</span><span class="lang-zh"><strong>工具与 harness：</strong>重复流程、检查机制与恢复路径。</span></li>
-          <li><span class="lang-en"><strong>Evaluator:</strong> missing constraints, ambiguity, and exploitable feedback.</span><span class="lang-zh"><strong>评价器：</strong>缺失约束、定义歧义与可被利用的反馈漏洞。</span></li>
+          <li><span class="lang-en"><strong>Weights:</strong> reusable policies for choosing problems, experiments, and stopping decisions.</span><span class="lang-zh"><strong>参数：</strong>可复用的选题、实验选择与停止策略。</span></li>
+          <li><span class="lang-en"><strong>Memory:</strong> evidence, precedents, and the conditions under which a lesson applies.</span><span class="lang-zh"><strong>记忆：</strong>证据、先例，以及经验成立的条件。</span></li>
+          <li><span class="lang-en"><strong>Tools and harness:</strong> reliable execution, reproducible controls, and records of decisions and observations.</span><span class="lang-zh"><strong>工具与 harness：</strong>可靠执行、可复现的对照，以及决策和观测记录。</span></li>
+          <li><span class="lang-en"><strong>Evaluator:</strong> calibration, missing criteria, and feedback that can be exploited.</span><span class="lang-zh"><strong>评价器：</strong>置信度校准、缺失的标准与可被利用的反馈。</span></li>
         </ul>
       </div>
     </article>
@@ -136,23 +146,33 @@ author_profile: true
   <div class="research-bets">
     <article>
       <span>01</span>
-      <h3><span class="lang-en">A more realistic environment is not always a more useful one.</span><span class="lang-zh">环境更真实，不一定就更有用。</span></h3>
-      <p class="lang-en">Under a fixed budget, a simpler environment may be preferable if it preserves the constraints that affect task success. I do not yet know how to identify those constraints reliably.</p>
-      <p class="lang-zh">在预算固定时，只要保留了影响任务成败的约束，更简单的环境可能反而更合适。怎样可靠地识别这些约束，我还没有答案。</p>
+      <h3><span class="lang-en">Decision histories may teach more than final outcomes alone.</span><span class="lang-zh">判断被证据修正的经历，可能提供额外的学习价值。</span></h3>
+      <p class="lang-en">Under matched training budgets, I would compare outcome summaries with chronological decision records, controlling for access to experimental facts. The test is whether later choices improve on unseen problems, rather than whether the model reproduces the original researcher's wording.</p>
+      <p class="lang-zh">在匹配训练预算、控制可用实验事实的条件下，比较结果摘要与按时间记录的决策经历。检验重点是能否改善新问题上的选择；复述原研究者的表达并不足以说明这一点。</p>
     </article>
     <article>
       <span>02</span>
-      <h3><span class="lang-en">Process feedback may help when it adds trustworthy evidence.</span><span class="lang-zh">当过程反馈提供了可信证据时，它才可能有所帮助。</span></h3>
-      <p class="lang-en">Observable traces and counterfactual interventions may help distinguish robust competence from lucky success, but poorly chosen process targets can also suppress valid exploration.</p>
-      <p class="lang-zh">可观察轨迹与反事实干预或许能够区分稳健能力与偶然成功，但选择不当的过程目标也可能压制合理探索。</p>
+      <h3><span class="lang-en">Seeking informative feedback may improve research efficiency.</span><span class="lang-zh">主动获取有用反馈，可能提高研究效率。</span></h3>
+      <p class="lang-en">With the same research budget, choosing experiments that test consequential assumptions may improve continuation and stopping decisions. Any gain must survive independent evaluation; rewarding easy uncertainty reduction could instead divert effort from valuable questions.</p>
+      <p class="lang-zh">在相同研究预算下，优先检验关键假设，可能改善继续或停止的决策。收益必须经独立评价确认；奖励容易消除的不确定性，也可能把精力引向不重要的问题。</p>
     </article>
     <article>
       <span>03</span>
-      <h3><span class="lang-en">Some failures may be better addressed by changing the harness than the model.</span><span class="lang-zh">有些失败可能更适合通过修改 harness 处理，而非直接修改模型。</span></h3>
-      <p class="lang-en">A system may improve more efficiently if it can locate the source of a failure and update the appropriate component. Whether this diagnosis can be made reliably remains open.</p>
-      <p class="lang-zh">如果系统能够定位失败来源并更新相应组件，改进或许会更高效。不过，这种诊断能否可靠完成，仍有待验证。</p>
+      <h3><span class="lang-en">Experience may transfer better when its limits are retained.</span><span class="lang-zh">保留经验的适用条件，可能改善迁移。</span></h3>
+      <p class="lang-en">Recording when a lesson holds may help an agent reuse it or seek fresh evidence as tasks change. I would test this across changes in data, resources, and goals, while tracking both better decisions and missed opportunities caused by excessive caution.</p>
+      <p class="lang-zh">记录经验在什么条件下成立，可能帮助智能体在任务变化后合理复用它，或重新取证。可以通过改变数据、资源与目标来检验，同时考察决策改善，以及过度保守导致的机会损失。</p>
     </article>
   </div>
+
+  <span class="anchor" id="first-study"></span>
+
+  <h2><span class="lang-en">A First Test I Would Like to Run</span><span class="lang-zh">我想先做的一组检验</span></h2>
+
+  <p class="lang-en">Start with a bounded computational research setting. Fix the candidate ideas, execution system, initial information, observation rules, and total budget, then compare policies for selecting ideas, choosing experiments, and continuing or stopping. Candidate baselines include random allocation, a static idea scorer, and a policy that updates its choices as evidence arrives. This would test research decisions under a stated objective.</p>
+  <p class="lang-zh">先从范围可控的计算研究环境出发。固定候选想法、执行系统、初始信息、观测规则和总预算，比较不同的选题、实验选择以及继续或停止策略。候选基线可以包括随机分配、静态想法评分，以及随证据更新选择的策略。这样的实验检验的是给定目标下的研究决策。</p>
+
+  <p class="lang-en">Evaluate budget use, reproducibility, and performance on held-out tasks with repeated trials and independent checks. Compare initial judgments with later outcomes without exposing those outcomes at decision time. Historical studies must also account for knowledge already present in model pretraining. Better performance here would be limited evidence: establishing lasting scientific value would still require longer follow-up.</p>
+  <p class="lang-zh">通过重复试验和独立检查，评价预算使用、可复现性与留出任务上的表现。把最初判断与后续结果对照，同时避免在决策时暴露未来结果；历史回测还必须考虑模型预训练中已经包含的未来知识。这些指标改善只能提供有限证据，长期科学价值仍需要更长时间的跟踪。</p>
 
   <span class="anchor" id="open-uncertainties"></span>
 
@@ -160,19 +180,28 @@ author_profile: true
 
   <div class="research-uncertainties">
     <ul>
-      <li><span class="lang-en"><strong>Who defines the next problem?</strong> Humans can provide purpose and boundaries; agents can expose blind spots. I do not yet know the right division of labor.</span><span class="lang-zh"><strong>下一个问题由谁定义？</strong>人类可以提供目的与边界，智能体可以暴露盲区；两者之间合适的分工尚不明确。</span></li>
-      <li><span class="lang-en"><strong>Is process quality unique?</strong> Many workflows may be equally valid. Process supervision could erase useful diversity if it enforces one preferred style.</span><span class="lang-zh"><strong>过程质量是否存在唯一标准？</strong>许多工作流可能同样合理；如果过程监督强制统一为某一种偏好，就可能抹去有价值的多样性。</span></li>
-      <li><span class="lang-en"><strong>How can the loop avoid self-confirmation?</strong> When an agent proposes tasks, builds evaluators, and learns from their feedback, external grounding and adversarial checks may be needed.</span><span class="lang-zh"><strong>闭环如何避免自我确认？</strong>当智能体同时提出任务、构建评价器并从反馈中学习时，可能仍然需要外部锚点与对抗性检查。</span></li>
-      <li><span class="lang-en"><strong>What should count as RSI?</strong> I care less about the exact boundary of the label than whether improvements to weights, memory, tools, and harnesses can accumulate across tasks.</span><span class="lang-zh"><strong>什么才算 RSI？</strong>相比为这个标签划定精确边界，我更关心参数、记忆、工具与 harness 上的改进能否跨任务积累。</span></li>
+      <li><span class="lang-en"><strong>Whose scientific value?</strong> Goals can differ legitimately. Expert preferences and citation counts can inform learning, but neither defines a universal objective.</span><span class="lang-zh"><strong>谁来定义科学价值？</strong>目标可以存在合理分歧。专家偏好与引用量可以提供学习信号，但都不能定义普遍适用的目标。</span></li>
+      <li><span class="lang-en"><strong>Where do useful histories come from?</strong> We need records made during research, including failures and revisions. Accounts written after success may omit alternatives or rationalize earlier choices.</span><span class="lang-zh"><strong>有用的研究经历从哪里来？</strong>需要研究当时留下的记录，包括失败与修正。成功后的回忆可能遗漏备选方案，或为早期选择补上事后理由。</span></li>
+      <li><span class="lang-en"><strong>How can the loop avoid self-confirmation?</strong> An agent that proposes ideas and evaluates them can reinforce its own preferences. Independent outcomes and checks must test whether its judgment actually improves.</span><span class="lang-zh"><strong>闭环如何避免自我确认？</strong>同时提出想法和评价想法的智能体，可能不断强化自身偏好。需要独立结果与检查来检验判断是否实际改善。</span></li>
+      <li><span class="lang-en"><strong>Will fast feedback suppress long-term exploration?</strong> Easily verified gains may crowd out uncertain directions. I want to preserve multiple valid approaches and test whether accumulated experience supports broader agent self-improvement.</span><span class="lang-zh"><strong>快速反馈会不会压制长期探索？</strong>容易验证的收益可能挤掉不确定的方向。我希望保留多种合理路径，并检验积累的经验能否支持更广泛的智能体自我改进。</span></li>
     </ul>
   </div>
+
+  <span class="anchor" id="related-reading"></span>
+
+  <h2><span class="lang-en">Two Starting Points</span><span class="lang-zh">两个相关起点</span></h2>
+
+  <ul>
+    <li><span class="lang-en"><a href="https://bear.warrington.ufl.edu/brenner/mar7588/Papers/kahneman-klein-2009.pdf">Kahneman &amp; Klein (2009), Conditions for Intuitive Expertise</a>: discusses how reliable intuition depends on learnable regularities and opportunities for effective feedback. It motivates the question about experience; it does not establish how to train scientific taste in LLMs.</span><span class="lang-zh"><a href="https://bear.warrington.ufl.edu/brenner/mar7588/Papers/kahneman-klein-2009.pdf">Kahneman 与 Klein（2009）：专家直觉的形成条件</a>：讨论可靠直觉与可学习的规律、有效反馈机会之间的关系。它启发了这里关于经验的问题，并未验证 LLM 科研判断的训练方法。</span></li>
+    <li><span class="lang-en"><a href="https://arxiv.org/html/2603.14473v3">AI Can Learn Scientific Taste (2026, v3)</a>: uses citation-based community feedback to train a scientific judge and then guide idea generation. Building on this line of inquiry, I want to test whether learning from decisions and revisions improves research resource allocation before outcomes are known.</span><span class="lang-zh"><a href="https://arxiv.org/html/2603.14473v3">AI Can Learn Scientific Taste（2026，v3）</a>：利用基于引用的社区反馈训练科学评价模型，再指导想法生成。沿着这一问题，我更想检验从决策与修正经历中学习，能否改善结果未知时的研究资源分配。</span></li>
+  </ul>
 
   <div class="research-discussion">
     <div>
       <small><span class="lang-en">Open for discussion</span><span class="lang-zh">欢迎讨论</span></small>
       <h2><span class="lang-en">These notes are still provisional.</span><span class="lang-zh">这些想法仍在形成。</span></h2>
-      <p class="lang-en">I am especially interested in evidence that challenges this framing: tasks whose outcomes are difficult to verify, settings where process feedback restricts exploration, or cases where a more realistic environment does not improve transfer. Such cases would help clarify which parts of this agenda are useful and which need revision.</p>
-      <p class="lang-zh">我也希望了解与这套表述不一致的证据，例如结果难以验证的任务、过程反馈限制探索的情形，或更真实的环境并未改善迁移的案例。这些反例有助于判断哪些问题值得继续推进，哪些表述需要修改。</p>
+      <p class="lang-en">I would especially welcome research histories that changed someone's judgment, failures that overturned a plausible idea, and cases where optimizing short-term feedback harmed later choices. They could help clarify which experiences improve research taste and where this framing breaks down.</p>
+      <p class="lang-zh">我尤其希望讨论那些改变了研究者判断的经历、推翻合理想法的失败，以及优化短期反馈反而损害后续选择的案例。它们可能帮助澄清哪些经验能改善研究判断，以及这套表述在哪里不成立。</p>
     </div>
     <a href="mailto:{{ site.author.email }}"><i class="fas fa-comment-dots" aria-hidden="true"></i><span class="lang-en">Discuss by email</span><span class="lang-zh">邮件讨论</span></a>
   </div>
