@@ -32,6 +32,8 @@ redirect_from:
   <div class="research-outlook__paragraph">
     <p class="lang-en">My long-term research goal is <strong>recursive self-improvement (RSI)</strong>: agents that learn from experience to improve their capabilities and their ability to learn and improve. I am interested in the loop between task design, environments, evaluation, and updates to model weights, memory, tools, and harnesses. One question within this goal is <strong>learning from extremely delayed real-world rewards</strong>: how can agents learn and provide credible evidence of improvement when true outcomes are unavailable in time and historical supervision risks leaking future information?</p>
     <p class="lang-zh">我的长期研究目标是实现<strong>递归式自我改进（RSI）</strong>：让智能体从经验中提升能力，并进一步提升自身学习与改进的能力。我关注任务设计、环境、评价，以及模型参数、记忆、工具与 harness 的更新如何形成闭环。其中一个问题是<strong>真实世界超级延迟奖励下的学习</strong>：当真实标签来不及用于训练、历史监督又容易泄漏未来信息时，如何学习并提供可信的改进证据？</p>
+    <p class="lang-en">One possible route is <a href="/research/#accelerated-simulation">learning in accelerated simulations</a> that preserve the mechanisms relevant to our decisions, then testing whether the resulting improvements transfer to the real world.</p>
+    <p class="lang-zh">一条可能的路径是<a href="/research/#accelerated-simulation">在可加速的模拟环境中学习</a>：保留影响决策的关键机制，再检验其中学到的改进能否迁移到现实。</p>
   </div>
   <a class="research-outlook__link" href="/research/"><span class="lang-en">Toward RSI: experience and delayed rewards</span><span class="lang-zh">走向 RSI：经验闭环与延迟奖励</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </div>

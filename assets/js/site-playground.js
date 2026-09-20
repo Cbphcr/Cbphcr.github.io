@@ -118,7 +118,7 @@
           title: currentLanguage() === "zh" ? "RSI、经验闭环与延迟奖励" : "RSI, experience, and delayed rewards",
           href: "/research/",
           type: "section",
-          keywords: "rsi recursive self-improvement experience learning delayed rewards ground truth temporal leakage credit assignment environment evaluation feedback research taste 递归式自我改进 经验 闭环 学习 超级延迟奖励 真实标签 未来信息 泄漏 延迟 反馈 信用分配 研究 判断"
+          keywords: "rsi recursive self-improvement experience learning delayed rewards ground truth temporal leakage accelerated simulation simulator world model value equivalence fidelity sim-to-real transfer credit assignment environment evaluation feedback research taste 递归式自我改进 经验 闭环 学习 超级延迟奖励 真实标签 未来信息 泄漏 延迟 反馈 模拟 仿真 加速 世界模型 价值等价 迁移 信用分配 研究 判断"
         },
         {
           title: currentLanguage() === "zh" ? "TabPFN · 演化、机制与研究方向" : "TabPFN · Evolution and research directions (Chinese)",

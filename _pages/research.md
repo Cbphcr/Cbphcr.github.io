@@ -1,7 +1,7 @@
 ---
 permalink: /research/
 title: "Research Questions"
-excerpt: "Toward recursive self-improvement: learning and credible evaluation under delayed real-world rewards and temporal leakage"
+excerpt: "Toward recursive self-improvement: delayed real-world rewards, accelerated simulation, and credible evidence of transfer"
 author_profile: true
 ---
 
@@ -59,6 +59,28 @@ author_profile: true
   <p class="lang-en"><strong>Research taste is one example.</strong> An idea's lasting value may become clear only long after the agent must choose which questions and experiments deserve investment. This setting also involves noise and disagreement about value. I see it as one setting for studying learning without timely ground truth within the broader goal of RSI.</p>
   <p class="lang-zh"><strong>Research taste（研究判断力）是其中一个例子。</strong>一个想法的长期价值可能很久以后才明确，但智能体必须提前判断哪些问题和实验值得投入。这个场景还包含噪声与对价值的不同判断。我希望把它放在 RSI 的总体目标下，用来思考缺少及时真实标签时的学习问题。</p>
 
+  <span class="anchor" id="accelerated-simulation"></span>
+
+  <h2><span class="lang-en">A Possible Route: Learning in Accelerated Simulations</span><span class="lang-zh">一条可能的路径：在可加速的模拟环境中学习</span></h2>
+
+  <p class="lang-en">A sufficiently faithful simulator could compress months or years of waiting into much less computation time, making repeated trials and learning possible before real outcomes mature. Building a complete replica of the world is far beyond this proposal. I want to investigate a narrower requirement: <strong>make the simulator accurate on the questions, quantities, and mechanisms that determine the decisions we care about.</strong></p>
+  <p class="lang-zh">如果模拟环境足够可信，就可能把现实中数月或数年的等待压缩为更短的计算时间，在真实结果成熟前反复尝试和学习。完整复现真实世界远超这个设想的范围。我想研究一个更有限的要求：<strong>让模拟环境在我们关心的问题、数值，以及影响决策的机制上足够真实。</strong></p>
+
+  <p class="lang-en">For example, a research agent may choose to scale up training, run an additional control experiment, or explore another direction. A useful simulator should capture how those choices affect eventual gains, resource use, and the evidence available for the next decision. Matching historical averages alone would not establish this: the simulator also needs to preserve meaningful differences between candidate strategies and the uncertainty around them.</p>
+  <p class="lang-zh">例如，研究智能体可以选择扩大训练规模、补充对照实验，或探索另一个方向。有用的模拟器应当反映这些选择如何影响最终收益、资源消耗，以及下一步决策能获得的证据。仅仅复现历史均值还不够：候选策略之间有意义的差异，以及这些差异的不确定性，也需要得到保留。</p>
+
+  <ul>
+    <li><span class="lang-en"><strong>Responses to actions.</strong> Which relationships between actions and outcomes must remain faithful, and which details can be simplified without changing the decision?</span><span class="lang-zh"><strong>行动后的结果。</strong>哪些行动与结果之间的关系必须保持真实？哪些细节可以简化，而不改变应当作出的决策？</span></li>
+    <li><span class="lang-en"><strong>Information timing.</strong> The training procedure can advance the simulated clock to obtain a terminal reward, but the agent must only see information available at each simulated decision time. Historical knowledge embedded in the agent or simulator also needs to be considered.</span><span class="lang-zh"><strong>信息出现的时序。</strong>训练程序可以快进模拟时间，获得终局奖励；智能体在每个决策时刻，只能看到那时可获得的信息。智能体或模拟器已有知识中包含的历史结局，也需要纳入检查。</span></li>
+    <li><span class="lang-en"><strong>Validity after optimization.</strong> A simulator that predicts outcomes for familiar strategies may fail on new strategies found by the agent. How can we detect improvements that exploit simulation errors and test transfer beyond the training environment?</span><span class="lang-zh"><strong>优化之后仍然有效。</strong>模拟器可能准确预测熟悉策略的结果，却无法处理智能体新找到的策略。如何识别利用模拟误差获得的提升，并检验它们在训练环境之外能否迁移？</span></li>
+  </ul>
+
+  <p class="lang-en">This connects to <a href="https://arxiv.org/abs/2011.03506">value equivalence</a>, which defines model equivalence through Bellman updates for specified policies and value functions, and to <a href="https://arxiv.org/abs/1911.08265">MuZero</a>, which learns predictions of reward, value, and policy for planning. These provide useful modeling ideas; they do not establish that a simulator can faithfully predict long-term research outcomes.</p>
+  <p class="lang-zh">相关的建模思想包括 <a href="https://arxiv.org/abs/2011.03506">value equivalence（价值等价）</a>：针对指定的策略和价值函数，以 Bellman 更新是否一致来定义模型等价；以及 <a href="https://arxiv.org/abs/1911.08265">MuZero</a> 对规划所需奖励、价值和策略的预测。这些思想可以借鉴，但不能据此认定科研的长期结果已经能够被准确模拟。</p>
+
+  <p class="lang-en">The central difficulty is calibration. Two simulators can fit the same short-term evidence while predicting opposite long-term effects. Without additional evidence or justified assumptions, more simulated trials cannot resolve that disagreement. <strong>Simulation rewards remain outcomes under a model's assumptions, not observed future ground truth.</strong> A possible learning loop would combine frequent simulated updates with checks from local experiments and, eventually, mature real-world outcomes.</p>
+  <p class="lang-zh">核心困难在于校准。两个模拟器可能同样符合现有短期证据，却对长期效果作出相反预测。没有额外证据或有依据的假设，增加模拟次数也无法消除这种分歧。<strong>模拟奖励始终是模型假设下的结果，不能当作已经观测到的未来真实标签。</strong>一条可能的学习路径，是把频繁的模拟更新与局部实验检验结合起来，再由后来成熟的真实结果持续校准。</p>
+
   <span class="anchor" id="experience-loop"></span>
 
   <h2><span class="lang-en">The Experience Loop</span><span class="lang-zh">经验闭环</span></h2>
@@ -109,8 +131,8 @@ author_profile: true
         <div><small><span class="lang-en">Resource-bounded environments</span><span class="lang-zh">资源受限的环境</span></small><h3><span class="lang-en">What must an environment preserve from the real task?</span><span class="lang-zh">环境需要保留真实任务中的哪些部分？</span></h3></div>
       </header>
       <div class="research-question__body">
-        <p class="lang-en">Once a task is specified, building its environment is largely an engineering effort. What remains unclear is which parts of reality need to be modeled faithfully under a limited budget. An environment can be expensive without being useful, while a cheap abstraction may omit the constraints that determine success.</p>
-        <p class="lang-zh">任务确定后，环境搭建很大程度上是工程实现。仍然值得研究的是：在资源有限时，真实世界的哪些部分必须被准确建模。一个环境可能成本很高却没有提供更多有效经验，廉价抽象也可能遗漏真正决定任务成败的约束。</p>
+        <p class="lang-en">For extremely delayed rewards, an environment could make future consequences available on an accelerated clock. The research question is which mechanisms must remain faithful for experience learned there to transfer. Under a limited budget, I want to study how accurately a simulator needs to represent action effects, information timing, costs, and uncertainty.</p>
+        <p class="lang-zh">面对超级延迟奖励，环境可以尝试通过加速的模拟时间，让行动的后果更快可用。需要研究的是：哪些机制必须保持真实，才能让其中学到的经验迁移出去。在预算有限时，行动效果、信息时序、成本与不确定性分别需要模拟到什么精度？</p>
         <ul>
           <li><span class="lang-en">Which task-relevant structures and constraints must remain faithful for learning to transfer?</span><span class="lang-zh">为了使学习结果能够迁移，哪些与任务有关的结构和约束必须保持真实？</span></li>
           <li><span class="lang-en">How can we tell when a simplification has changed the capability being learned or evaluated?</span><span class="lang-zh">如何判断某种简化已经改变了原本希望学习或评价的能力？</span></li>
@@ -179,9 +201,9 @@ author_profile: true
   <div class="research-bets">
     <article>
       <span>01</span>
-      <h3><span class="lang-en">A more realistic environment is not always a more useful one.</span><span class="lang-zh">环境更真实，不一定就更有用。</span></h3>
-      <p class="lang-en">Under a fixed budget, a simpler environment may be preferable if it preserves the constraints that affect task success. I do not yet know how to identify those constraints reliably.</p>
-      <p class="lang-zh">在预算固定时，只要保留了影响任务成败的约束，更简单的环境可能反而更合适。怎样可靠地识别这些约束，我还没有答案。</p>
+      <h3><span class="lang-en">Accelerated simulation may support transferable improvement.</span><span class="lang-zh">可加速的模拟，可能支持可迁移的改进。</span></h3>
+      <p class="lang-en">Under a fixed budget, preserving the mechanisms that determine relevant decisions may be enough to learn useful strategies. This depends on how well those mechanisms are identified and whether the simulator stays reliable as the agent discovers new strategies.</p>
+      <p class="lang-zh">在预算固定时，保留决定相关选择的关键机制，可能就足以学习有用的策略。这取决于能否可靠识别这些机制，以及智能体发现新策略后，模拟器是否仍然可信。</p>
     </article>
     <article>
       <span>02</span>
@@ -207,8 +229,11 @@ author_profile: true
   <p class="lang-en">Historical backtests need evidence about the model's training history, later adaptations, and retrieved sources, not just a date filter on the test set. Models trained with documented temporal boundaries, such as <a href="https://arxiv.org/abs/2603.11838">DatedGPT</a>, offer one approach. Another is to freeze the system and record predictions before outcomes are known, as in <a href="https://forecastbench.org/about/">ForecastBench</a>. This reduces the risk of remembering resolved answers but retains the wait for real outcomes. These approaches address different parts of the tradeoff between evaluation speed, leakage control, and real-world relevance.</p>
   <p class="lang-zh">历史回测需要关于模型训练历史、后续适配与检索来源的证据，不能只给测试集加一个日期过滤器。像 <a href="https://arxiv.org/abs/2603.11838">DatedGPT</a> 这样记录并控制训练数据时间边界的模型，是一种路径。另一种是先固定系统，在结果尚未知晓时记录预测，例如 <a href="https://forecastbench.org/about/">ForecastBench</a> 的做法；这降低了记忆已知答案的风险，却仍需等待真实结果。这些路径分别处理评估速度、泄漏控制与真实世界相关性之间的不同取舍。</p>
 
-  <p class="lang-en">With the same initial system, task distribution, and total budget, compare training on mature labels alone, learning from interim signals, and combining historical labels with recent unlabeled experience. Later ground truth can evaluate updates that had to be made without it; it need not have been available as a training reward. Vary delay, noise, and distribution change separately in controlled environments. Artificially delaying known labels can test mechanisms, while claims about real-world long-term gains require outcomes that have actually matured.</p>
-  <p class="lang-zh">在相同初始系统、任务分布和总预算下，可以比较只使用成熟标签、依赖中间信号，以及结合历史标签和最新无标签经验的学习方式。后来的真实结果可以评价那些在缺少标签时已经完成的更新，并不要求它当时能够充当训练奖励。在可控环境中，再分别改变延迟、噪声和分布变化。人为延迟已知标签可以检验机制；对真实世界长期收益的判断，仍需要实际成熟的结果。</p>
+  <p class="lang-en">With the same initial system, task distribution, and total budget, compare training on mature labels alone, learning from interim signals, combining historical labels with recent unlabeled experience, and adding accelerated simulation. Account for the cost of constructing, running, and checking the simulator. Later ground truth can evaluate updates that had to be made without it; it need not have been available as a training reward.</p>
+  <p class="lang-zh">在相同初始系统、任务分布和总预算下，可以比较只使用成熟标签、依赖中间信号、结合历史标签和最新无标签经验，以及加入加速模拟的学习方式。模拟器的构建、运行与验证成本也应计入。后来的真实结果可以评价那些在缺少标签时已经完成的更新，并不要求它当时能够充当训练奖励。</p>
+
+  <p class="lang-en">For the simulation route, first check predicted returns and uncertainty for fixed candidate strategies, then test whether strategies improved inside the simulator transfer to held-out settings, mechanism changes, and prospective real tasks. Vary delay, noise, and distribution change separately. Artificially delaying known labels can test mechanisms; real-world long-term gains still need validation against outcomes that actually mature.</p>
+  <p class="lang-zh">对于模拟这条路径，可以先检验固定候选策略的收益预测与不确定性，再检验经过模拟训练的新策略能否迁移到留出的场景、不同的机制设置，以及预先记录决策的真实任务。延迟、噪声和分布变化应分别控制。人为延迟已知标签可以检验机制；真实世界的长期收益仍需要实际成熟的结果来验证。</p>
 
   <p class="lang-en">For RSI, I would also examine whether an update helps the agent learn more effectively in later cycles and transfer across tasks, accounting for additional computation, interaction, and verification costs.</p>
   <p class="lang-zh">围绕 RSI，还需要考察一次更新能否帮助智能体在后续轮次中更有效地学习、跨任务迁移，并计入额外的计算、交互与验证成本。</p>
