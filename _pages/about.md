@@ -30,8 +30,8 @@ redirect_from:
     <span class="visually-hidden"><span class="lang-en">Open Agent Harness Lab</span><span class="lang-zh">打开 Agent Harness Lab</span></span>
   </button>
   <div class="research-outlook__paragraph">
-    <p class="lang-en">My long-term research goal is <strong>recursive self-improvement (RSI)</strong>: agents that learn from experience to improve their capabilities and their ability to learn and improve. I am interested in the loop between task design, environments, evaluation, and updates to model weights, memory, tools, and harnesses. One question within this goal is <strong>learning from extremely delayed real-world rewards</strong>: what can guide current updates when the long-term outcomes that matter are not yet observable?</p>
-    <p class="lang-zh">我的长期研究目标是实现<strong>递归式自我改进（RSI）</strong>：让智能体从经验中提升能力，并进一步提升自身学习与改进的能力。我关注任务设计、环境、评价，以及模型参数、记忆、工具与 harness 的更新如何形成闭环。其中一个问题是<strong>真实世界超级延迟奖励下的学习</strong>：当真正关心的长期结果尚不可观测、真实标签来不及用于训练时，当前更新可以依靠什么？</p>
+    <p class="lang-en">My long-term research goal is <strong>recursive self-improvement (RSI)</strong>: agents that learn from experience to improve their capabilities and their ability to learn and improve. I am interested in the loop between task design, environments, evaluation, and updates to model weights, memory, tools, and harnesses. One question within this goal is <strong>learning from extremely delayed real-world rewards</strong>: how can agents learn and provide credible evidence of improvement when true outcomes are unavailable in time and historical supervision risks leaking future information?</p>
+    <p class="lang-zh">我的长期研究目标是实现<strong>递归式自我改进（RSI）</strong>：让智能体从经验中提升能力，并进一步提升自身学习与改进的能力。我关注任务设计、环境、评价，以及模型参数、记忆、工具与 harness 的更新如何形成闭环。其中一个问题是<strong>真实世界超级延迟奖励下的学习</strong>：当真实标签来不及用于训练、历史监督又容易泄漏未来信息时，如何学习并提供可信的改进证据？</p>
   </div>
   <a class="research-outlook__link" href="/research/"><span class="lang-en">Toward RSI: experience and delayed rewards</span><span class="lang-zh">走向 RSI：经验闭环与延迟奖励</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </div>

@@ -1,7 +1,7 @@
 ---
 permalink: /research/
 title: "Research Questions"
-excerpt: "Toward recursive self-improvement: learning when real-world rewards arrive too late for current updates"
+excerpt: "Toward recursive self-improvement: learning and credible evaluation under delayed real-world rewards and temporal leakage"
 author_profile: true
 ---
 
@@ -33,11 +33,22 @@ author_profile: true
   <p class="lang-en">Suppose a label can only be determined after a fixed delay <code>Δ</code>. At training time <code>t</code>, only examples from <code>t − Δ</code> or earlier have mature labels. This creates a tension: <strong>labeled data describe the past, while the freshest data remain unlabeled</strong>. When the delay greatly exceeds the update cycle, true rewards from recent actions cannot close a timely training loop. Mature historical labels may still help with learning and calibration, subject to changes in the environment and policy.</p>
   <p class="lang-zh">假设一个标签必须等待固定时长 <code>Δ</code> 才能确定，那么在训练时刻 <code>t</code>，只有 <code>t − Δ</code> 及更早的样本具备成熟标签。这带来一个矛盾：<strong>有标签的数据描述过去，最贴近当前环境的数据却没有标签</strong>。当延迟远大于更新周期时，最新行为的真实奖励无法及时返回，当前更新必须面对这部分监督的缺失。历史上已经成熟的标签仍可能用于学习与校准，但必须考虑环境和策略已经发生的变化。</p>
 
-  <p class="lang-en"><strong>The question is what can guide learning while true long-term rewards are unavailable, and what would justify believing that those updates improve the long-term objective.</strong> Process reliability, predictions of future reward, and observed final outcomes need separate evaluation. A better proxy score alone cannot establish improvement in the eventual outcome.</p>
-  <p class="lang-zh"><strong>核心问题是：真实长期奖励无法及时用于训练时，智能体依靠什么信号持续学习，又凭什么相信这些更新会改善长期目标？</strong>执行过程是否可靠、对未来奖励的预测是否准确，以及最终结果如何，需要分别评价。代理分数变高，本身不足以说明最终结果会更好。</p>
+  <span class="anchor" id="temporal-leakage"></span>
+
+  <h3><span class="lang-en">Mature Labels Still Need a Defensible Information Boundary</span><span class="lang-zh">历史标签成熟，不代表回测没有泄漏</span></h3>
+
+  <p class="lang-en">For an LLM, a chronological split of downstream data does not establish what the model knew. A present-day model judging an old research idea may already have read papers reporting its eventual success. Future information can enter through pretraining, post-training, retrieval, or retrospective descriptions of the task. Hiding the label or rewriting the question cannot by itself establish a clean historical test.</p>
+  <p class="lang-zh">对 LLM 而言，仅按时间划分下游数据，无法确定模型当时“知道什么”。让今天的模型评价几年前的研究想法，它可能已经读过报告该方向后来成功的论文。未来信息可以通过预训练、后训练、检索或事后整理的任务描述进入系统。只隐藏标签或改写题面，并不足以保证历史测试没有泄漏。</p>
+
+  <p class="lang-en">Using historical labels for supervised training is legitimate. The concern is whether the model learns shortcuts based on known outcomes and whether evaluation rewards the same shortcuts. Selecting only ideas known to have succeeded creates a separate selection bias. This leaves two difficulties: recent examples lack mature labels, while historical examples require evidence that the apparent foresight did not come from future knowledge.</p>
+  <p class="lang-zh">用历史标签做监督训练本身是合理的。需要警惕的是，模型是否学到了识别已知结局的捷径，以及评测是否仍在奖励同一条捷径。只选择后来成功的想法，还会引入另一类选择偏差。于是困难有两面：最新样本缺少成熟标签，历史样本又需要证明表面的“远见”没有来自未来知识。</p>
+
+  <p class="lang-en"><strong>Within the goal of RSI, how can agents keep improving when true rewards are unavailable in time and historical supervision risks leaking future information, while providing credible evidence of that improvement?</strong> Learning effectively and establishing that learning occurred are related but distinct problems. Process reliability, predictions of future reward, and observed final outcomes need separate evaluation; a better proxy score alone does not establish a better eventual outcome.</p>
+  <p class="lang-zh"><strong>面向 RSI，在真实奖励无法及时获得、历史监督又容易受到未来信息污染的条件下，智能体如何持续自我改进，并提供可信的改进证据？</strong>“怎样学习”与“怎样知道它真的学会了”是相互关联、又需要分别解决的问题。执行过程、未来奖励预测与最终结果应分别评价；代理分数变高，本身不足以说明最终结果会更好。</p>
 
   <ul>
     <li><span class="lang-en"><strong>What can support an update now?</strong> How can mature historical outcomes, intermediate observations, local experiments, and model predictions be used? What assumptions connect each signal to the long-term objective?</span><span class="lang-zh"><strong>当前更新可以依据什么？</strong>如何利用成熟的历史结果、中间观测、局部实验与模型预测？每种信号与长期目标之间，需要哪些关联假设？</span></li>
+    <li><span class="lang-en"><strong>What makes evidence from historical data credible?</strong> How can we distinguish transferable judgment from recognition of known outcomes, and audit information available to the model as well as the task inputs?</span><span class="lang-zh"><strong>历史数据上的证据何时可信？</strong>如何区分可迁移的判断与对已知结局的识别，并同时检查模型已有知识和任务输入中的信息？</span></li>
     <li><span class="lang-en"><strong>How can learning stay relevant as the world changes?</strong> Can recent unlabeled experience help adapt what was learned from old labels, and how can the system detect when an old relationship no longer holds?</span><span class="lang-zh"><strong>世界变化后，学习怎样保持有效？</strong>最新的无标签经验能否帮助调整从旧标签中学到的规律？旧规律不再成立时，系统如何识别？</span></li>
     <li><span class="lang-en"><strong>How should unresolved outcomes affect exploration?</strong> An outcome that has not matured should remain unresolved. How can experience selection avoid favoring only quickly rewarded actions or treating pending outcomes as failures?</span><span class="lang-zh"><strong>未决结果应如何影响探索？</strong>尚未成熟的结果应保留为未决。经验筛选如何避免只偏向很快见效的行动，或把还没有结果的尝试当作失败？</span></li>
     <li><span class="lang-en"><strong>What can a reward correct when it finally arrives?</strong> Which records of information, model versions, actions, and alternatives are needed to revisit early judgments and credit assignments after many updates?</span><span class="lang-zh"><strong>奖励终于到来后，还能纠正什么？</strong>需要保留怎样的信息、模型版本、行动与备选记录，才能在多轮更新后重新评价早期判断和信用分配？</span></li>
@@ -192,6 +203,9 @@ author_profile: true
 
   <p class="lang-en">A rolling evaluation should reconstruct the information available at each real-world cutoff: mature historical labels, recent observations, and unresolved outcomes. Save predictions and model versions at that time, then evaluate against outcomes once they mature. Separate an outcome's occurrence time from the time it became observable, and audit future knowledge already present in pretrained models when using historical data.</p>
   <p class="lang-zh">可以按真实时间滚动评估：在每个截止时刻，只提供当时已经成熟的历史标签、最新观测与仍未决的记录。保存当时的预测和模型版本，等结果成熟后再评价。同时区分结果发生时间与它真正可被观察到的时间；使用历史数据时，还需要检查预训练模型是否已经知道了未来信息。</p>
+
+  <p class="lang-en">Historical backtests need evidence about the model's training history, later adaptations, and retrieved sources, not just a date filter on the test set. Models trained with documented temporal boundaries, such as <a href="https://arxiv.org/abs/2603.11838">DatedGPT</a>, offer one approach. Another is to freeze the system and record predictions before outcomes are known, as in <a href="https://forecastbench.org/about/">ForecastBench</a>. This reduces the risk of remembering resolved answers but retains the wait for real outcomes. These approaches address different parts of the tradeoff between evaluation speed, leakage control, and real-world relevance.</p>
+  <p class="lang-zh">历史回测需要关于模型训练历史、后续适配与检索来源的证据，不能只给测试集加一个日期过滤器。像 <a href="https://arxiv.org/abs/2603.11838">DatedGPT</a> 这样记录并控制训练数据时间边界的模型，是一种路径。另一种是先固定系统，在结果尚未知晓时记录预测，例如 <a href="https://forecastbench.org/about/">ForecastBench</a> 的做法；这降低了记忆已知答案的风险，却仍需等待真实结果。这些路径分别处理评估速度、泄漏控制与真实世界相关性之间的不同取舍。</p>
 
   <p class="lang-en">With the same initial system, task distribution, and total budget, compare training on mature labels alone, learning from interim signals, and combining historical labels with recent unlabeled experience. Later ground truth can evaluate updates that had to be made without it; it need not have been available as a training reward. Vary delay, noise, and distribution change separately in controlled environments. Artificially delaying known labels can test mechanisms, while claims about real-world long-term gains require outcomes that have actually matured.</p>
   <p class="lang-zh">在相同初始系统、任务分布和总预算下，可以比较只使用成熟标签、依赖中间信号，以及结合历史标签和最新无标签经验的学习方式。后来的真实结果可以评价那些在缺少标签时已经完成的更新，并不要求它当时能够充当训练奖励。在可控环境中，再分别改变延迟、噪声和分布变化。人为延迟已知标签可以检验机制；对真实世界长期收益的判断，仍需要实际成熟的结果。</p>
