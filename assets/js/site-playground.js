@@ -115,10 +115,10 @@
 
       [
         {
-          title: currentLanguage() === "zh" ? "研究判断与经验学习" : "Research taste and learning from experience",
+          title: currentLanguage() === "zh" ? "RSI、经验闭环与延迟奖励" : "RSI, experience, and delayed rewards",
           href: "/research/",
           type: "section",
-          keywords: "research taste scientific judgment vision experience environment evaluation feedback uncertainty attribution learning rsi 研究 判断 品味 问题 经验 环境 评价 反馈 噪声 延迟 归因 学习"
+          keywords: "rsi recursive self-improvement experience learning delayed rewards ground truth credit assignment environment evaluation feedback research taste 递归式自我改进 经验 闭环 学习 超级延迟奖励 真实标签 延迟 反馈 信用分配 研究 判断"
         },
         {
           title: currentLanguage() === "zh" ? "TabPFN · 演化、机制与研究方向" : "TabPFN · Evolution and research directions (Chinese)",
