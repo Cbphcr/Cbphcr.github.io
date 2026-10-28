@@ -80,7 +80,7 @@ redirect_from:
     <div class="experience-content">
       <div class="experience-card__header">
         <h3><a href="https://www.bytedance.com/">ByteDance</a></h3>
-        <span class="experience-date"><span class="lang-en">2026.04 - Present</span><span class="lang-zh">2026.04 - 至今</span></span>
+        <span class="experience-date"><span class="lang-en">2026.04 - 2026.10</span><span class="lang-zh">2026.04 - 2026.10</span></span>
       </div>
       <p class="experience-role"><span class="lang-en">LLM Algorithm Intern</span><span class="lang-zh">大模型算法实习生</span></p>
       <p class="experience-team"><span class="lang-en">Douyin E-commerce</span><span class="lang-zh">抖音电商</span></p>
