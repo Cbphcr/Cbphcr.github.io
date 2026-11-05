@@ -16,10 +16,10 @@ author_profile: true
   <article class="note-index__item">
     <a class="note-index__icon" href="{{ '/notes/grpo-std-noisy-labels/' | relative_url }}" aria-label="Open GRPO standard deviation note"><i class="fas fa-bullseye" aria-hidden="true"></i></a>
     <div class="note-index__body">
-      <div class="note-index__meta"><time datetime="2026-11-05">2026.11.05</time><span><span class="lang-en">Chinese note · Derivation &amp; simulation</span><span class="lang-zh">推导与模拟 · 概率校准</span></span></div>
-      <h2><a href="{{ '/notes/grpo-std-noisy-labels/' | relative_url }}"><span class="lang-en">Why GRPO's group std pushes forecasts to 0 and 1</span><span class="lang-zh">GRPO 的组内标准差，为什么把概率预测推向 0 和 1</span></a></h2>
-      <p class="lang-en">Dividing by group std cancels the size of the reward slope. Under noisy labels the target drifts from the mean toward the median, with a closed-form pseudo-Huber view, reproducible simulations, and a look at rubric RL and LLM judges.</p>
-      <p class="lang-zh">除以组内 std 会消去奖励斜率的大小。标签有噪声时，优化目标从均值滑向中位数；附任务背景、pseudo-Huber 闭式解和可复现模拟，并讨论 rubric RL 与 LLM judge。</p>
+      <div class="note-index__meta"><time datetime="2026-11-05">2026.11.05</time><span><span class="lang-en">Chinese note · Derivation &amp; experiments</span><span class="lang-zh">推导与实验 · 奖励噪声</span></span></div>
+      <h2><a href="{{ '/notes/grpo-std-noisy-labels/' | relative_url }}"><span class="lang-en">GRPO group std: target shift and outlier suppression</span><span class="lang-zh">GRPO 的组内标准差：目标偏移与离群值压制</span></a></h2>
+      <p class="lang-en">With noisy rewards, group-std normalization can change the objective: shared labels shift the target toward the median, and independent noise suppresses outliers in small groups. Includes propositions, a closed form, seven reproducible experiments, and LLM judge rewards.</p>
+      <p class="lang-zh">奖励带噪时，除以组内 std 可能改变优化目标：共享标签使目标偏向中位数，独立噪声使小组压制离群值。含命题、闭式解、七组可复现实验，并讨论 LLM judge 奖励。</p>
       <div class="note-index__topics" aria-label="Topics"><span>GRPO</span><span>Calibration</span><span>Median</span><span>Pseudo-Huber</span></div>
     </div>
     <a class="note-index__open" href="{{ '/notes/grpo-std-noisy-labels/' | relative_url }}" aria-label="Read GRPO standard deviation note"><i class="fas fa-arrow-right" aria-hidden="true"></i></a>

@@ -66,7 +66,12 @@ def run(reward_fn, mode, n, lr):
         if t >= STEPS * 3 // 4:
             tail += 1 / (1 + np.exp(-theta))
             count += 1
-    return round(float((tail / count).mean()), 3)
+    final = tail / count
+    return {
+        "mean": round(float(final.mean()), 3),
+        "min": round(float(final.min()), 3),
+        "max": round(float(final.max()), 3),
+    }
 
 
 def main():
