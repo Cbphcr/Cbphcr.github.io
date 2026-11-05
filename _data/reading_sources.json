@@ -412,5 +412,87 @@
       "kind": "arXiv（年份为首发）",
       "verified": "2026-09-08"
     }
+  ],
+  "grpo-std": [
+    {
+      "id": "G1",
+      "title": "Uncalibrated Reasoning: GRPO Induces Overconfidence for Stochastic Outcomes",
+      "authors": "Michael Bereket, Jure Leskovec",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2508.11800",
+      "read": "正文与附录 A.3（v1）",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G2",
+      "title": "Understanding R1-Zero-Like Training: A Critical Perspective",
+      "authors": "Zichen Liu, Changyu Chen, Wenjun Li et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2503.20783",
+      "read": "相关章节",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G3",
+      "title": "Outcome-based Reinforcement Learning to Predict the Future",
+      "authors": "Benjamin Turtel, Danny Franklin, Kris Skotheim et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2505.17989",
+      "read": "正文相关章节（v3）",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G4",
+      "title": "Why GRPO Needs Normalization: A Local-Curvature Perspective on Adaptive Gradients",
+      "authors": "Cheng Ge, Caitlyn Heqi Yin, Hao Liang, Jiawei Zhang",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2601.23135",
+      "read": "摘要与关键词检索",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G5",
+      "title": "Noise-corrected GRPO: From Noisy Rewards to Unbiased Gradients",
+      "authors": "Omar El Mansouri, Fathinah Asma Izzati, Mohamed El Amine Seddik, Salem Lahlou",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2510.18924",
+      "read": "正文大部分（v3，噪声模型相关）",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G6",
+      "title": "MC-GRPO: Median-Centered Group Relative Policy Optimization for Small-Rollout Reinforcement Learning",
+      "authors": "Youngeun Kim",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2601.22582",
+      "read": "仅摘要级信息",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G7",
+      "title": "Verifiable Rewards for Calibrated Probabilistic Forecasting",
+      "authors": "Sadanand Singh, Allam Reddy, Manan Chopra",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2607.00164",
+      "read": "正文相关章节",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G8",
+      "title": "The Dark Room in the Reward Channel: Dense Prediction Rewards Collapse GRPO-Trained LLM Agents",
+      "authors": "Yu Wang",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2607.21273",
+      "read": "正文相关章节（v1；v2 标题有更新）",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    }
   ]
 }

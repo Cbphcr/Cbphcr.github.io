@@ -1,0 +1,199 @@
+{
+ "regression": [
+  {
+   "label": "exponential(1)",
+   "sigma": 0.05,
+   "theory": 0.695,
+   "simulated_n8": 0.695
+  },
+  {
+   "label": "exponential(1)",
+   "sigma": 0.2,
+   "theory": 0.71,
+   "simulated_n8": 0.707
+  },
+  {
+   "label": "exponential(1)",
+   "sigma": 0.5,
+   "theory": 0.749,
+   "simulated_n8": 0.748
+  },
+  {
+   "label": "exponential(1)",
+   "sigma": 1.0,
+   "theory": 0.806,
+   "simulated_n8": 0.816
+  },
+  {
+   "label": "exponential(1)",
+   "sigma": 2.0,
+   "theory": 0.877,
+   "simulated_n8": 0.895
+  },
+  {
+   "label": "exponential(1)",
+   "sigma": 5.0,
+   "theory": 0.954,
+   "simulated_n8": 0.968
+  },
+  {
+   "label": "lognormal(0,1)",
+   "sigma": 0.082,
+   "theory": 1.004,
+   "simulated_n8": 1.003
+  },
+  {
+   "label": "lognormal(0,1)",
+   "sigma": 0.33,
+   "theory": 1.037,
+   "simulated_n8": 1.031
+  },
+  {
+   "label": "lognormal(0,1)",
+   "sigma": 0.824,
+   "theory": 1.112,
+   "simulated_n8": 1.115
+  },
+  {
+   "label": "lognormal(0,1)",
+   "sigma": 1.649,
+   "theory": 1.213,
+   "simulated_n8": 1.232
+  },
+  {
+   "label": "lognormal(0,1)",
+   "sigma": 3.297,
+   "theory": 1.337,
+   "simulated_n8": 1.369
+  },
+  {
+   "label": "lognormal(0,1)",
+   "sigma": 8.244,
+   "theory": 1.492,
+   "simulated_n8": 1.52
+  },
+  {
+   "label": "gamma(2,1)",
+   "sigma": 0.1,
+   "theory": 1.681,
+   "simulated_n8": 1.682
+  },
+  {
+   "label": "gamma(2,1)",
+   "sigma": 0.4,
+   "theory": 1.701,
+   "simulated_n8": 1.699
+  },
+  {
+   "label": "gamma(2,1)",
+   "sigma": 1.0,
+   "theory": 1.752,
+   "simulated_n8": 1.754
+  },
+  {
+   "label": "gamma(2,1)",
+   "sigma": 2.0,
+   "theory": 1.82,
+   "simulated_n8": 1.836
+  },
+  {
+   "label": "gamma(2,1)",
+   "sigma": 4.0,
+   "theory": 1.899,
+   "simulated_n8": 1.921
+  },
+  {
+   "label": "gamma(2,1)",
+   "sigma": 10.0,
+   "theory": 1.97,
+   "simulated_n8": 1.979
+  },
+  {
+   "label": "two-point {0,10}, P(10)=0.4",
+   "sigma": 0.2,
+   "theory": 0.126,
+   "simulated_n8": 0.129
+  },
+  {
+   "label": "two-point {0,10}, P(10)=0.4",
+   "sigma": 0.8,
+   "theory": 0.504,
+   "simulated_n8": 0.514
+  },
+  {
+   "label": "two-point {0,10}, P(10)=0.4",
+   "sigma": 2.0,
+   "theory": 1.236,
+   "simulated_n8": 1.275
+  },
+  {
+   "label": "two-point {0,10}, P(10)=0.4",
+   "sigma": 4.0,
+   "theory": 2.271,
+   "simulated_n8": 2.426
+  },
+  {
+   "label": "two-point {0,10}, P(10)=0.4",
+   "sigma": 8.0,
+   "theory": 3.338,
+   "simulated_n8": 3.548
+  },
+  {
+   "label": "two-point {0,10}, P(10)=0.4",
+   "sigma": 20.0,
+   "theory": 3.882,
+   "simulated_n8": 3.928
+  }
+ ],
+ "exponential_sigma_0.2_theory": 0.71,
+ "finite_group_exponential_sigma_2": [
+  {
+   "n": 8,
+   "mean": 0.895,
+   "min": 0.892,
+   "max": 0.9
+  },
+  {
+   "n": 64,
+   "mean": 0.88,
+   "min": 0.877,
+   "max": 0.883
+  },
+  {
+   "n": 256,
+   "mean": 0.877,
+   "min": 0.875,
+   "max": 0.88
+  }
+ ],
+ "independent_labels_exponential": [
+  {
+   "n": 8,
+   "sigma": 0.2,
+   "mean": 0.66,
+   "min": 0.658,
+   "max": 0.663
+  },
+  {
+   "n": 8,
+   "sigma": 2.0,
+   "mean": 0.925,
+   "min": 0.923,
+   "max": 0.928
+  },
+  {
+   "n": 64,
+   "sigma": 0.2,
+   "mean": 0.917,
+   "min": 0.916,
+   "max": 0.92
+  },
+  {
+   "n": 64,
+   "sigma": 2.0,
+   "mean": 0.974,
+   "min": 0.973,
+   "max": 0.976
+  }
+ ]
+}

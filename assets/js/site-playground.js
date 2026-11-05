@@ -121,6 +121,12 @@
           keywords: "rsi recursive self-improvement experience learning delayed rewards ground truth temporal leakage accelerated simulation simulator world model value equivalence fidelity sim-to-real transfer credit assignment environment evaluation feedback research taste 递归式自我改进 经验 闭环 学习 超级延迟奖励 真实标签 未来信息 泄漏 延迟 反馈 模拟 仿真 加速 世界模型 价值等价 迁移 信用分配 研究 判断"
         },
         {
+          title: currentLanguage() === "zh" ? "GRPO 的组内标准差与概率校准" : "GRPO group std and probability calibration (Chinese)",
+          href: "/notes/grpo-std-noisy-labels/",
+          type: "note",
+          keywords: "grpo std standard deviation normalization calibration overconfidence median pseudo-huber brier proper scoring noisy label forecasting 标准差 归一化 校准 过度自信 中位数 概率预测 随机标签"
+        },
+        {
           title: currentLanguage() === "zh" ? "TabPFN · 演化、机制与研究方向" : "TabPFN · Evolution and research directions (Chinese)",
           href: "/notes/tabpfn/",
           type: "note",

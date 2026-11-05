@@ -8,5 +8,5 @@
       {% endfor %}
     </ol>
   </section>
-  <p class="review-note__sibling">关联笔记：<a href="{{ page.related_url | relative_url }}">{{ page.related_title }}</a></p>
+  {% if page.related_url %}<p class="review-note__sibling">关联笔记：<a href="{{ page.related_url | relative_url }}">{{ page.related_title }}</a></p>{% endif %}
 </article>
