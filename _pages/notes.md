@@ -18,8 +18,8 @@ author_profile: true
     <div class="note-index__body">
       <div class="note-index__meta"><time datetime="2026-11-05">2026.11.05</time><span><span class="lang-en">Chinese note · Derivation &amp; simulation</span><span class="lang-zh">推导与模拟 · 概率校准</span></span></div>
       <h2><a href="{{ '/notes/grpo-std-noisy-labels/' | relative_url }}"><span class="lang-en">Why GRPO's group std pushes forecasts to 0 and 1</span><span class="lang-zh">GRPO 的组内标准差，为什么把概率预测推向 0 和 1</span></a></h2>
-      <p class="lang-en">Dividing by group std cancels the size of the reward slope. Under noisy labels the target drifts from the mean toward the median, with a closed-form pseudo-Huber view and reproducible simulations.</p>
-      <p class="lang-zh">除以组内 std 会消去奖励斜率的大小。标签有噪声时，优化目标从均值滑向中位数；附 pseudo-Huber 闭式解和可复现模拟。</p>
+      <p class="lang-en">Dividing by group std cancels the size of the reward slope. Under noisy labels the target drifts from the mean toward the median, with a closed-form pseudo-Huber view, reproducible simulations, and a look at rubric RL and LLM judges.</p>
+      <p class="lang-zh">除以组内 std 会消去奖励斜率的大小。标签有噪声时，优化目标从均值滑向中位数；附任务背景、pseudo-Huber 闭式解和可复现模拟，并讨论 rubric RL 与 LLM judge。</p>
       <div class="note-index__topics" aria-label="Topics"><span>GRPO</span><span>Calibration</span><span>Median</span><span>Pseudo-Huber</span></div>
     </div>
     <a class="note-index__open" href="{{ '/notes/grpo-std-noisy-labels/' | relative_url }}" aria-label="Read GRPO standard deviation note"><i class="fas fa-arrow-right" aria-hidden="true"></i></a>

@@ -1,0 +1,58 @@
+{
+ "p_choose_b": [
+  {
+   "scenario": "binary pass/fail, 0.60 vs 0.65",
+   "none_n4": 0.997,
+   "group_std_n4": 0.994,
+   "none_n8": 0.998,
+   "group_std_n8": 0.995,
+   "none_n64": 0.998,
+   "group_std_n64": 0.996
+  },
+  {
+   "scenario": "same gaussian noise sd 0.2, 0.60 vs 0.65",
+   "none_n4": 0.998,
+   "group_std_n4": 0.998,
+   "none_n8": 0.998,
+   "group_std_n8": 0.998,
+   "none_n64": 0.998,
+   "group_std_n64": 0.998
+  },
+  {
+   "scenario": "B noisier, 0.60 sd 0.02 vs 0.65 sd 0.3",
+   "none_n4": 0.998,
+   "group_std_n4": 0.997,
+   "none_n8": 0.998,
+   "group_std_n8": 0.998,
+   "none_n64": 0.998,
+   "group_std_n64": 0.997
+  },
+  {
+   "scenario": "B bimodal, 0.60 fixed vs {1, 0.3}, mean 0.65",
+   "none_n4": 0.998,
+   "group_std_n4": 0.995,
+   "none_n8": 0.998,
+   "group_std_n8": 0.997,
+   "none_n64": 0.998,
+   "group_std_n64": 0.997
+  },
+  {
+   "scenario": "B rare big win, 0.10 fixed vs 1 with prob 0.15",
+   "none_n4": 0.998,
+   "group_std_n4": 0.002,
+   "none_n8": 0.998,
+   "group_std_n8": 0.002,
+   "none_n64": 0.998,
+   "group_std_n64": 0.997
+  },
+  {
+   "scenario": "shared per-group strictness 0.5-1.5, 0.60 vs 0.65",
+   "none_n4": 0.998,
+   "group_std_n4": 0.998,
+   "none_n8": 0.998,
+   "group_std_n8": 0.998,
+   "none_n64": 0.998,
+   "group_std_n64": 0.998
+  }
+ ]
+}

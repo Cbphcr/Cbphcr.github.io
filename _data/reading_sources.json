@@ -493,6 +493,66 @@
       "read": "正文相关章节（v1；v2 标题有更新）",
       "kind": "arXiv（年份为首发）",
       "verified": "2026-11-05"
+    },
+    {
+      "id": "G9",
+      "title": "Reliability without Validity: A Systematic, Large-Scale Evaluation of LLM-as-a-Judge Models Across Agreement, Consistency, and Bias",
+      "authors": "Justin D. Norman, Michael U. Rivera, D. Alex Hughes",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2606.19544",
+      "read": "正文大部分（v1）",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G10",
+      "title": "Agentic Rubrics as Contextual Verifiers for SWE Agents",
+      "authors": "Mohit Raghavendra, Anisha Gunjal, Bing Liu, Yunzhong He",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2601.04171",
+      "read": "相关章节与附录 A.4",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G11",
+      "title": "HealthBench: Evaluating Large Language Models Towards Improved Human Health",
+      "authors": "Rahul K. Arora, Jason Wei, Rebecca Soskin Hicks et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2505.08775",
+      "read": "仅摘要级信息",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G12",
+      "title": "Rubric-Grounded RL: Structured Judge Rewards for Generalizable Reasoning",
+      "authors": "Manish Bhattarai, Ismael Boureima, Nishath Rajiv Ranasinghe, Scott Pakin, Dan O'Malley",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2605.08061",
+      "read": "正文相关章节（v1）",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G13",
+      "title": "Jointly Reinforcing Diversity and Quality in Language Model Generations",
+      "authors": "Tianjian Li, Yiming Zhang, Ping Yu et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2509.02534",
+      "read": "§3、§6.3 与附录 F",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
+    },
+    {
+      "id": "G14",
+      "title": "Step-wise Rubric Rewards for LLM Reasoning",
+      "authors": "Weichu Xie, Haozhe Zhao, Wenpu Liu et al.",
+      "year": "2026",
+      "url": "https://arxiv.org/abs/2605.17291",
+      "read": "方法相关章节（v2）",
+      "kind": "arXiv（年份为首发）",
+      "verified": "2026-11-05"
     }
   ]
 }
